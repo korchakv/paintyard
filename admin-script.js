@@ -374,8 +374,8 @@ async function updateContactColors() {
     if (!data.contactColors) {
         data.contactColors = {};
     }
-    data.contactColors.phones = document.getElementById('contact-phones-color').value;
-    data.contactColors.address = document.getElementById('contact-address-color').value;
+    data.contactColors.phones = document.getElementById('contact-phones-color').value || '#333333';
+    data.contactColors.address = document.getElementById('contact-address-color').value || '#666666';
     saveData(data);
 }
 
@@ -384,10 +384,10 @@ async function updateHeaderSizes() {
     if (!data.headerSizes) {
         data.headerSizes = {};
     }
-    data.headerSizes.headerTopHeight = document.getElementById('header-top-height').value;
-    data.headerSizes.menuHeight = document.getElementById('menu-height').value;
-    data.headerSizes.logoHeightNormal = document.getElementById('logo-height-normal').value;
-    data.headerSizes.logoHeightShrink = document.getElementById('logo-height-shrink').value;
+    data.headerSizes.headerTopHeight = document.getElementById('header-top-height').value || '15px';
+    data.headerSizes.menuHeight = document.getElementById('menu-height').value || '18px';
+    data.headerSizes.logoHeightNormal = document.getElementById('logo-height-normal').value || '50px';
+    data.headerSizes.logoHeightShrink = document.getElementById('logo-height-shrink').value || '35px';
     saveData(data);
 }
 

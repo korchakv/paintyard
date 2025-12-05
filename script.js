@@ -301,27 +301,39 @@ function applyHeaderSizes(headerSizes) {
         document.head.appendChild(styleEl);
     }
     
+    // Sanitize CSS values - only allow safe units
+    function sanitizeCSSValue(value) {
+        if (!value) return null;
+        // Only allow px, em, rem, %, auto values
+        const safePattern = /^(auto|(\d+(\.\d+)?(px|em|rem|%)))$/;
+        return safePattern.test(value.trim()) ? value.trim() : null;
+    }
+    
     // Build CSS rules
     let css = '';
     
     // Header top padding
-    if (headerSizes.headerTopHeight) {
-        css += `.header-top { padding: ${headerSizes.headerTopHeight} 0; }\n`;
-        css += `#header.shrink .header-top { padding: calc(${headerSizes.headerTopHeight} * 0.5) 0; }\n`;
+    const headerTopHeight = sanitizeCSSValue(headerSizes.headerTopHeight);
+    if (headerTopHeight) {
+        css += `.header-top { padding: ${headerTopHeight} 0; }\n`;
+        css += `#header.shrink .header-top { padding: calc(${headerTopHeight} * 0.5) 0; }\n`;
     }
     
     // Menu padding
-    if (headerSizes.menuHeight) {
-        css += `.menu-container a { padding: ${headerSizes.menuHeight} 25px; }\n`;
-        css += `#header.shrink .menu-container a { padding: calc(${headerSizes.menuHeight} * 0.7) 25px; }\n`;
+    const menuHeight = sanitizeCSSValue(headerSizes.menuHeight);
+    if (menuHeight) {
+        css += `.menu-container a { padding: ${menuHeight} 25px; }\n`;
+        css += `#header.shrink .menu-container a { padding: calc(${menuHeight} * 0.7) 25px; }\n`;
     }
     
     // Logo heights - these override the shrink animation
-    if (headerSizes.logoHeightNormal) {
-        css += `#header-logo { height: ${headerSizes.logoHeightNormal} !important; }\n`;
+    const logoHeightNormal = sanitizeCSSValue(headerSizes.logoHeightNormal);
+    if (logoHeightNormal) {
+        css += `#header-logo { height: ${logoHeightNormal} !important; }\n`;
     }
-    if (headerSizes.logoHeightShrink) {
-        css += `#header.shrink #header-logo { height: ${headerSizes.logoHeightShrink} !important; }\n`;
+    const logoHeightShrink = sanitizeCSSValue(headerSizes.logoHeightShrink);
+    if (logoHeightShrink) {
+        css += `#header.shrink #header-logo { height: ${logoHeightShrink} !important; }\n`;
     }
     
     styleEl.textContent = css;
