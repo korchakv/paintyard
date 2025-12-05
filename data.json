@@ -46,7 +46,7 @@
     }
   ],
   "colors": {
-    "headerBg": "#2c3e50",
-    "mainBg": "#f4f4f4"
+    "headerBg": "rgba(255, 255, 255, 0.95)",
+    "mainBg": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
   }
 }

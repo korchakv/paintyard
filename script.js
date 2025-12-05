@@ -1,10 +1,21 @@
 // Global data variable
 let siteData = null;
 
-// Load data from data.json file
+// Load data from localStorage first, then data.json
 async function loadData() {
-    // Try to load from data.json first
+    // Try to load from localStorage first (for admin changes)
     if (!siteData) {
+        const localData = localStorage.getItem('paintyardData');
+        if (localData) {
+            try {
+                siteData = JSON.parse(localData);
+                return siteData;
+            } catch (e) {
+                console.error('Error parsing localStorage data:', e);
+            }
+        }
+        
+        // If no localStorage data, load from data.json
         try {
             const response = await fetch('data.json');
             siteData = await response.json();
@@ -18,7 +29,7 @@ async function loadData() {
                 aboutText: '',
                 products: [],
                 articles: [],
-                colors: { headerBg: '#2c3e50', mainBg: '#f4f4f4' }
+                colors: { headerBg: '#667eea', mainBg: 'transparent' }
             };
         }
     }

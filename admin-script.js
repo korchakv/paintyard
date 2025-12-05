@@ -36,12 +36,22 @@ async function showAdminPanel() {
     await loadAdminData();
 }
 
-// Load data from data.json
+// Load data from data.json or localStorage
 async function loadData() {
     if (!siteData) {
+        // First check localStorage for any unsaved changes
+        const localData = localStorage.getItem('paintyardData');
+        if (localData) {
+            siteData = JSON.parse(localData);
+            return siteData;
+        }
+        
+        // If no local data, load from data.json
         try {
             const response = await fetch('data.json');
             siteData = await response.json();
+            // Save to localStorage for future use
+            localStorage.setItem('paintyardData', JSON.stringify(siteData));
         } catch (error) {
             console.error('Error loading data.json:', error);
             siteData = {
@@ -58,14 +68,41 @@ async function loadData() {
     return siteData;
 }
 
-// Save data - updates the in-memory copy
+// Save data - updates the in-memory copy AND localStorage for auto-save
 function saveData(data) {
     siteData = data;
+    // Also save to localStorage for immediate persistence
+    localStorage.setItem('paintyardData', JSON.stringify(data));
+    // Auto-download reminder
+    showSaveNotification();
+}
+
+// Show save notification
+function showSaveNotification() {
+    const existingNotif = document.getElementById('save-notification');
+    if (existingNotif) {
+        existingNotif.remove();
+    }
+    
+    const notif = document.createElement('div');
+    notif.id = 'save-notification';
+    notif.className = 'save-notification';
+    notif.innerHTML = '✓ Зміни збережено! Не забудьте завантажити data.json для синхронізації.';
+    document.body.appendChild(notif);
+    
+    setTimeout(() => {
+        notif.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        notif.classList.remove('show');
+        setTimeout(() => notif.remove(), 300);
+    }, 3000);
 }
 
 // Download data.json file
 function downloadDataJson() {
-    const data = siteData;
+    const data = siteData || JSON.parse(localStorage.getItem('paintyardData'));
     const dataStr = JSON.stringify(data, null, 2);
     const dataBlob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(dataBlob);
@@ -75,6 +112,33 @@ function downloadDataJson() {
     link.click();
     URL.revokeObjectURL(url);
     alert('Файл data.json завантажено! Тепер закомітьте його в репозиторій GitHub.');
+}
+
+// Convert image file to base64
+function convertImageToBase64(file, callback) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        callback(e.target.result);
+    };
+    reader.readAsDataURL(file);
+}
+
+// Upload image helper
+function uploadImage(inputElement, callback) {
+    const file = inputElement.files[0];
+    if (!file) return;
+    
+    if (!file.type.startsWith('image/')) {
+        alert('Будь ласка, виберіть файл зображення');
+        return;
+    }
+    
+    if (file.size > 2 * 1024 * 1024) { // 2MB limit
+        alert('Розмір файлу не повинен перевищувати 2MB');
+        return;
+    }
+    
+    convertImageToBase64(file, callback);
 }
 
 // Load admin data into form
@@ -87,47 +151,82 @@ async function loadAdminData() {
     document.getElementById('about-input').value = data.aboutText || '';
     document.getElementById('header-color').value = data.colors.headerBg;
     document.getElementById('main-color').value = data.colors.mainBg;
+    
+    // Show logo preview if exists
+    if (data.logo) {
+        showImagePreview('logo-preview', data.logo);
+    }
 
     renderProductsList(data.products);
     renderArticlesList(data.articles);
 }
 
+// Image upload handlers
+function handleLogoUpload(input) {
+    uploadImage(input, (base64) => {
+        document.getElementById('logo-input').value = base64;
+        showImagePreview('logo-preview', base64);
+        updateLogo();
+    });
+}
+
+function handleProductImageUpload(input) {
+    uploadImage(input, (base64) => {
+        document.getElementById('product-image').value = base64;
+        showImagePreview('product-image-preview', base64);
+    });
+}
+
+function handleArticleImageUpload(input) {
+    uploadImage(input, (base64) => {
+        document.getElementById('article-image').value = base64;
+        showImagePreview('article-image-preview', base64);
+    });
+}
+
+// Show image preview
+function showImagePreview(elementId, imageSrc) {
+    const preview = document.getElementById(elementId);
+    if (imageSrc) {
+        preview.innerHTML = `<img src="${imageSrc}" alt="Preview">`;
+        preview.style.display = 'block';
+    } else {
+        preview.innerHTML = '';
+        preview.style.display = 'none';
+    }
+}
+
 // Update functions
-function updateLogo() {
-    const data = loadData();
+async function updateLogo() {
+    const data = await loadData();
     data.logo = document.getElementById('logo-input').value;
     saveData(data);
-    alert('Логотип оновлено!');
 }
 
-function updateAddress() {
-    const data = loadData();
+async function updateAddress() {
+    const data = await loadData();
     data.address = document.getElementById('address-input').value;
     saveData(data);
-    alert('Адресу оновлено!');
 }
 
-function updatePhones() {
-    const data = loadData();
+async function updatePhones() {
+    const data = await loadData();
     const phonesText = document.getElementById('phones-input').value;
     data.phones = phonesText.split('\n').filter(p => p.trim() !== '');
     saveData(data);
-    alert('Телефони оновлено!');
 }
 
-function updateAbout() {
-    const data = loadData();
+async function updateAbout() {
+    const data = await loadData();
     data.aboutText = document.getElementById('about-input').value;
     saveData(data);
-    alert('Текст "Про нас" оновлено!');
 }
 
-function updateColors() {
-    const data = loadData();
+async function updateColors() {
+    const data = await loadData();
     data.colors.headerBg = document.getElementById('header-color').value;
     data.colors.mainBg = document.getElementById('main-color').value;
     saveData(data);
-    alert('Кольори оновлено!');
 }
 
 // Products management

@@ -35,9 +35,12 @@
             <div class="section">
                 <h2>Загальні налаштування</h2>
                 <div class="form-group">
-                    <label>Логотип (URL або Base64)</label>
-                    <input type="text" id="logo-input" placeholder="https://example.com/logo.png">
+                    <label>Логотип</label>
+                    <input type="file" id="logo-file" accept="image/*" onchange="handleLogoUpload(this)" class="file-input">
+                    <button onclick="document.getElementById('logo-file').click()" class="upload-btn">📤 Завантажити логотип</button>
+                    <input type="text" id="logo-input" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
                     <button onclick="updateLogo()">Оновити логотип</button>
+                    <div id="logo-preview" class="image-preview"></div>
                 </div>
                 <div class="form-group">
                     <label>Адреса</label>
@@ -109,8 +112,11 @@
                 <input type="text" id="product-price" placeholder="450 грн">
             </div>
             <div class="form-group">
-                <label>Зображення (URL або Base64)</label>
-                <input type="text" id="product-image">
+                <label>Зображення</label>
+                <input type="file" id="product-image-file" accept="image/*" onchange="handleProductImageUpload(this)" class="file-input" style="display: none;">
+                <button type="button" onclick="document.getElementById('product-image-file').click()" class="upload-btn">📤 Завантажити зображення</button>
+                <input type="text" id="product-image" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
+                <div id="product-image-preview" class="image-preview"></div>
             </div>
             <input type="hidden" id="product-id">
             <button onclick="saveProduct()">Зберегти</button>
@@ -131,8 +137,11 @@
                 <textarea id="article-excerpt" rows="2"></textarea>
             </div>
             <div class="form-group">
-                <label>Зображення (URL або Base64)</label>
-                <input type="text" id="article-image">
+                <label>Зображення</label>
+                <input type="file" id="article-image-file" accept="image/*" onchange="handleArticleImageUpload(this)" class="file-input" style="display: none;">
+                <button type="button" onclick="document.getElementById('article-image-file').click()" class="upload-btn">📤 Завантажити зображення</button>
+                <input type="text" id="article-image" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
+                <div id="article-image-preview" class="image-preview"></div>
             </div>
             <div class="form-group">
                 <label>Вміст статті (HTML)</label>

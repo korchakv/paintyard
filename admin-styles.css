@@ -129,11 +129,58 @@ button:hover {
     background-color: #229954;
 }
 
+.upload-btn {
+    background-color: #9b59b6;
+    margin-top: 0;
+}
+
+.upload-btn:hover {
+    background-color: #8e44ad;
+}
+
+.file-input {
+    display: none;
+}
+
+.image-preview {
+    margin-top: 15px;
+    display: none;
+}
+
+.image-preview img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.save-notification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 10000;
+    font-weight: 500;
+}
+
+.save-notification.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
 .info-text {
-    background-color: #fff3cd;
+    background: linear-gradient(135deg, #fff3cd 0%, #ffe7a0 100%);
     border: 1px solid #ffc107;
+    border-left: 4px solid #ff9800;
     padding: 15px;
-    border-radius: 5px;
+    border-radius: 8px;
     margin-bottom: 15px;
     color: #856404;
     line-height: 1.6;
