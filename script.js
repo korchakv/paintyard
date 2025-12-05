@@ -1,63 +1,33 @@
-// Initialize default data
-const DEFAULT_DATA = {
-    logo: '',
-    address: 'м. Київ, вул. Прикладна, 1',
-    phones: ['+380 (44) 123-45-67', '+380 (50) 123-45-67'],
-    aboutText: 'Наш магазин "Paintyard" пропонує широкий асортимент якісних фарб, лаків та будівельних матеріалів. Ми працюємо на ринку понад 10 років та допомагаємо нашим клієнтам втілити в життя найсміливіші дизайнерські рішення. У нас ви знайдете продукцію провідних виробників за найкращими цінами.',
-    products: [
-        {
-            id: 1,
-            name: 'Фарба інтер\'єрна біла',
-            description: 'Високоякісна фарба для внутрішніх робіт',
-            price: '450 грн',
-            image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%23ddd" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999" font-size="16"%3EФарба%3C/text%3E%3C/svg%3E'
-        },
-        {
-            id: 2,
-            name: 'Емаль для дерева',
-            description: 'Захисна емаль для дерев\'яних поверхонь',
-            price: '380 грн',
-            image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%23ddd" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999" font-size="16"%3EЕмаль%3C/text%3E%3C/svg%3E'
-        },
-        {
-            id: 3,
-            name: 'Лак для паркету',
-            description: 'Глянцевий лак для паркетних підлог',
-            price: '620 грн',
-            image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%23ddd" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999" font-size="16"%3EЛак%3C/text%3E%3C/svg%3E'
-        }
-    ],
-    articles: [
-        {
-            id: 1,
-            name: 'Як вибрати фарбу для стін',
-            excerpt: 'Поради професіоналів щодо вибору інтер\'єрної фарби',
-            content: '<h1>Як вибрати фарбу для стін</h1><p>При виборі фарби для стін потрібно враховувати декілька важливих факторів...</p><p>1. Тип приміщення - для вологих приміщень обирайте вологостійкі фарби</p><p>2. Тип поверхні - для різних матеріалів підходять різні типи фарб</p><p>3. Бажаний ефект - матовий, глянцевий або напівматовий</p>',
-            image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%23ddd" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999" font-size="14"%3EСтаття 1%3C/text%3E%3C/svg%3E'
-        },
-        {
-            id: 2,
-            name: 'Підготовка поверхні перед фарбуванням',
-            excerpt: 'Важливі етапи підготовки для ідеального результату',
-            content: '<h1>Підготовка поверхні перед фарбуванням</h1><p>Якісна підготовка поверхні - запорука успіху...</p><p>Етапи підготовки:</p><ul><li>Очищення поверхні від старого покриття</li><li>Шпаклювання тріщин та нерівностей</li><li>Шліфування</li><li>Ґрунтування</li></ul>',
-            image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%23ddd" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999" font-size="14"%3EСтаття 2%3C/text%3E%3C/svg%3E'
-        }
-    ],
-    colors: {
-        headerBg: '#2c3e50',
-        mainBg: '#f4f4f4'
-    }
-};
+// Global data variable
+let siteData = null;
 
-// Load data from localStorage or use defaults
-function loadData() {
-    const storedData = localStorage.getItem('paintyardData');
-    return storedData ? JSON.parse(storedData) : DEFAULT_DATA;
+// Load data from data.json file
+async function loadData() {
+    // Try to load from data.json first
+    if (!siteData) {
+        try {
+            const response = await fetch('data.json');
+            siteData = await response.json();
+        } catch (error) {
+            console.error('Error loading data.json:', error);
+            // Fallback to empty data if file doesn't exist
+            siteData = {
+                logo: '',
+                address: '',
+                phones: [],
+                aboutText: '',
+                products: [],
+                articles: [],
+                colors: { headerBg: '#2c3e50', mainBg: '#f4f4f4' }
+            };
+        }
+    }
+    return siteData;
 }
 
 // Render page content
-function renderPage() {
-    const data = loadData();
+async function renderPage() {
+    const data = await loadData();
 
     // Apply colors
     document.getElementById('header').style.backgroundColor = data.colors.headerBg;

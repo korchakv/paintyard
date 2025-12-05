@@ -94,23 +94,28 @@
         const articleId = parseInt(urlParams.get('id'));
 
         // Load and display article
-        function loadArticle() {
-            const storedData = localStorage.getItem('paintyardData');
-            const data = storedData ? JSON.parse(storedData) : null;
+        async function loadArticle() {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
 
-            if (data && data.articles) {
-                const article = data.articles.find(a => a.id === articleId);
-                if (article) {
-                    if (article.image) {
-                        document.getElementById('article-image').src = article.image;
-                        document.getElementById('article-image').style.display = 'block';
+                if (data && data.articles) {
+                    const article = data.articles.find(a => a.id === articleId);
+                    if (article) {
+                        if (article.image) {
+                            document.getElementById('article-image').src = article.image;
+                            document.getElementById('article-image').style.display = 'block';
+                        }
+                        document.getElementById('article-content').innerHTML = article.content;
+                        document.title = article.name + ' - Paintyard';
+                    } else {
+                        document.getElementById('article-content').innerHTML = '<p>Стаття не знайдена.</p>';
                     }
-                    document.getElementById('article-content').innerHTML = article.content;
-                    document.title = article.name + ' - Paintyard';
                 } else {
-                    document.getElementById('article-content').innerHTML = '<p>Стаття не знайдена.</p>';
+                    document.getElementById('article-content').innerHTML = '<p>Помилка завантаження статті.</p>';
                 }
-            } else {
+            } catch (error) {
+                console.error('Error loading article:', error);
                 document.getElementById('article-content').innerHTML = '<p>Помилка завантаження статті.</p>';
             }
         }
