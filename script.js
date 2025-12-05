@@ -171,18 +171,29 @@ function applySectionBackgrounds(backgrounds) {
         const bgData = backgrounds[sectionKey];
         
         if (section && bgData && bgData.image) {
-            const opacity = (bgData.opacity || 100) / 100;
+            // Sanitize image URL - only allow data: URLs and relative paths
+            const imageUrl = bgData.image;
+            if (!imageUrl.startsWith('data:') && !imageUrl.startsWith('images/') && !imageUrl.startsWith('/images/')) {
+                console.warn(`Skipping potentially unsafe URL for ${sectionKey}: ${imageUrl}`);
+                return;
+            }
+            
+            const opacity = Math.max(0, Math.min(100, bgData.opacity || 100)) / 100;
             
             // Create overlay div if not exists
             let overlay = section.querySelector('.section-bg-overlay');
             if (!overlay) {
                 overlay = document.createElement('div');
                 overlay.className = 'section-bg-overlay';
-                section.style.position = 'relative';
+                // Only set position if not already set
+                const currentPosition = window.getComputedStyle(section).position;
+                if (currentPosition === 'static') {
+                    section.style.position = 'relative';
+                }
                 section.insertBefore(overlay, section.firstChild);
             }
             
-            overlay.style.backgroundImage = `url('${bgData.image}')`;
+            overlay.style.backgroundImage = `url('${imageUrl.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}')`;
             overlay.style.opacity = opacity;
         }
     });

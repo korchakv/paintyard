@@ -232,8 +232,16 @@ function downloadSectionImage(section) {
         return;
     }
     
-    // Convert to blob and download
-    const filename = `${section}-bg.jpg`;
+    // Detect file type from base64 data
+    let extension = 'jpg';
+    if (imageData.startsWith('data:image/')) {
+        const match = imageData.match(/data:image\/(\w+);/);
+        if (match) {
+            extension = match[1] === 'jpeg' ? 'jpg' : match[1];
+        }
+    }
+    
+    const filename = `${section}-bg.${extension}`;
     
     if (imageData.startsWith('data:')) {
         // It's base64
@@ -241,8 +249,9 @@ function downloadSectionImage(section) {
         link.href = imageData;
         link.download = filename;
         link.click();
+        alert(`Файл ${filename} завантажено! Завантажте його в папку images/backgrounds/ на GitHub.`);
     } else {
-        alert('Використовуйте функцію завантаження файлу для автоматичного перейменування');
+        alert('Завантажте зображення через кнопку "📤 Завантажити фон" для автоматичного перейменування файлу.');
     }
 }
 
