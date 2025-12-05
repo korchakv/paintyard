@@ -151,6 +151,17 @@ async function loadAdminData() {
     document.getElementById('about-input').value = data.aboutText || '';
     document.getElementById('header-color').value = data.colors.headerBg;
     document.getElementById('main-color').value = data.colors.mainBg;
+    document.getElementById('menu-color').value = data.colors.menuBg || '#2c3e50';
+    
+    // Load text colors
+    if (data.textColors) {
+        document.getElementById('text-header-color').value = data.textColors.header || '#333333';
+        document.getElementById('text-menu-color').value = data.textColors.menu || '#ffffff';
+        document.getElementById('text-about-color').value = data.textColors.about || '#333333';
+        document.getElementById('text-products-color').value = data.textColors.products || '#333333';
+        document.getElementById('text-articles-color').value = data.textColors.articles || '#333333';
+        document.getElementById('text-footer-color').value = data.textColors.footer || '#ffffff';
+    }
     
     // Load logo size
     if (data.logoSize) {
@@ -326,6 +337,21 @@ async function updateColors() {
     const data = await loadData();
     data.colors.headerBg = document.getElementById('header-color').value;
     data.colors.mainBg = document.getElementById('main-color').value;
+    data.colors.menuBg = document.getElementById('menu-color').value;
+    saveData(data);
+}
+
+async function updateTextColors() {
+    const data = await loadData();
+    if (!data.textColors) {
+        data.textColors = {};
+    }
+    data.textColors.header = document.getElementById('text-header-color').value;
+    data.textColors.menu = document.getElementById('text-menu-color').value;
+    data.textColors.about = document.getElementById('text-about-color').value;
+    data.textColors.products = document.getElementById('text-products-color').value;
+    data.textColors.articles = document.getElementById('text-articles-color').value;
+    data.textColors.footer = document.getElementById('text-footer-color').value;
     saveData(data);
 }
 
@@ -335,8 +361,9 @@ function renderProductsList(products) {
     container.innerHTML = products.map(product => `
         <div class="item-card">
             <div class="item-info">
-                <h3>${product.name}</h3>
+                <h3>${product.name} <span class="item-id">(ID: ${product.id})</span></h3>
                 <p>${product.description} - ${product.price}</p>
+                <p class="hint">Зображення: images/products/${product.id}.jpg</p>
             </div>
             <div class="item-actions">
                 <button class="edit-btn" onclick="editProduct(${product.id})">Редагувати</button>
@@ -423,8 +450,9 @@ function renderArticlesList(articles) {
     container.innerHTML = articles.map(article => `
         <div class="item-card">
             <div class="item-info">
-                <h3>${article.name}</h3>
+                <h3>${article.name} <span class="item-id">(ID: ${article.id})</span></h3>
                 <p>${article.excerpt}</p>
+                <p class="hint">Зображення: images/articles/${article.id}.jpg</p>
             </div>
             <div class="item-actions">
                 <button class="edit-btn" onclick="editArticle(${article.id})">Редагувати</button>

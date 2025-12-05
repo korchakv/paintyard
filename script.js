@@ -41,9 +41,23 @@ async function renderPage() {
     const data = await loadData();
 
     // Apply colors
-    document.getElementById('header').style.backgroundColor = data.colors.headerBg;
+    const headerTop = document.querySelector('.header-top');
+    if (headerTop) {
+        headerTop.style.backgroundColor = data.colors.headerBg;
+    }
+    
+    const menuBar = document.getElementById('menu-bar');
+    if (menuBar && data.colors.menuBg) {
+        menuBar.style.backgroundColor = data.colors.menuBg;
+    }
+    
     document.getElementById('footer').style.backgroundColor = data.colors.headerBg;
     document.getElementById('main-content').style.backgroundColor = data.colors.mainBg;
+
+    // Apply text colors
+    if (data.textColors) {
+        applyTextColors(data.textColors);
+    }
 
     // Apply logo size
     if (data.logoSize) {
@@ -197,6 +211,57 @@ function applySectionBackgrounds(backgrounds) {
             overlay.style.opacity = opacity;
         }
     });
+}
+
+// Apply text colors to sections
+function applyTextColors(textColors) {
+    // Header text color
+    if (textColors.header) {
+        const headerTop = document.querySelector('.header-top');
+        if (headerTop) {
+            headerTop.style.color = textColors.header;
+        }
+    }
+    
+    // Menu text color
+    if (textColors.menu) {
+        const menuLinks = document.querySelectorAll('.menu-container a');
+        menuLinks.forEach(link => {
+            link.style.color = textColors.menu;
+        });
+    }
+    
+    // About section text color
+    if (textColors.about) {
+        const aboutSection = document.getElementById('about');
+        if (aboutSection) {
+            aboutSection.style.color = textColors.about;
+        }
+    }
+    
+    // Products section text color
+    if (textColors.products) {
+        const productsSection = document.getElementById('products');
+        if (productsSection) {
+            productsSection.style.color = textColors.products;
+        }
+    }
+    
+    // Articles section text color
+    if (textColors.articles) {
+        const articlesSection = document.getElementById('articles');
+        if (articlesSection) {
+            articlesSection.style.color = textColors.articles;
+        }
+    }
+    
+    // Footer text color
+    if (textColors.footer) {
+        const footer = document.getElementById('footer');
+        if (footer) {
+            footer.style.color = textColors.footer;
+        }
+    }
 }
 
 // Initialize page

@@ -47,7 +47,16 @@
   ],
   "colors": {
     "headerBg": "#efc3c3",
-    "mainBg": "#e6e6e6"
+    "mainBg": "#e6e6e6",
+    "menuBg": "#2c3e50"
+  },
+  "textColors": {
+    "header": "#333333",
+    "menu": "#ffffff",
+    "about": "#333333",
+    "products": "#333333",
+    "articles": "#333333",
+    "footer": "#ffffff"
   },
   "logoSize": {
     "width": "auto",

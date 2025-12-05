@@ -220,6 +220,12 @@ button:hover {
     color: #856404;
     line-height: 1.6;
 }
+
+.item-id {
+    font-size: 14px;
+    color: #666;
+    font-weight: normal;
+}
 }
 
 .hint {
