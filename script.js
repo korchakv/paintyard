@@ -156,7 +156,7 @@ window.addEventListener('scroll', () => {
 });
 
 // Smooth scroll for menu links
-document.querySelectorAll('.menu a').forEach(link => {
+document.querySelectorAll('.menu-container a').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         const targetId = link.getAttribute('href').substring(1);
