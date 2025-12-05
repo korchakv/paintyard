@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адмін-панель - Paintyard</title>
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>Адмін-панель</h1>
+            <a href="index.html" class="back-btn">← Повернутися на сайт</a>
+        </header>
+
+        <div id="login-section" class="section">
+            <h2>Вхід</h2>
+            <input type="password" id="admin-password" placeholder="Пароль">
+            <button onclick="login()">Увійти</button>
+            <p class="hint">Пароль за замовчуванням: admin</p>
+        </div>
+
+        <div id="admin-panel" style="display: none;">
+            <!-- General Settings -->
+            <div class="section">
+                <h2>Загальні налаштування</h2>
+                <div class="form-group">
+                    <label>Логотип (URL або Base64)</label>
+                    <input type="text" id="logo-input" placeholder="https://example.com/logo.png">
+                    <button onclick="updateLogo()">Оновити логотип</button>
+                </div>
+                <div class="form-group">
+                    <label>Адреса</label>
+                    <input type="text" id="address-input" placeholder="м. Київ, вул. Прикладна, 1">
+                    <button onclick="updateAddress()">Оновити адресу</button>
+                </div>
+                <div class="form-group">
+                    <label>Телефони (один на рядок)</label>
+                    <textarea id="phones-input" rows="3" placeholder="+380 (44) 123-45-67&#10;+380 (50) 123-45-67"></textarea>
+                    <button onclick="updatePhones()">Оновити телефони</button>
+                </div>
+                <div class="form-group">
+                    <label>Текст "Про нас"</label>
+                    <textarea id="about-input" rows="5"></textarea>
+                    <button onclick="updateAbout()">Оновити текст</button>
+                </div>
+            </div>
+
+            <!-- Color Settings -->
+            <div class="section">
+                <h2>Кольори</h2>
+                <div class="form-group">
+                    <label>Колір шапки (Header)</label>
+                    <input type="color" id="header-color">
+                    <button onclick="updateColors()">Оновити кольори</button>
+                </div>
+                <div class="form-group">
+                    <label>Колір основної сторінки</label>
+                    <input type="color" id="main-color">
+                </div>
+            </div>
+
+            <!-- Products Management -->
+            <div class="section">
+                <h2>Товари</h2>
+                <div id="products-list"></div>
+                <button onclick="showAddProductForm()" class="add-btn">+ Додати товар</button>
+            </div>
+
+            <!-- Articles Management -->
+            <div class="section">
+                <h2>Статті</h2>
+                <div id="articles-list"></div>
+                <button onclick="showAddArticleForm()" class="add-btn">+ Додати статтю</button>
+            </div>
+
+            <!-- Logout -->
+            <div class="section">
+                <button onclick="logout()" class="logout-btn">Вийти</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeProductModal()">&times;</span>
+            <h2 id="product-modal-title">Додати товар</h2>
+            <div class="form-group">
+                <label>Назва</label>
+                <input type="text" id="product-name">
+            </div>
+            <div class="form-group">
+                <label>Опис</label>
+                <textarea id="product-description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Ціна</label>
+                <input type="text" id="product-price" placeholder="450 грн">
+            </div>
+            <div class="form-group">
+                <label>Зображення (URL або Base64)</label>
+                <input type="text" id="product-image">
+            </div>
+            <input type="hidden" id="product-id">
+            <button onclick="saveProduct()">Зберегти</button>
+        </div>
+    </div>
+
+    <!-- Article Modal -->
+    <div id="article-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeArticleModal()">&times;</span>
+            <h2 id="article-modal-title">Додати статтю</h2>
+            <div class="form-group">
+                <label>Назва</label>
+                <input type="text" id="article-name">
+            </div>
+            <div class="form-group">
+                <label>Короткий опис</label>
+                <textarea id="article-excerpt" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Зображення (URL або Base64)</label>
+                <input type="text" id="article-image">
+            </div>
+            <div class="form-group">
+                <label>Вміст статті (HTML)</label>
+                <textarea id="article-content" rows="10"></textarea>
+            </div>
+            <input type="hidden" id="article-id">
+            <button onclick="saveArticle()">Зберегти</button>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>
