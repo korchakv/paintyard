@@ -398,12 +398,10 @@ async function updateHeaderSizes() {
 function renderProductsList(products) {
     const container = document.getElementById('products-list');
     container.innerHTML = products.map(product => `
-        <div class="item-card">
-            <div class="item-info">
-                <h3>${product.name} <span class="item-id">(ID: ${product.id})</span></h3>
-                <p>${product.description} - ${product.price}</p>
-                <p class="hint">Зображення: images/products/${product.id}.jpg</p>
-            </div>
+        <div class="product-item">
+            <h4>${product.name} <span class="item-id">(ID: ${product.id})</span></h4>
+            <p>${product.description} - ${product.price}</p>
+            <p class="hint">Зображення: images/products/${product.id}.jpg</p>
             <div class="item-actions">
                 <button class="edit-btn" onclick="editProduct(${product.id})">Редагувати</button>
                 <button class="delete-btn" onclick="deleteProduct(${product.id})">Видалити</button>
@@ -487,12 +485,10 @@ function closeProductModal() {
 function renderArticlesList(articles) {
     const container = document.getElementById('articles-list');
     container.innerHTML = articles.map(article => `
-        <div class="item-card">
-            <div class="item-info">
-                <h3>${article.name} <span class="item-id">(ID: ${article.id})</span></h3>
-                <p>${article.excerpt}</p>
-                <p class="hint">Зображення: images/articles/${article.id}.jpg</p>
-            </div>
+        <div class="article-item">
+            <h4>${article.name} <span class="item-id">(ID: ${article.id})</span></h4>
+            <p>${article.excerpt}</p>
+            <p class="hint">Зображення: images/articles/${article.id}.jpg</p>
             <div class="item-actions">
                 <button class="edit-btn" onclick="editArticle(${article.id})">Редагувати</button>
                 <button class="delete-btn" onclick="deleteArticle(${article.id})">Видалити</button>

@@ -230,7 +230,6 @@ button:hover {
     color: #666;
     font-weight: normal;
 }
-}
 
 .hint {
     font-size: 12px;
@@ -238,12 +237,55 @@ button:hover {
     margin-top: 10px;
 }
 
-/* Product/Article List */
+/* Product/Article List - Compact Design */
 #products-list,
 #articles-list {
     max-height: 400px;
     overflow-y: auto;
     padding-right: 10px;
+}
+
+/* List item styling - more compact */
+.product-item,
+.article-item {
+    padding: 12px;
+    margin-bottom: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #3498db;
+}
+
+.product-item:hover,
+.article-item:hover {
+    background: #e9ecef;
+}
+
+.product-item h4,
+.article-item h4 {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.product-item p,
+.article-item p {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.product-item .item-actions,
+.article-item .item-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+}
+
+.product-item .item-actions button,
+.article-item .item-actions button {
+    padding: 6px 12px;
+    font-size: 13px;
+    margin-top: 0;
 }
 
 #products-list::-webkit-scrollbar,
