@@ -59,14 +59,14 @@ async function renderPage() {
         applyTextColors(data.textColors);
     }
     
-    // Apply contact colors
-    if (data.contactColors) {
-        applyContactColors(data.contactColors);
-    }
-    
     // Apply header sizes
     if (data.headerSizes) {
         applyHeaderSizes(data.headerSizes);
+    }
+    
+    // Apply footer size
+    if (data.headerSizes && data.headerSizes.footerHeight) {
+        applyFooterSize(data.headerSizes.footerHeight);
     }
 
     // Apply logo size
@@ -108,13 +108,18 @@ async function renderPage() {
     // Render address
     document.getElementById('header-address').textContent = data.address;
     document.getElementById('footer-address').textContent = data.address;
+    
+    // Apply contact colors AFTER rendering (fix for phone colors)
+    if (data.contactColors) {
+        applyContactColors(data.contactColors);
+    }
 
     // Render about
     document.getElementById('about-content').innerHTML = `<p>${data.aboutText}</p>`;
 
     // Render products
     const productsHTML = data.products.map(product => `
-        <div class="product-card">
+        <div class="product-card" onclick="openProductModal(${product.id})">
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p>${product.description}</p>
@@ -125,11 +130,11 @@ async function renderPage() {
 
     // Render articles
     const articlesHTML = data.articles.map(article => `
-        <a href="article.html?id=${article.id}" target="_blank" class="article-card">
+        <div class="article-card" onclick="openArticleModal(${article.id})">
             <img src="${article.image}" alt="${article.name}">
             <h3>${article.name}</h3>
             <p class="excerpt">${article.excerpt}</p>
-        </a>
+        </div>
     `).join('');
     document.getElementById('articles-container').innerHTML = articlesHTML;
 }
@@ -337,6 +342,72 @@ function applyHeaderSizes(headerSizes) {
     }
     
     styleEl.textContent = css;
+}
+
+// Modal functions for products
+function openProductModal(productId) {
+    const product = siteData.products.find(p => p.id === productId);
+    if (!product) return;
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal(this)">&times;</button>
+            <div class="modal-body">
+                <img src="${product.image}" alt="${product.name}" class="modal-image">
+                <h2>${product.name}</h2>
+                <p class="modal-description">${product.description}</p>
+                <div class="modal-price">${product.price}</div>
+            </div>
+        </div>
+    `;
+    modal.onclick = (e) => { if (e.target === modal) closeModal(modal.querySelector('.modal-close')); };
+    document.body.appendChild(modal);
+    setTimeout(() => modal.classList.add('show'), 10);
+}
+
+// Modal functions for articles
+function openArticleModal(articleId) {
+    const article = siteData.articles.find(a => a.id === articleId);
+    if (!article) return;
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal-content modal-article">
+            <button class="modal-close" onclick="closeModal(this)">&times;</button>
+            <div class="modal-body">
+                <img src="${article.image}" alt="${article.name}" class="modal-image">
+                <h2>${article.name}</h2>
+                <div class="modal-article-content">${article.content}</div>
+            </div>
+        </div>
+    `;
+    modal.onclick = (e) => { if (e.target === modal) closeModal(modal.querySelector('.modal-close')); };
+    document.body.appendChild(modal);
+    setTimeout(() => modal.classList.add('show'), 10);
+}
+
+// Close modal
+function closeModal(closeBtn) {
+    const modal = closeBtn.closest('.modal-overlay');
+    modal.classList.remove('show');
+    setTimeout(() => modal.remove(), 300);
+}
+
+// Apply footer size
+function applyFooterSize(footerHeight) {
+    if (!footerHeight) return;
+    
+    // Sanitize CSS value
+    const safePattern = /^(auto|(\d+(\.\d+)?(px|em|rem|%)))$/;
+    if (!safePattern.test(footerHeight.trim())) return;
+    
+    const footer = document.getElementById('footer');
+    if (footer) {
+        footer.style.padding = `${footerHeight} 0`;
+    }
 }
 
 // Initialize page

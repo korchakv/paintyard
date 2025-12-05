@@ -175,6 +175,7 @@ async function loadAdminData() {
         document.getElementById('menu-height').value = data.headerSizes.menuHeight || '18px';
         document.getElementById('logo-height-normal').value = data.headerSizes.logoHeightNormal || '50px';
         document.getElementById('logo-height-shrink').value = data.headerSizes.logoHeightShrink || '35px';
+        document.getElementById('footer-height').value = data.headerSizes.footerHeight || '30px';
     }
     
     // Load logo size
@@ -388,6 +389,7 @@ async function updateHeaderSizes() {
     data.headerSizes.menuHeight = document.getElementById('menu-height').value || '18px';
     data.headerSizes.logoHeightNormal = document.getElementById('logo-height-normal').value || '50px';
     data.headerSizes.logoHeightShrink = document.getElementById('logo-height-shrink').value || '35px';
+    data.headerSizes.footerHeight = document.getElementById('footer-height').value || '30px';
     saveData(data);
 }
 
