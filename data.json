@@ -1,0 +1,95 @@
+{
+  "logo": "",
+  "address": "Івано-Франківськ, вул. Вовчинецька, 191",
+  "phones": [
+    "+380 (63) 770-24-57",
+    "+380 (68) 770-24-57"
+  ],
+  "aboutText": "Магазин «Малярний» пропонує широкий асортимент фарб, лаків та будівельних матеріалів. Тут ви отримаєте професійну допомогу у підборі покриттів для різних поверхонь і придбаєте сучасні лакофарбові продукти від провідних виробників. Наша команда забезпечить вас якісними фарбами і лакофарбовими матеріалами – від стін і фасадів до підлоги і даху – з урахуванням актуальних технологій і побажань клієнта.",
+  "brands": [
+    {
+      "id": 1,
+      "name": "Caparol",
+      "description": "Німецький виробник високоякісних лакофарбових матеріалів. Професійні рішення для будь-яких поверхонь.",
+      "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%23e63946' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='24' font-weight='bold'%3ECaparol%3C/text%3E%3C/svg%3E"
+    },
+    {
+      "id": 2,
+      "name": "Tikkurila",
+      "description": "Фінський бренд з понад 150-річною історією. Екологічні та стійкі покриття для інтер'єру та екстер'єру.",
+      "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%232a9d8f' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='22' font-weight='bold'%3ETikkurila%3C/text%3E%3C/svg%3E"
+    },
+    {
+      "id": 3,
+      "name": "Dulux",
+      "description": "Світовий лідер у виробництві декоративних фарб. Інноваційні технології та широка палітра кольорів.",
+      "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%23457b9d' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='26' font-weight='bold'%3EDulux%3C/text%3E%3C/svg%3E"
+    }
+  ],
+  "articles": [
+    {
+      "id": 1,
+      "name": "Як вибрати фарбу для стін",
+      "excerpt": "Поради професіоналів щодо вибору інтер'єрної фарби для різних приміщень та типів поверхонь.",
+      "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%23ddd' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23999' font-size='14'%3EСтаття 1%3C/text%3E%3C/svg%3E",
+      "content": "<h1>Як вибрати фарбу для стін</h1><p>При виборі фарби для стін потрібно враховувати декілька важливих факторів...</p><p>1. Тип приміщення - для вологих приміщень обирайте вологостійкі фарби</p><p>2. Тип поверхні - для різних матеріалів підходять різні типи фарб</p><p>3. Бажаний ефект - матовий, глянцевий або напівматовий</p>"
+    },
+    {
+      "id": 2,
+      "name": "Підготовка поверхні перед фарбуванням",
+      "excerpt": "Важливі етапи підготовки для ідеального результату",
+      "content": "<h1>Підготовка поверхні перед фарбуванням</h1><p>Якісна підготовка поверхні - запорука успіху...</p><p>Етапи підготовки:</p><ul><li>Очищення поверхні від старого покриття</li><li>Шпаклювання тріщин та нерівностей</li><li>Шліфування</li><li>Ґрунтування</li></ul>",
+      "image": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%23ddd' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23999' font-size='14'%3EСтаття 2%3C/text%3E%3C/svg%3E"
+    }
+  ],
+  "colors": {
+    "headerBg": "#efc3c3",
+    "mainBg": "#e6e6e6",
+    "menuBg": "#2c3e50"
+  },
+  "textColors": {
+    "header": "#333333",
+    "menu": "#ffffff",
+    "about": "#333333",
+    "brands": "#333333",
+    "articles": "#333333",
+    "footer": "#ffffff"
+  },
+  "logoSize": {
+    "width": "auto",
+    "height": "50px"
+  },
+  "headerSizes": {
+    "headerTopHeight": "15px",
+    "menuHeight": "18px",
+    "logoHeightNormal": "50px",
+    "logoHeightShrink": "35px",
+    "footerHeight": "30px"
+  },
+  "contactColors": {
+    "phones": "#333333",
+    "address": "#666666"
+  },
+  "sectionBackgrounds": {
+    "header": {
+      "image": "",
+      "opacity": 100
+    },
+    "about": {
+      "image": "",
+      "opacity": 100
+    },
+    "brands": {
+      "image": "",
+      "opacity": 100
+    },
+    "articles": {
+      "image": "",
+      "opacity": 100
+    },
+    "footer": {
+      "image": "",
+      "opacity": 100
+    }
+  }
+}
