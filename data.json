@@ -48,5 +48,31 @@
   "colors": {
     "headerBg": "#efc3c3",
     "mainBg": "#e6e6e6"
+  },
+  "logoSize": {
+    "width": "auto",
+    "height": "50px"
+  },
+  "sectionBackgrounds": {
+    "header": {
+      "image": "",
+      "opacity": 100
+    },
+    "about": {
+      "image": "",
+      "opacity": 100
+    },
+    "products": {
+      "image": "",
+      "opacity": 100
+    },
+    "articles": {
+      "image": "",
+      "opacity": 100
+    },
+    "footer": {
+      "image": "",
+      "opacity": 100
+    }
   }
 }

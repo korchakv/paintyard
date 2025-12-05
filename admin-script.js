@@ -152,9 +152,35 @@ async function loadAdminData() {
     document.getElementById('header-color').value = data.colors.headerBg;
     document.getElementById('main-color').value = data.colors.mainBg;
     
+    // Load logo size
+    if (data.logoSize) {
+        document.getElementById('logo-width').value = data.logoSize.width || 'auto';
+        document.getElementById('logo-height').value = data.logoSize.height || '50px';
+    }
+    
     // Show logo preview if exists
     if (data.logo) {
         showImagePreview('logo-preview', data.logo);
+    }
+    
+    // Load section backgrounds
+    if (data.sectionBackgrounds) {
+        ['header', 'about', 'products', 'articles', 'footer'].forEach(section => {
+            const bgData = data.sectionBackgrounds[section];
+            if (bgData) {
+                const input = document.getElementById(`${section}-bg-input`);
+                const opacity = document.getElementById(`${section}-bg-opacity`);
+                const opacityValue = document.getElementById(`${section}-opacity-value`);
+                
+                if (input) input.value = bgData.image || '';
+                if (opacity) opacity.value = bgData.opacity || 100;
+                if (opacityValue) opacityValue.textContent = (bgData.opacity || 100) + '%';
+                
+                if (bgData.image) {
+                    showImagePreview(`${section}-bg-preview`, bgData.image);
+                }
+            }
+        });
     }
 
     renderProductsList(data.products);
@@ -184,6 +210,61 @@ function handleArticleImageUpload(input) {
     });
 }
 
+// Handle section background upload
+function handleSectionBgUpload(input, section) {
+    uploadImage(input, (base64) => {
+        document.getElementById(`${section}-bg-input`).value = base64;
+        showImagePreview(`${section}-bg-preview`, base64);
+    });
+}
+
+// Update opacity value display
+function updateOpacityValue(section) {
+    const opacity = document.getElementById(`${section}-bg-opacity`).value;
+    document.getElementById(`${section}-opacity-value`).textContent = opacity + '%';
+}
+
+// Download section image with standard name
+function downloadSectionImage(section) {
+    const imageData = document.getElementById(`${section}-bg-input`).value;
+    if (!imageData) {
+        alert('Спочатку завантажте зображення!');
+        return;
+    }
+    
+    // Convert to blob and download
+    const filename = `${section}-bg.jpg`;
+    
+    if (imageData.startsWith('data:')) {
+        // It's base64
+        const link = document.createElement('a');
+        link.href = imageData;
+        link.download = filename;
+        link.click();
+    } else {
+        alert('Використовуйте функцію завантаження файлу для автоматичного перейменування');
+    }
+}
+
+// Update section background
+async function updateSectionBackground(section) {
+    const data = await loadData();
+    if (!data.sectionBackgrounds) {
+        data.sectionBackgrounds = {};
+    }
+    if (!data.sectionBackgrounds[section]) {
+        data.sectionBackgrounds[section] = {};
+    }
+    
+    const image = document.getElementById(`${section}-bg-input`).value;
+    const opacity = parseInt(document.getElementById(`${section}-bg-opacity`).value);
+    
+    data.sectionBackgrounds[section].image = image;
+    data.sectionBackgrounds[section].opacity = opacity;
+    
+    saveData(data);
+}
+
 // Show image preview
 function showImagePreview(elementId, imageSrc) {
     const preview = document.getElementById(elementId);
@@ -200,6 +281,16 @@ function showImagePreview(elementId, imageSrc) {
 async function updateLogo() {
     const data = await loadData();
     data.logo = document.getElementById('logo-input').value;
+    saveData(data);
+}
+
+async function updateLogoSize() {
+    const data = await loadData();
+    if (!data.logoSize) {
+        data.logoSize = {};
+    }
+    data.logoSize.width = document.getElementById('logo-width').value || 'auto';
+    data.logoSize.height = document.getElementById('logo-height').value || '50px';
     saveData(data);
 }
 

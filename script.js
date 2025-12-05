@@ -45,6 +45,20 @@ async function renderPage() {
     document.getElementById('footer').style.backgroundColor = data.colors.headerBg;
     document.getElementById('main-content').style.backgroundColor = data.colors.mainBg;
 
+    // Apply logo size
+    if (data.logoSize) {
+        const headerLogo = document.getElementById('header-logo');
+        const footerLogo = document.getElementById('footer-logo');
+        if (headerLogo) {
+            headerLogo.style.width = data.logoSize.width;
+            headerLogo.style.height = data.logoSize.height;
+        }
+        if (footerLogo) {
+            footerLogo.style.width = data.logoSize.width;
+            footerLogo.style.height = data.logoSize.height;
+        }
+    }
+
     // Render logo
     if (data.logo) {
         document.getElementById('header-logo').src = data.logo;
@@ -53,6 +67,11 @@ async function renderPage() {
         document.getElementById('footer-logo').src = data.logo;
         document.getElementById('footer-logo').style.display = 'block';
         document.getElementById('footer-logo-text').style.display = 'none';
+    }
+    
+    // Apply section backgrounds
+    if (data.sectionBackgrounds) {
+        applySectionBackgrounds(data.sectionBackgrounds);
     }
 
     // Render phones
@@ -136,6 +155,38 @@ document.querySelectorAll('.menu a').forEach(link => {
         }
     });
 });
+
+// Apply section backgrounds
+function applySectionBackgrounds(backgrounds) {
+    const sectionMap = {
+        'header': document.getElementById('header'),
+        'about': document.getElementById('about'),
+        'products': document.getElementById('products'),
+        'articles': document.getElementById('articles'),
+        'footer': document.getElementById('footer')
+    };
+    
+    Object.keys(backgrounds).forEach(sectionKey => {
+        const section = sectionMap[sectionKey];
+        const bgData = backgrounds[sectionKey];
+        
+        if (section && bgData && bgData.image) {
+            const opacity = (bgData.opacity || 100) / 100;
+            
+            // Create overlay div if not exists
+            let overlay = section.querySelector('.section-bg-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.className = 'section-bg-overlay';
+                section.style.position = 'relative';
+                section.insertBefore(overlay, section.firstChild);
+            }
+            
+            overlay.style.backgroundImage = `url('${bgData.image}')`;
+            overlay.style.opacity = opacity;
+        }
+    });
+}
 
 // Initialize page
 renderPage();

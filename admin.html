@@ -43,6 +43,21 @@
                     <div id="logo-preview" class="image-preview"></div>
                 </div>
                 <div class="form-group">
+                    <label>Розмір логотипу</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <div>
+                            <label style="font-size: 12px;">Ширина</label>
+                            <input type="text" id="logo-width" placeholder="auto" style="width: 100px;">
+                        </div>
+                        <div>
+                            <label style="font-size: 12px;">Висота</label>
+                            <input type="text" id="logo-height" placeholder="50px" style="width: 100px;">
+                        </div>
+                    </div>
+                    <button onclick="updateLogoSize()">Оновити розмір</button>
+                    <p class="hint">Введіть значення, наприклад: 100px, auto, 50%</p>
+                </div>
+                <div class="form-group">
                     <label>Адреса</label>
                     <input type="text" id="address-input" placeholder="м. Київ, вул. Прикладна, 1">
                     <button onclick="updateAddress()">Оновити адресу</button>
@@ -70,6 +85,82 @@
                 <div class="form-group">
                     <label>Колір основної сторінки</label>
                     <input type="color" id="main-color">
+                </div>
+            </div>
+
+            <!-- Section Background Images -->
+            <div class="section">
+                <h2>Фонові зображення секцій</h2>
+                <p class="info-text">📁 Завантажте зображення з автоматичними назвами. Перейменуйте їх та завантажте в папки GitHub: /images/backgrounds/</p>
+                
+                <!-- Header Background -->
+                <div class="form-group background-section-group">
+                    <h3>Шапка (Header)</h3>
+                    <input type="file" id="header-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'header')" class="file-input">
+                    <button onclick="document.getElementById('header-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
+                    <input type="text" id="header-bg-input" placeholder="Або введіть URL зображення">
+                    <label>Прозорість (0-100%):</label>
+                    <input type="range" id="header-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('header')">
+                    <span id="header-opacity-value">100%</span>
+                    <button onclick="updateSectionBackground('header')">Оновити фон</button>
+                    <button onclick="downloadSectionImage('header')" class="download-btn">💾 Завантажити як header-bg.jpg</button>
+                    <div id="header-bg-preview" class="image-preview"></div>
+                </div>
+
+                <!-- About Background -->
+                <div class="form-group background-section-group">
+                    <h3>Про нас (About)</h3>
+                    <input type="file" id="about-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'about')" class="file-input">
+                    <button onclick="document.getElementById('about-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
+                    <input type="text" id="about-bg-input" placeholder="Або введіть URL зображення">
+                    <label>Прозорість (0-100%):</label>
+                    <input type="range" id="about-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('about')">
+                    <span id="about-opacity-value">100%</span>
+                    <button onclick="updateSectionBackground('about')">Оновити фон</button>
+                    <button onclick="downloadSectionImage('about')" class="download-btn">💾 Завантажити як about-bg.jpg</button>
+                    <div id="about-bg-preview" class="image-preview"></div>
+                </div>
+
+                <!-- Products Background -->
+                <div class="form-group background-section-group">
+                    <h3>Товари (Products)</h3>
+                    <input type="file" id="products-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'products')" class="file-input">
+                    <button onclick="document.getElementById('products-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
+                    <input type="text" id="products-bg-input" placeholder="Або введіть URL зображення">
+                    <label>Прозорість (0-100%):</label>
+                    <input type="range" id="products-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('products')">
+                    <span id="products-opacity-value">100%</span>
+                    <button onclick="updateSectionBackground('products')">Оновити фон</button>
+                    <button onclick="downloadSectionImage('products')" class="download-btn">💾 Завантажити як products-bg.jpg</button>
+                    <div id="products-bg-preview" class="image-preview"></div>
+                </div>
+
+                <!-- Articles Background -->
+                <div class="form-group background-section-group">
+                    <h3>Статті (Articles)</h3>
+                    <input type="file" id="articles-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'articles')" class="file-input">
+                    <button onclick="document.getElementById('articles-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
+                    <input type="text" id="articles-bg-input" placeholder="Або введіть URL зображення">
+                    <label>Прозорість (0-100%):</label>
+                    <input type="range" id="articles-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('articles')">
+                    <span id="articles-opacity-value">100%</span>
+                    <button onclick="updateSectionBackground('articles')">Оновити фон</button>
+                    <button onclick="downloadSectionImage('articles')" class="download-btn">💾 Завантажити як articles-bg.jpg</button>
+                    <div id="articles-bg-preview" class="image-preview"></div>
+                </div>
+
+                <!-- Footer Background -->
+                <div class="form-group background-section-group">
+                    <h3>Підвал (Footer)</h3>
+                    <input type="file" id="footer-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'footer')" class="file-input">
+                    <button onclick="document.getElementById('footer-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
+                    <input type="text" id="footer-bg-input" placeholder="Або введіть URL зображення">
+                    <label>Прозорість (0-100%):</label>
+                    <input type="range" id="footer-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('footer')">
+                    <span id="footer-opacity-value">100%</span>
+                    <button onclick="updateSectionBackground('footer')">Оновити фон</button>
+                    <button onclick="downloadSectionImage('footer')" class="download-btn">💾 Завантажити як footer-bg.jpg</button>
+                    <div id="footer-bg-preview" class="image-preview"></div>
                 </div>
             </div>
 
