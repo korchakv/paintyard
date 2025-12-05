@@ -109,6 +109,9 @@ async function renderPage() {
     document.getElementById('header-address').textContent = data.address;
     document.getElementById('footer-address').textContent = data.address;
     
+    // Update map link with address
+    updateMapLink(data.address);
+    
     // Apply contact colors AFTER rendering (fix for phone colors)
     if (data.contactColors) {
         applyContactColors(data.contactColors);
@@ -124,6 +127,7 @@ async function renderPage() {
             <h3>${product.name}</h3>
             <p>${product.description}</p>
             <div class="price">${product.price}</div>
+            <div class="read-more">Читати більше</div>
         </div>
     `).join('');
     document.getElementById('products-container').innerHTML = productsHTML;
@@ -134,6 +138,7 @@ async function renderPage() {
             <img src="${article.image}" alt="${article.name}">
             <h3>${article.name}</h3>
             <p class="excerpt">${article.excerpt}</p>
+            <div class="read-more">Читати більше</div>
         </div>
     `).join('');
     document.getElementById('articles-container').innerHTML = articlesHTML;
@@ -357,8 +362,8 @@ function openProductModal(productId) {
             <div class="modal-body">
                 <img src="${product.image}" alt="${product.name}" class="modal-image">
                 <h2>${product.name}</h2>
-                <p class="modal-description">${product.description}</p>
                 <div class="modal-price">${product.price}</div>
+                <p class="modal-description">${product.description}</p>
             </div>
         </div>
     `;
@@ -407,6 +412,18 @@ function applyFooterSize(footerHeight) {
     const footer = document.getElementById('footer');
     if (footer) {
         footer.style.padding = `${footerHeight} 0`;
+    }
+}
+
+// Update map link with address
+function updateMapLink(address) {
+    const mapLink = document.getElementById('map-link');
+    if (mapLink && address) {
+        // Generate Google Maps URL
+        const encodedAddress = encodeURIComponent(address);
+        mapLink.href = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+        mapLink.target = '_blank';
+        mapLink.rel = 'noopener noreferrer';
     }
 }
 
