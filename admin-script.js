@@ -158,7 +158,7 @@ async function loadAdminData() {
         document.getElementById('text-header-color').value = data.textColors.header || '#333333';
         document.getElementById('text-menu-color').value = data.textColors.menu || '#ffffff';
         document.getElementById('text-about-color').value = data.textColors.about || '#333333';
-        document.getElementById('text-products-color').value = data.textColors.products || '#333333';
+        document.getElementById('text-brands-color').value = data.textColors.brands || data.textColors.products || '#333333';
         document.getElementById('text-articles-color').value = data.textColors.articles || '#333333';
         document.getElementById('text-footer-color').value = data.textColors.footer || '#ffffff';
     }
@@ -167,6 +167,16 @@ async function loadAdminData() {
     if (data.contactColors) {
         document.getElementById('contact-phones-color').value = data.contactColors.phones || '#333333';
         document.getElementById('contact-address-color').value = data.contactColors.address || '#666666';
+    }
+    
+    // Load font sizes
+    if (data.fontSizes) {
+        document.getElementById('font-size-header').value = data.fontSizes.header || '14px';
+        document.getElementById('font-size-menu').value = data.fontSizes.menu || '16px';
+        document.getElementById('font-size-about').value = data.fontSizes.about || '16px';
+        document.getElementById('font-size-brands').value = data.fontSizes.brands || '16px';
+        document.getElementById('font-size-articles').value = data.fontSizes.articles || '16px';
+        document.getElementById('font-size-footer').value = data.fontSizes.footer || '14px';
     }
     
     // Load header sizes
@@ -181,7 +191,10 @@ async function loadAdminData() {
     // Load logo size
     if (data.logoSize) {
         document.getElementById('logo-width').value = data.logoSize.width || 'auto';
-        document.getElementById('logo-height').value = data.logoSize.height || '50px';
+        const logoHeightInput = document.getElementById('logo-height');
+        if (logoHeightInput) {
+            logoHeightInput.value = data.logoSize.height || '50px';
+        }
     }
     
     // Show logo preview if exists
@@ -189,10 +202,10 @@ async function loadAdminData() {
         showImagePreview('logo-preview', data.logo);
     }
     
-    // Load section backgrounds
+    // Load section backgrounds (update to use 'brands' instead of 'products')
     if (data.sectionBackgrounds) {
-        ['header', 'about', 'products', 'articles', 'footer'].forEach(section => {
-            const bgData = data.sectionBackgrounds[section];
+        ['header', 'about', 'brands', 'articles', 'footer'].forEach(section => {
+            const bgData = data.sectionBackgrounds[section] || data.sectionBackgrounds[section === 'brands' ? 'products' : section];
             if (bgData) {
                 const input = document.getElementById(`${section}-bg-input`);
                 const opacity = document.getElementById(`${section}-bg-opacity`);
@@ -209,7 +222,7 @@ async function loadAdminData() {
         });
     }
 
-    renderProductsList(data.products);
+    renderProductsList(data.brands || data.products || []);
     renderArticlesList(data.articles);
 }
 
@@ -364,9 +377,31 @@ async function updateTextColors() {
     data.textColors.header = document.getElementById('text-header-color').value;
     data.textColors.menu = document.getElementById('text-menu-color').value;
     data.textColors.about = document.getElementById('text-about-color').value;
-    data.textColors.products = document.getElementById('text-products-color').value;
+    data.textColors.brands = document.getElementById('text-brands-color').value;
     data.textColors.articles = document.getElementById('text-articles-color').value;
     data.textColors.footer = document.getElementById('text-footer-color').value;
+    saveData(data);
+}
+
+async function updateFontSizes() {
+    const data = await loadData();
+    if (!data.fontSizes) {
+        data.fontSizes = {};
+    }
+    const headerSize = document.getElementById('font-size-header')?.value;
+    const menuSize = document.getElementById('font-size-menu')?.value;
+    const aboutSize = document.getElementById('font-size-about')?.value;
+    const brandsSize = document.getElementById('font-size-brands')?.value;
+    const articlesSize = document.getElementById('font-size-articles')?.value;
+    const footerSize = document.getElementById('font-size-footer')?.value;
+    
+    if (headerSize) data.fontSizes.header = headerSize;
+    if (menuSize) data.fontSizes.menu = menuSize;
+    if (aboutSize) data.fontSizes.about = aboutSize;
+    if (brandsSize) data.fontSizes.brands = brandsSize;
+    if (articlesSize) data.fontSizes.articles = articlesSize;
+    if (footerSize) data.fontSizes.footer = footerSize;
+    
     saveData(data);
 }
 
@@ -400,8 +435,8 @@ function renderProductsList(products) {
     container.innerHTML = products.map(product => `
         <div class="product-item">
             <h4>${product.name} <span class="item-id">(ID: ${product.id})</span></h4>
-            <p>${product.description} - ${product.price}</p>
-            <p class="hint">Зображення: images/products/${product.id}.jpg</p>
+            <p>${product.description}</p>
+            <p class="hint">Зображення: images/brands/${product.id}.jpg</p>
             <div class="item-actions">
                 <button class="edit-btn" onclick="editProduct(${product.id})">Редагувати</button>
                 <button class="delete-btn" onclick="deleteProduct(${product.id})">Видалити</button>
@@ -411,24 +446,24 @@ function renderProductsList(products) {
 }
 
 function showAddProductForm() {
-    document.getElementById('product-modal-title').textContent = 'Додати товар';
+    document.getElementById('product-modal-title').textContent = 'Додати бренд';
     document.getElementById('product-id').value = '';
     document.getElementById('product-name').value = '';
     document.getElementById('product-description').value = '';
-    document.getElementById('product-price').value = '';
     document.getElementById('product-image').value = '';
+    document.getElementById('product-image-preview').innerHTML = '';
     document.getElementById('product-modal').style.display = 'block';
 }
 
 async function editProduct(id) {
     const data = await loadData();
-    const product = data.products.find(p => p.id === id);
+    const brands = data.brands || data.products || [];
+    const product = brands.find(p => p.id === id);
     if (product) {
-        document.getElementById('product-modal-title').textContent = 'Редагувати товар';
+        document.getElementById('product-modal-title').textContent = 'Редагувати бренд';
         document.getElementById('product-id').value = product.id;
         document.getElementById('product-name').value = product.name;
         document.getElementById('product-description').value = product.description;
-        document.getElementById('product-price').value = product.price;
         document.getElementById('product-image').value = product.image;
         if (product.image) {
             showImagePreview('product-image-preview', product.image);
@@ -442,38 +477,47 @@ async function saveProduct() {
     const id = document.getElementById('product-id').value;
     const name = document.getElementById('product-name').value;
     const description = document.getElementById('product-description').value;
-    const price = document.getElementById('product-price').value;
     const image = document.getElementById('product-image').value;
 
-    if (!name || !description || !price) {
+    if (!name || !description) {
         alert('Заповніть всі обов\'язкові поля!');
         return;
     }
 
+    // Ensure we're using brands, not products
+    if (!data.brands) {
+        data.brands = data.products || [];
+        delete data.products;
+    }
+
     if (id) {
         // Edit existing
-        const index = data.products.findIndex(p => p.id === parseInt(id));
+        const index = data.brands.findIndex(p => p.id === parseInt(id));
         if (index !== -1) {
-            data.products[index] = { id: parseInt(id), name, description, price, image };
+            data.brands[index] = { id: parseInt(id), name, description, image };
         }
     } else {
         // Add new
-        const newId = data.products.length > 0 ? Math.max(...data.products.map(p => p.id)) + 1 : 1;
-        data.products.push({ id: newId, name, description, price, image });
+        const newId = data.brands.length > 0 ? Math.max(...data.brands.map(p => p.id)) + 1 : 1;
+        data.brands.push({ id: newId, name, description, image });
     }
 
     saveData(data);
-    renderProductsList(data.products);
+    renderProductsList(data.brands);
     closeProductModal();
-    alert('Товар збережено!');
+    alert('Бренд збережено!');
 }
 
 async function deleteProduct(id) {
-    if (confirm('Ви впевнені, що хочете видалити цей товар?')) {
+    if (confirm('Ви впевнені, що хочете видалити цей бренд?')) {
         const data = await loadData();
-        data.products = data.products.filter(p => p.id !== id);
+        if (!data.brands) {
+            data.brands = data.products || [];
+            delete data.products;
+        }
+        data.brands = data.brands.filter(p => p.id !== id);
         saveData(data);
-        renderProductsList(data.products);
+        renderProductsList(data.brands);
     }
 }
 

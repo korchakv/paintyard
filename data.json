@@ -91,5 +91,13 @@
       "image": "",
       "opacity": 100
     }
+  },
+  "fontSizes": {
+    "header": "14px",
+    "menu": "16px",
+    "about": "16px",
+    "brands": "16px",
+    "articles": "16px",
+    "footer": "14px"
   }
 }
