@@ -62,6 +62,16 @@
     "width": "auto",
     "height": "50px"
   },
+  "headerSizes": {
+    "headerTopHeight": "15px",
+    "menuHeight": "18px",
+    "logoHeightNormal": "50px",
+    "logoHeightShrink": "35px"
+  },
+  "contactColors": {
+    "phones": "#333333",
+    "address": "#666666"
+  },
   "sectionBackgrounds": {
     "header": {
       "image": "",

@@ -163,6 +163,20 @@ async function loadAdminData() {
         document.getElementById('text-footer-color').value = data.textColors.footer || '#ffffff';
     }
     
+    // Load contact colors
+    if (data.contactColors) {
+        document.getElementById('contact-phones-color').value = data.contactColors.phones || '#333333';
+        document.getElementById('contact-address-color').value = data.contactColors.address || '#666666';
+    }
+    
+    // Load header sizes
+    if (data.headerSizes) {
+        document.getElementById('header-top-height').value = data.headerSizes.headerTopHeight || '15px';
+        document.getElementById('menu-height').value = data.headerSizes.menuHeight || '18px';
+        document.getElementById('logo-height-normal').value = data.headerSizes.logoHeightNormal || '50px';
+        document.getElementById('logo-height-shrink').value = data.headerSizes.logoHeightShrink || '35px';
+    }
+    
     // Load logo size
     if (data.logoSize) {
         document.getElementById('logo-width').value = data.logoSize.width || 'auto';
@@ -354,6 +368,29 @@ async function updateTextColors() {
     data.textColors.footer = document.getElementById('text-footer-color').value;
     saveData(data);
 }
+
+async function updateContactColors() {
+    const data = await loadData();
+    if (!data.contactColors) {
+        data.contactColors = {};
+    }
+    data.contactColors.phones = document.getElementById('contact-phones-color').value;
+    data.contactColors.address = document.getElementById('contact-address-color').value;
+    saveData(data);
+}
+
+async function updateHeaderSizes() {
+    const data = await loadData();
+    if (!data.headerSizes) {
+        data.headerSizes = {};
+    }
+    data.headerSizes.headerTopHeight = document.getElementById('header-top-height').value;
+    data.headerSizes.menuHeight = document.getElementById('menu-height').value;
+    data.headerSizes.logoHeightNormal = document.getElementById('logo-height-normal').value;
+    data.headerSizes.logoHeightShrink = document.getElementById('logo-height-shrink').value;
+    saveData(data);
+}
+
 
 // Products management
 function renderProductsList(products) {

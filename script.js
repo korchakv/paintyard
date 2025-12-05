@@ -58,6 +58,16 @@ async function renderPage() {
     if (data.textColors) {
         applyTextColors(data.textColors);
     }
+    
+    // Apply contact colors
+    if (data.contactColors) {
+        applyContactColors(data.contactColors);
+    }
+    
+    // Apply header sizes
+    if (data.headerSizes) {
+        applyHeaderSizes(data.headerSizes);
+    }
 
     // Apply logo size
     if (data.logoSize) {
@@ -262,6 +272,59 @@ function applyTextColors(textColors) {
             footer.style.color = textColors.footer;
         }
     }
+}
+
+// Apply contact colors
+function applyContactColors(contactColors) {
+    if (contactColors.phones) {
+        const phoneLinks = document.querySelectorAll('#header-phones a, #footer-phones a');
+        phoneLinks.forEach(link => {
+            link.style.color = contactColors.phones;
+        });
+    }
+    
+    if (contactColors.address) {
+        const addressElements = document.querySelectorAll('#header-address, #footer-address');
+        addressElements.forEach(element => {
+            element.style.color = contactColors.address;
+        });
+    }
+}
+
+// Apply header sizes
+function applyHeaderSizes(headerSizes) {
+    // Create style element if not exists
+    let styleEl = document.getElementById('dynamic-header-styles');
+    if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = 'dynamic-header-styles';
+        document.head.appendChild(styleEl);
+    }
+    
+    // Build CSS rules
+    let css = '';
+    
+    // Header top padding
+    if (headerSizes.headerTopHeight) {
+        css += `.header-top { padding: ${headerSizes.headerTopHeight} 0; }\n`;
+        css += `#header.shrink .header-top { padding: calc(${headerSizes.headerTopHeight} * 0.5) 0; }\n`;
+    }
+    
+    // Menu padding
+    if (headerSizes.menuHeight) {
+        css += `.menu-container a { padding: ${headerSizes.menuHeight} 25px; }\n`;
+        css += `#header.shrink .menu-container a { padding: calc(${headerSizes.menuHeight} * 0.7) 25px; }\n`;
+    }
+    
+    // Logo heights - these override the shrink animation
+    if (headerSizes.logoHeightNormal) {
+        css += `#header-logo { height: ${headerSizes.logoHeightNormal} !important; }\n`;
+    }
+    if (headerSizes.logoHeightShrink) {
+        css += `#header.shrink #header-logo { height: ${headerSizes.logoHeightShrink} !important; }\n`;
+    }
+    
+    styleEl.textContent = css;
 }
 
 // Initialize page

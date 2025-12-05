@@ -122,6 +122,43 @@
                 </div>
             </div>
 
+            <!-- Contact Colors -->
+            <div class="section">
+                <h2>Кольори контактів</h2>
+                <div class="form-group">
+                    <label>Колір телефонів</label>
+                    <input type="color" id="contact-phones-color">
+                </div>
+                <div class="form-group">
+                    <label>Колір адреси</label>
+                    <input type="color" id="contact-address-color">
+                    <button onclick="updateContactColors()">Оновити кольори контактів</button>
+                </div>
+            </div>
+
+            <!-- Header Sizes -->
+            <div class="section">
+                <h2>Розміри шапки та меню</h2>
+                <div class="form-group">
+                    <label>Висота верхньої шапки (padding, наприклад: 15px, 20px)</label>
+                    <input type="text" id="header-top-height" placeholder="15px">
+                </div>
+                <div class="form-group">
+                    <label>Висота меню (padding вертикальний, наприклад: 18px, 15px)</label>
+                    <input type="text" id="menu-height" placeholder="18px">
+                </div>
+                <div class="form-group">
+                    <label>Висота логотипу (звичайний стан, наприклад: 50px, 60px)</label>
+                    <input type="text" id="logo-height-normal" placeholder="50px">
+                </div>
+                <div class="form-group">
+                    <label>Висота логотипу (зменшений стан, наприклад: 35px, 40px)</label>
+                    <input type="text" id="logo-height-shrink" placeholder="35px">
+                    <button onclick="updateHeaderSizes()">Оновити розміри</button>
+                    <p class="hint">Ці налаштування дозволяють незалежно контролювати розміри шапки, меню та логотипу</p>
+                </div>
+            </div>
+
             <!-- Section Background Images -->
             <div class="section">
                 <h2>Фонові зображення секцій</h2>
