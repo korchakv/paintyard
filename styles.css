@@ -13,13 +13,6 @@ body {
     min-height: 100vh;
 }
 
-/* Main content wrapper - centered with max-width */
-body > * {
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 /* Section Background Overlay */
 .section-bg-overlay {
     position: absolute;
@@ -45,9 +38,7 @@ body > * {
 #header {
     position: fixed;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 1200px;
+    left: 0;
     width: 100%;
     background: transparent;
     z-index: 1000;
@@ -64,7 +55,7 @@ body > * {
 }
 
 #header.shrink .header-top {
-    padding: 8px 0;
+    padding: 6px 0;
 }
 
 .header-top-content {
@@ -75,6 +66,7 @@ body > * {
     align-items: center;
     padding: 0 40px;
     width: 100%;
+    gap: 20px;
 }
 
 .logo-container {
@@ -118,8 +110,9 @@ body > * {
     margin: 0 auto;
     display: flex;
     justify-content: center;
-    gap: 50px;
+    gap: 40px;
     padding: 0 40px;
+    flex-wrap: nowrap;
 }
 
 .menu-container a {
@@ -127,10 +120,11 @@ body > * {
     text-decoration: none;
     font-size: 16px;
     font-weight: 500;
-    padding: 18px 25px;
+    padding: 18px 20px;
     position: relative;
     transition: all 0.3s ease;
     display: inline-block;
+    white-space: nowrap;
 }
 
 .menu-container a::after {
@@ -154,59 +148,55 @@ body > * {
 }
 
 #header.shrink .menu-container a {
-    padding: 12px 25px;
+    padding: 10px 20px;
     font-size: 15px;
 }
 
 .contacts {
     text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#header.shrink .contacts {
+    gap: 3px;
 }
 
 .contacts a {
     color: #1a1a1a;
     text-decoration: none;
     display: block;
-    margin-bottom: 4px;
     font-size: 14px;
     font-weight: 500;
     transition: color 0.3s ease;
+    line-height: 1.3;
+}
+
+#header.shrink .contacts a {
+    font-size: 13px;
 }
 
 .contacts a:hover {
     color: #667eea;
 }
 
-/* Map Button */
-.map-button {
-    display: inline-flex;
+/* Address link with location icon */
+.address-link {
+    display: inline-flex !important;
     align-items: center;
-    gap: 6px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    margin-top: 8px;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    gap: 5px;
 }
 
-.map-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+.location-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
 }
 
-.map-button svg {
-    width: 18px;
-    height: 18px;
-}
-
-#header-address {
-    font-size: 13px;
-    color: #666;
+#header.shrink .location-icon {
+    width: 14px;
+    height: 14px;
 }
 
 /* Main Content */
@@ -524,22 +514,45 @@ h2 {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .header-content {
+    .header-top-content {
         flex-direction: column;
-        gap: 20px;
+        gap: 12px;
         padding: 0 20px;
     }
-
-    .menu {
-        gap: 20px;
+    
+    #header.shrink .header-top-content {
+        gap: 8px;
     }
 
-    .menu a {
-        font-size: 14px;
+    .logo-container {
+        width: 100%;
+        justify-content: center;
     }
 
     .contacts {
+        width: 100%;
         text-align: center;
+        align-items: center;
+        gap: 4px;
+    }
+    
+    #header.shrink .contacts {
+        gap: 2px;
+    }
+
+    .menu-container {
+        gap: 15px;
+        padding: 0 20px;
+    }
+
+    .menu-container a {
+        font-size: 14px;
+        padding: 15px 12px;
+    }
+    
+    #header.shrink .menu-container a {
+        font-size: 13px;
+        padding: 8px 10px;
     }
 
     .footer-content {
@@ -553,7 +566,7 @@ h2 {
     }
 
     #main-content {
-        margin-top: 200px;
+        margin-top: 220px;
     }
 
     .section {

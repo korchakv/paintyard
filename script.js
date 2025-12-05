@@ -105,12 +105,17 @@ async function renderPage() {
     document.getElementById('header-phones').innerHTML = phonesHTML;
     document.getElementById('footer-phones').innerHTML = phonesHTML;
 
-    // Render address
-    document.getElementById('header-address').textContent = data.address;
+    // Render address with map link
+    const addressLink = document.getElementById('header-address-link');
+    const headerAddress = document.getElementById('header-address');
+    if (addressLink && headerAddress) {
+        headerAddress.textContent = data.address;
+        const encodedAddress = encodeURIComponent(data.address);
+        addressLink.href = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+        addressLink.target = '_blank';
+        addressLink.rel = 'noopener noreferrer';
+    }
     document.getElementById('footer-address').textContent = data.address;
-    
-    // Update map link with address
-    updateMapLink(data.address);
     
     // Apply contact colors AFTER rendering (fix for phone colors)
     if (data.contactColors) {
@@ -298,6 +303,11 @@ function applyContactColors(contactColors) {
         addressElements.forEach(element => {
             element.style.color = contactColors.address;
         });
+        // Also color the address link
+        const addressLink = document.getElementById('header-address-link');
+        if (addressLink) {
+            addressLink.style.color = contactColors.address;
+        }
     }
 }
 
@@ -322,11 +332,11 @@ function applyHeaderSizes(headerSizes) {
     // Build CSS rules
     let css = '';
     
-    // Header top padding
+    // Header top padding with improved shrinking
     const headerTopHeight = sanitizeCSSValue(headerSizes.headerTopHeight);
     if (headerTopHeight) {
         css += `.header-top { padding: ${headerTopHeight} 0; }\n`;
-        css += `#header.shrink .header-top { padding: calc(${headerTopHeight} * 0.5) 0; }\n`;
+        css += `#header.shrink .header-top { padding: calc(${headerTopHeight} * 0.4) 0; }\n`;
     }
     
     // Menu padding
@@ -412,18 +422,6 @@ function applyFooterSize(footerHeight) {
     const footer = document.getElementById('footer');
     if (footer) {
         footer.style.padding = `${footerHeight} 0`;
-    }
-}
-
-// Update map link with address
-function updateMapLink(address) {
-    const mapLink = document.getElementById('map-link');
-    if (mapLink && address) {
-        // Generate Google Maps URL
-        const encodedAddress = encodeURIComponent(address);
-        mapLink.href = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-        mapLink.target = '_blank';
-        mapLink.rel = 'noopener noreferrer';
     }
 }
 
