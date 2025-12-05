@@ -256,8 +256,8 @@ function showAddProductForm() {
     document.getElementById('product-modal').style.display = 'block';
 }
 
-function editProduct(id) {
-    const data = loadData();
+async function editProduct(id) {
+    const data = await loadData();
     const product = data.products.find(p => p.id === id);
     if (product) {
         document.getElementById('product-modal-title').textContent = 'Редагувати товар';
@@ -266,12 +266,15 @@ function editProduct(id) {
         document.getElementById('product-description').value = product.description;
         document.getElementById('product-price').value = product.price;
         document.getElementById('product-image').value = product.image;
+        if (product.image) {
+            showImagePreview('product-image-preview', product.image);
+        }
         document.getElementById('product-modal').style.display = 'block';
     }
 }
 
-function saveProduct() {
-    const data = loadData();
+async function saveProduct() {
+    const data = await loadData();
     const id = document.getElementById('product-id').value;
     const name = document.getElementById('product-name').value;
     const description = document.getElementById('product-description').value;
@@ -301,13 +304,12 @@ function saveProduct() {
     alert('Товар збережено!');
 }
 
-function deleteProduct(id) {
+async function deleteProduct(id) {
     if (confirm('Ви впевнені, що хочете видалити цей товар?')) {
-        const data = loadData();
+        const data = await loadData();
         data.products = data.products.filter(p => p.id !== id);
         saveData(data);
         renderProductsList(data.products);
-        alert('Товар видалено!');
     }
 }
 
@@ -342,8 +344,8 @@ function showAddArticleForm() {
     document.getElementById('article-modal').style.display = 'block';
 }
 
-function editArticle(id) {
-    const data = loadData();
+async function editArticle(id) {
+    const data = await loadData();
     const article = data.articles.find(a => a.id === id);
     if (article) {
         document.getElementById('article-modal-title').textContent = 'Редагувати статтю';
@@ -352,12 +354,15 @@ function editArticle(id) {
         document.getElementById('article-excerpt').value = article.excerpt;
         document.getElementById('article-image').value = article.image;
         document.getElementById('article-content').value = article.content;
+        if (article.image) {
+            showImagePreview('article-image-preview', article.image);
+        }
         document.getElementById('article-modal').style.display = 'block';
     }
 }
 
-function saveArticle() {
-    const data = loadData();
+async function saveArticle() {
+    const data = await loadData();
     const id = document.getElementById('article-id').value;
     const name = document.getElementById('article-name').value;
     const excerpt = document.getElementById('article-excerpt').value;
@@ -387,13 +392,12 @@ function saveArticle() {
     alert('Статтю збережено!');
 }
 
-function deleteArticle(id) {
+async function deleteArticle(id) {
     if (confirm('Ви впевнені, що хочете видалити цю статтю?')) {
-        const data = loadData();
+        const data = await loadData();
         data.articles = data.articles.filter(a => a.id !== id);
         saveData(data);
         renderArticlesList(data.articles);
-        alert('Статтю видалено!');
     }
 }
 
