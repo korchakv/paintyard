@@ -125,17 +125,17 @@ async function renderPage() {
     // Render about
     document.getElementById('about-content').innerHTML = `<p>${data.aboutText}</p>`;
 
-    // Render products
-    const productsHTML = data.products.map(product => `
-        <div class="product-card" onclick="openProductModal(${product.id})">
-            <img src="${product.image}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p>${product.description}</p>
-            <div class="price">${product.price}</div>
+    // Render brands (without price)
+    const brands = data.brands || data.products || []; // Support both old and new format
+    const brandsHTML = brands.map(brand => `
+        <div class="brand-card" onclick="openBrandModal(${brand.id})">
+            <img src="${brand.image}" alt="${brand.name}">
+            <h3>${brand.name}</h3>
+            <p>${brand.description}</p>
             <div class="read-more">Читати більше</div>
         </div>
     `).join('');
-    document.getElementById('products-container').innerHTML = productsHTML;
+    document.getElementById('brands-container').innerHTML = brandsHTML;
 
     // Render articles
     const articlesHTML = data.articles.map(article => `
@@ -150,9 +150,9 @@ async function renderPage() {
 }
 
 // Scroll functions
-function scrollProducts(direction) {
-    const container = document.getElementById('products-container');
-    const scrollAmount = 300;
+function scrollBrands(direction) {
+    const container = document.getElementById('brands-container');
+    const scrollAmount = 290;
     if (direction === 'left') {
         container.scrollLeft -= scrollAmount;
     } else {
@@ -162,7 +162,7 @@ function scrollProducts(direction) {
 
 function scrollArticles(direction) {
     const container = document.getElementById('articles-container');
-    const scrollAmount = 340;
+    const scrollAmount = 290;
     if (direction === 'left') {
         container.scrollLeft -= scrollAmount;
     } else {
@@ -200,7 +200,8 @@ function applySectionBackgrounds(backgrounds) {
     const sectionMap = {
         'header': document.getElementById('header'),
         'about': document.getElementById('about'),
-        'products': document.getElementById('products'),
+        'brands': document.getElementById('brands'),
+        'products': document.getElementById('brands'), // Legacy support
         'articles': document.getElementById('articles'),
         'footer': document.getElementById('footer')
     };
@@ -264,11 +265,12 @@ function applyTextColors(textColors) {
         }
     }
     
-    // Products section text color
-    if (textColors.products) {
-        const productsSection = document.getElementById('products');
-        if (productsSection) {
-            productsSection.style.color = textColors.products;
+    // Brands section text color
+    const brandsColor = textColors.brands || textColors.products;
+    if (brandsColor) {
+        const brandsSection = document.getElementById('brands');
+        if (brandsSection) {
+            brandsSection.style.color = brandsColor;
         }
     }
     
@@ -359,10 +361,11 @@ function applyHeaderSizes(headerSizes) {
     styleEl.textContent = css;
 }
 
-// Modal functions for products
-function openProductModal(productId) {
-    const product = siteData.products.find(p => p.id === productId);
-    if (!product) return;
+// Modal functions for brands
+function openBrandModal(brandId) {
+    const brands = siteData.brands || siteData.products || [];
+    const brand = brands.find(b => b.id === brandId);
+    if (!brand) return;
     
     const modal = document.createElement('div');
     modal.className = 'modal-overlay';
@@ -370,16 +373,20 @@ function openProductModal(productId) {
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal(this)">&times;</button>
             <div class="modal-body">
-                <img src="${product.image}" alt="${product.name}" class="modal-image">
-                <h2>${product.name}</h2>
-                <div class="modal-price">${product.price}</div>
-                <p class="modal-description">${product.description}</p>
+                <img src="${brand.image}" alt="${brand.name}" class="modal-image">
+                <h2>${brand.name}</h2>
+                <p class="modal-description">${brand.description}</p>
             </div>
         </div>
     `;
     modal.onclick = (e) => { if (e.target === modal) closeModal(modal.querySelector('.modal-close')); };
     document.body.appendChild(modal);
     setTimeout(() => modal.classList.add('show'), 10);
+}
+
+// Legacy function name for backwards compatibility
+function openProductModal(productId) {
+    openBrandModal(productId);
 }
 
 // Modal functions for articles
