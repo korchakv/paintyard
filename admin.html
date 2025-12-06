@@ -92,6 +92,30 @@
                     <button onclick="updateSectionBackground('header')">Оновити фон</button>
                     <button onclick="downloadSectionImage('header')" class="download-btn">💾 Завантажити як header-bg.jpg</button>
                     <div id="header-bg-preview" class="image-preview"></div>
+                    <button onclick="toggleBackgroundPreview('header')" class="preview-btn" style="margin-top: 15px;">👁️ Показати прев'ю з логотипом</button>
+                    <div id="header-preview-container" class="bg-preview-container" style="display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <label>🔍 Прев'ю сайту з логотипом</label>
+                    <button onclick="toggleSitePreview()" class="preview-btn">👁️ Показати/Сховати прев'ю</button>
+                    <div id="site-preview-container" style="display: none; margin-top: 15px;">
+                        <div class="logo-controls">
+                            <label>Масштаб логотипу:</label>
+                            <input type="range" id="logo-scale" min="20" max="200" value="100" oninput="updateLogoPreview()">
+                            <span id="logo-scale-value">100%</span>
+                            
+                            <label style="margin-top: 10px;">Позиція по горизонталі:</label>
+                            <input type="range" id="logo-position-x" min="0" max="100" value="50" oninput="updateLogoPreview()">
+                            <span id="logo-position-x-value">50%</span>
+                            
+                            <label style="margin-top: 10px;">Позиція по вертикалі:</label>
+                            <input type="range" id="logo-position-y" min="0" max="100" value="50" oninput="updateLogoPreview()">
+                            <span id="logo-position-y-value">50%</span>
+                            
+                            <button onclick="saveLogoPosition()" style="margin-top: 10px;">💾 Зберегти позицію та масштаб</button>
+                        </div>
+                        <div id="site-preview" class="site-preview"></div>
+                    </div>
                 </div>
             </div>
 
@@ -173,6 +197,8 @@
                     <button onclick="updateSectionBackground('about')">Оновити фон</button>
                     <button onclick="downloadSectionImage('about')" class="download-btn">💾 Завантажити як about-bg.jpg</button>
                     <div id="about-bg-preview" class="image-preview"></div>
+                    <button onclick="toggleBackgroundPreview('about')" class="preview-btn" style="margin-top: 15px;">👁️ Показати прев'ю з логотипом</button>
+                    <div id="about-preview-container" class="bg-preview-container" style="display: none;"></div>
                 </div>
             </div>
 
@@ -200,6 +226,8 @@
                     <button onclick="updateSectionBackground('brands')">Оновити фон</button>
                     <button onclick="downloadSectionImage('brands')" class="download-btn">💾 Завантажити як brands-bg.jpg</button>
                     <div id="brands-bg-preview" class="image-preview"></div>
+                    <button onclick="toggleBackgroundPreview('brands')" class="preview-btn" style="margin-top: 15px;">👁️ Показати прев'ю з логотипом</button>
+                    <div id="brands-preview-container" class="bg-preview-container" style="display: none;"></div>
                 </div>
                 <div class="form-group">
                     <h3>Список брендів</h3>
@@ -232,6 +260,8 @@
                     <button onclick="updateSectionBackground('articles')">Оновити фон</button>
                     <button onclick="downloadSectionImage('articles')" class="download-btn">💾 Завантажити як articles-bg.jpg</button>
                     <div id="articles-bg-preview" class="image-preview"></div>
+                    <button onclick="toggleBackgroundPreview('articles')" class="preview-btn" style="margin-top: 15px;">👁️ Показати прев'ю з логотипом</button>
+                    <div id="articles-preview-container" class="bg-preview-container" style="display: none;"></div>
                 </div>
                 <div class="form-group">
                     <h3>Список статтей</h3>
@@ -269,6 +299,8 @@
                     <button onclick="updateSectionBackground('footer')">Оновити фон</button>
                     <button onclick="downloadSectionImage('footer')" class="download-btn">💾 Завантажити як footer-bg.jpg</button>
                     <div id="footer-bg-preview" class="image-preview"></div>
+                    <button onclick="toggleBackgroundPreview('footer')" class="preview-btn" style="margin-top: 15px;">👁️ Показати прев'ю з логотипом</button>
+                    <div id="footer-preview-container" class="bg-preview-container" style="display: none;"></div>
                 </div>
             </div>
 

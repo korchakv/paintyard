@@ -191,9 +191,9 @@ async function loadAdminData() {
     // Load logo size
     if (data.logoSize) {
         document.getElementById('logo-width').value = data.logoSize.width || 'auto';
-        const logoHeightInput = document.getElementById('logo-height');
-        if (logoHeightInput) {
-            logoHeightInput.value = data.logoSize.height || '50px';
+        // Also load logo heights from logoSize if they don't exist in headerSizes
+        if (!data.headerSizes || !data.headerSizes.logoHeightNormal) {
+            document.getElementById('logo-height-normal').value = data.logoSize.height || '50px';
         }
     }
     
@@ -337,9 +337,22 @@ async function updateLogoSize() {
     if (!data.logoSize) {
         data.logoSize = {};
     }
-    data.logoSize.width = document.getElementById('logo-width').value || 'auto';
-    data.logoSize.height = document.getElementById('logo-height').value || '50px';
+    if (!data.headerSizes) {
+        data.headerSizes = {};
+    }
+    const width = document.getElementById('logo-width').value || 'auto';
+    const heightNormal = document.getElementById('logo-height-normal').value || '50px';
+    const heightShrink = document.getElementById('logo-height-shrink').value || '35px';
+    
+    data.logoSize.width = width;
+    // Save both to logoSize for consistency and to headerSizes for shrinking behavior
+    data.headerSizes.logoHeightNormal = heightNormal;
+    data.headerSizes.logoHeightShrink = heightShrink;
+    // Use normal height as the default logoSize.height
+    data.logoSize.height = heightNormal;
+    
     saveData(data);
+    alert(`Розмір логотипу оновлено!\nШирина: ${width}\nВисота (звичайна): ${heightNormal}\nВисота (зменшена): ${heightShrink}`);
 }
 
 async function updateAddress() {
@@ -617,6 +630,256 @@ window.onclick = function(event) {
     if (event.target.className === 'modal') {
         event.target.style.display = 'none';
     }
+}
+
+// Background preview with logo positioning
+function toggleBackgroundPreview(section) {
+    const container = document.getElementById(`${section}-preview-container`);
+    if (container.style.display === 'none') {
+        container.style.display = 'block';
+        renderBackgroundPreview(section);
+    } else {
+        container.style.display = 'none';
+    }
+}
+
+async function renderBackgroundPreview(section) {
+    const data = await loadData();
+    const container = document.getElementById(`${section}-preview-container`);
+    
+    const logoUrl = data.logo || '';
+    
+    // Get all background images and opacities
+    const headerBg = data.sectionBackgrounds?.header?.image || '';
+    const headerBgOpacity = data.sectionBackgrounds?.header?.opacity || 100;
+    const aboutBg = data.sectionBackgrounds?.about?.image || '';
+    const aboutBgOpacity = data.sectionBackgrounds?.about?.opacity || 100;
+    const brandsBg = data.sectionBackgrounds?.brands?.image || '';
+    const brandsBgOpacity = data.sectionBackgrounds?.brands?.opacity || 100;
+    const articlesBg = data.sectionBackgrounds?.articles?.image || '';
+    const articlesBgOpacity = data.sectionBackgrounds?.articles?.opacity || 100;
+    const footerBg = data.sectionBackgrounds?.footer?.image || '';
+    const footerBgOpacity = data.sectionBackgrounds?.footer?.opacity || 100;
+    
+    // Get colors
+    const headerColor = data.colors?.headerBg || '#2c3e50';
+    const menuColor = data.colors?.menuBg || '#2c3e50';
+    const mainColor = data.colors?.mainBg || '#f4f4f4';
+    
+    // Load saved logo position if exists for this section
+    const savedPosition = data[`${section}LogoPosition`] || { scale: 100, x: 50, y: 50 };
+    
+    // Determine which section is being previewed and highlight it
+    const getSectionStyle = (sectionName, bg, opacity, color) => {
+        const isActive = sectionName === section;
+        const borderStyle = isActive ? 'border: 3px solid #007bff;' : '';
+        const bgStyle = bg ? `background-image: url('${bg}'); background-size: cover; background-position: center; opacity: ${opacity / 100};` : '';
+        return `background-color: ${color}; position: relative; overflow: hidden; ${borderStyle}`;
+    };
+    
+    container.innerHTML = `
+        <div class="logo-controls">
+            <label>Масштаб логотипу (для секції "${section}"):</label>
+            <input type="range" id="${section}-logo-scale" min="20" max="200" value="${savedPosition.scale}" oninput="updateBackgroundLogoPreview('${section}')">
+            <span id="${section}-logo-scale-value">${savedPosition.scale}%</span>
+            
+            <label style="margin-top: 10px;">Позиція по горизонталі:</label>
+            <input type="range" id="${section}-logo-position-x" min="0" max="100" value="${savedPosition.x}" oninput="updateBackgroundLogoPreview('${section}')">
+            <span id="${section}-logo-position-x-value">${savedPosition.x}%</span>
+            
+            <label style="margin-top: 10px;">Позиція по вертикалі:</label>
+            <input type="range" id="${section}-logo-position-y" min="0" max="100" value="${savedPosition.y}" oninput="updateBackgroundLogoPreview('${section}')">
+            <span id="${section}-logo-position-y-value">${savedPosition.y}%</span>
+            
+            <button onclick="saveBackgroundLogoPosition('${section}')" style="margin-top: 10px;">💾 Зберегти позицію та масштаб</button>
+            <p class="hint" style="margin-top: 10px; font-size: 12px; color: #666;">Синя рамка показує секцію, що редагується</p>
+        </div>
+        <div id="${section}-bg-preview-frame" class="site-preview" style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+            <!-- Header Section -->
+            <div class="preview-header" style="${getSectionStyle('header', headerBg, headerBgOpacity, headerColor)} padding: 15px;">
+                ${headerBg && section === 'header' ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${headerBg}'); background-size: cover; background-position: center; opacity: ${headerBgOpacity / 100}; pointer-events: none;"></div>` : ''}
+                <div class="preview-logo-container${section === 'header' ? '-active' : ''}" style="position: relative; z-index: 1; text-align: center;">
+                    ${logoUrl && section === 'header' ? `<img id="${section}-preview-logo" src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 100px; height: auto;">` : (logoUrl ? `<img src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 100px; height: auto;">` : '<div style="padding: 10px; color: #999; font-size: 12px;">Логотип</div>')}
+                </div>
+            </div>
+            
+            <!-- Menu Section -->
+            <div class="preview-menu" style="background-color: ${menuColor}; color: white; padding: 8px; text-align: center; font-size: 11px;">
+                <span>Меню • Контакти • Про нас • Бренди • Статті</span>
+            </div>
+            
+            <!-- About Section -->
+            <div class="preview-about" style="${getSectionStyle('about', aboutBg, aboutBgOpacity, mainColor)} padding: 20px; min-height: 60px;">
+                ${aboutBg && section === 'about' ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${aboutBg}'); background-size: cover; background-position: center; opacity: ${aboutBgOpacity / 100}; pointer-events: none;"></div>` : ''}
+                <div class="preview-logo-container${section === 'about' ? '-active' : ''}" style="position: relative; z-index: 1; text-align: center;">
+                    ${logoUrl && section === 'about' ? `<img id="${section}-preview-logo" src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 80px; height: auto;">` : '<div style="padding: 10px; color: #999; font-size: 11px;">Про нас</div>'}
+                </div>
+            </div>
+            
+            <!-- Brands Section -->
+            <div class="preview-brands" style="${getSectionStyle('brands', brandsBg, brandsBgOpacity, mainColor)} padding: 20px; min-height: 60px;">
+                ${brandsBg && section === 'brands' ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${brandsBg}'); background-size: cover; background-position: center; opacity: ${brandsBgOpacity / 100}; pointer-events: none;"></div>` : ''}
+                <div class="preview-logo-container${section === 'brands' ? '-active' : ''}" style="position: relative; z-index: 1; text-align: center;">
+                    ${logoUrl && section === 'brands' ? `<img id="${section}-preview-logo" src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 80px; height: auto;">` : '<div style="padding: 10px; color: #999; font-size: 11px;">Бренди</div>'}
+                </div>
+            </div>
+            
+            <!-- Articles Section -->
+            <div class="preview-articles" style="${getSectionStyle('articles', articlesBg, articlesBgOpacity, mainColor)} padding: 20px; min-height: 60px;">
+                ${articlesBg && section === 'articles' ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${articlesBg}'); background-size: cover; background-position: center; opacity: ${articlesBgOpacity / 100}; pointer-events: none;"></div>` : ''}
+                <div class="preview-logo-container${section === 'articles' ? '-active' : ''}" style="position: relative; z-index: 1; text-align: center;">
+                    ${logoUrl && section === 'articles' ? `<img id="${section}-preview-logo" src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 80px; height: auto;">` : '<div style="padding: 10px; color: #999; font-size: 11px;">Статті</div>'}
+                </div>
+            </div>
+            
+            <!-- Footer Section -->
+            <div class="preview-footer" style="${getSectionStyle('footer', footerBg, footerBgOpacity, headerColor)} padding: 15px; text-align: center;">
+                ${footerBg && section === 'footer' ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${footerBg}'); background-size: cover; background-position: center; opacity: ${footerBgOpacity / 100}; pointer-events: none;"></div>` : ''}
+                <div class="preview-logo-container${section === 'footer' ? '-active' : ''}" style="position: relative; z-index: 1;">
+                    ${logoUrl && section === 'footer' ? `<img id="${section}-preview-logo" src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 60px; height: auto;">` : '<div style="padding: 8px; color: #999; font-size: 10px;">Підвал</div>'}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    updateBackgroundLogoPreview(section);
+}
+
+function updateBackgroundLogoPreview(section) {
+    const logo = document.getElementById(`${section}-preview-logo`);
+    if (!logo) return;
+    
+    const scale = document.getElementById(`${section}-logo-scale`).value;
+    const posX = document.getElementById(`${section}-logo-position-x`).value;
+    const posY = document.getElementById(`${section}-logo-position-y`).value;
+    
+    document.getElementById(`${section}-logo-scale-value`).textContent = scale + '%';
+    document.getElementById(`${section}-logo-position-x-value`).textContent = posX + '%';
+    document.getElementById(`${section}-logo-position-y-value`).textContent = posY + '%';
+    
+    const container = logo.parentElement;
+    
+    // Apply horizontal alignment
+    if (posX < 33) {
+        container.style.textAlign = 'left';
+        logo.style.marginLeft = '0';
+        logo.style.marginRight = 'auto';
+    } else if (posX > 66) {
+        container.style.textAlign = 'right';
+        logo.style.marginLeft = 'auto';
+        logo.style.marginRight = '0';
+    } else {
+        container.style.textAlign = 'center';
+        logo.style.marginLeft = 'auto';
+        logo.style.marginRight = 'auto';
+    }
+    
+    // Apply vertical positioning with padding
+    container.style.paddingTop = `${posY / 2}px`;
+    container.style.paddingBottom = `${(100 - posY) / 2}px`;
+    
+    // Apply scale
+    logo.style.transform = `scale(${scale / 100})`;
+    logo.style.transformOrigin = posX < 33 ? 'left center' : posX > 66 ? 'right center' : 'center center';
+}
+
+async function saveBackgroundLogoPosition(section) {
+    const data = await loadData();
+    const positionKey = `${section}LogoPosition`;
+    
+    if (!data[positionKey]) {
+        data[positionKey] = {};
+    }
+    
+    data[positionKey].scale = parseInt(document.getElementById(`${section}-logo-scale`).value);
+    data[positionKey].x = parseInt(document.getElementById(`${section}-logo-position-x`).value);
+    data[positionKey].y = parseInt(document.getElementById(`${section}-logo-position-y`).value);
+    
+    saveData(data);
+    alert('Позицію та масштаб логотипу збережено!');
+}
+
+// Site preview with logo positioning
+function toggleSitePreview() {
+    const container = document.getElementById('site-preview-container');
+    if (container.style.display === 'none') {
+        container.style.display = 'block';
+        renderSitePreview();
+    } else {
+        container.style.display = 'none';
+    }
+}
+
+async function renderSitePreview() {
+    const data = await loadData();
+    const preview = document.getElementById('site-preview');
+    
+    const logoUrl = data.logo || '';
+    const headerBg = data.sectionBackgrounds?.header?.image || '';
+    const headerBgOpacity = data.sectionBackgrounds?.header?.opacity || 100;
+    const headerColor = data.colors?.headerBg || '#2c3e50';
+    
+    // Load saved logo position if exists
+    if (data.logoPosition) {
+        document.getElementById('logo-scale').value = data.logoPosition.scale || 100;
+        document.getElementById('logo-scale-value').textContent = (data.logoPosition.scale || 100) + '%';
+        document.getElementById('logo-position-x').value = data.logoPosition.x || 50;
+        document.getElementById('logo-position-x-value').textContent = (data.logoPosition.x || 50) + '%';
+        document.getElementById('logo-position-y').value = data.logoPosition.y || 50;
+        document.getElementById('logo-position-y-value').textContent = (data.logoPosition.y || 50) + '%';
+    }
+    
+    preview.innerHTML = `
+        <div class="preview-header" style="background-color: ${headerColor}; position: relative; overflow: hidden;">
+            ${headerBg ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${headerBg}'); background-size: cover; background-position: center; opacity: ${headerBgOpacity / 100};"></div>` : ''}
+            <div class="preview-logo-container" style="position: relative; z-index: 1;">
+                ${logoUrl ? `<img id="preview-logo" src="${logoUrl}" alt="Logo" style="display: block;">` : '<div style="padding: 20px; color: white; text-align: center;">Логотип не завантажено</div>'}
+            </div>
+        </div>
+        <div class="preview-menu" style="background-color: ${data.colors?.menuBg || '#2c3e50'}; color: white; padding: 10px; text-align: center;">
+            <span>Меню • Контакти • Про нас • Бренди • Статті</span>
+        </div>
+        <div class="preview-content" style="background-color: ${data.colors?.mainBg || '#f4f4f4'}; padding: 20px; text-align: center;">
+            <p style="color: #666;">Прев'ю сайту з логотипом</p>
+        </div>
+    `;
+    
+    updateLogoPreview();
+}
+
+function updateLogoPreview() {
+    const logo = document.getElementById('preview-logo');
+    if (!logo) return;
+    
+    const scale = document.getElementById('logo-scale').value;
+    const posX = document.getElementById('logo-position-x').value;
+    const posY = document.getElementById('logo-position-y').value;
+    
+    document.getElementById('logo-scale-value').textContent = scale + '%';
+    document.getElementById('logo-position-x-value').textContent = posX + '%';
+    document.getElementById('logo-position-y-value').textContent = posY + '%';
+    
+    const container = logo.parentElement;
+    container.style.textAlign = posX < 33 ? 'left' : posX > 66 ? 'right' : 'center';
+    container.style.paddingTop = `${posY / 2}px`;
+    container.style.paddingBottom = `${(100 - posY) / 2}px`;
+    
+    logo.style.transform = `scale(${scale / 100})`;
+    logo.style.transformOrigin = posX < 33 ? 'left center' : posX > 66 ? 'right center' : 'center center';
+}
+
+async function saveLogoPosition() {
+    const data = await loadData();
+    if (!data.logoPosition) {
+        data.logoPosition = {};
+    }
+    
+    data.logoPosition.scale = parseInt(document.getElementById('logo-scale').value);
+    data.logoPosition.x = parseInt(document.getElementById('logo-position-x').value);
+    data.logoPosition.y = parseInt(document.getElementById('logo-position-y').value);
+    
+    saveData(data);
+    alert('Позицію та масштаб логотипу збережено!');
 }
 
 // Initialize
