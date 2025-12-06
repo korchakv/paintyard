@@ -197,12 +197,14 @@ async function loadAdminData() {
         }
     }
     
-    // Ensure consistency: if headerSizes has logo heights, sync them to logoSize
+    // Ensure consistency: if headerSizes has logo heights, sync them to logoSize (one-time sync, no save to avoid unnecessary writes)
     if (data.headerSizes && data.headerSizes.logoHeightNormal) {
         if (!data.logoSize) data.logoSize = {};
+        // Only update in memory, will be saved when user makes changes
         if (data.logoSize.height !== data.headerSizes.logoHeightNormal) {
             data.logoSize.height = data.headerSizes.logoHeightNormal;
-            saveData(data);
+            // Update localStorage without triggering save notification
+            localStorage.setItem('paintyardData', JSON.stringify(data));
         }
     }
     
@@ -842,12 +844,19 @@ async function renderSitePreview() {
     
     // Load saved logo position if exists
     if (data.logoPosition) {
-        document.getElementById('logo-scale').value = data.logoPosition.scale || 100;
-        document.getElementById('logo-scale-value').textContent = (data.logoPosition.scale || 100) + '%';
-        document.getElementById('logo-position-x').value = data.logoPosition.x || 50;
-        document.getElementById('logo-position-x-value').textContent = (data.logoPosition.x || 50) + '%';
-        document.getElementById('logo-position-y').value = data.logoPosition.y || 50;
-        document.getElementById('logo-position-y-value').textContent = (data.logoPosition.y || 50) + '%';
+        const scaleInput = document.getElementById('logo-scale');
+        const scaleValue = document.getElementById('logo-scale-value');
+        const posXInput = document.getElementById('logo-position-x');
+        const posXValue = document.getElementById('logo-position-x-value');
+        const posYInput = document.getElementById('logo-position-y');
+        const posYValue = document.getElementById('logo-position-y-value');
+        
+        if (scaleInput) scaleInput.value = data.logoPosition.scale || 100;
+        if (scaleValue) scaleValue.textContent = (data.logoPosition.scale || 100) + '%';
+        if (posXInput) posXInput.value = data.logoPosition.x || 50;
+        if (posXValue) posXValue.textContent = (data.logoPosition.x || 50) + '%';
+        if (posYInput) posYInput.value = data.logoPosition.y || 50;
+        if (posYValue) posYValue.textContent = (data.logoPosition.y || 50) + '%';
     }
     
     preview.innerHTML = `
