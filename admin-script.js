@@ -197,6 +197,15 @@ async function loadAdminData() {
         }
     }
     
+    // Ensure consistency: if headerSizes has logo heights, sync them to logoSize
+    if (data.headerSizes && data.headerSizes.logoHeightNormal) {
+        if (!data.logoSize) data.logoSize = {};
+        if (data.logoSize.height !== data.headerSizes.logoHeightNormal) {
+            data.logoSize.height = data.headerSizes.logoHeightNormal;
+            saveData(data);
+        }
+    }
+    
     // Show logo preview if exists
     if (data.logo) {
         showImagePreview('logo-preview', data.logo);
@@ -435,8 +444,6 @@ async function updateHeaderSizes() {
     }
     data.headerSizes.headerTopHeight = document.getElementById('header-top-height').value || '15px';
     data.headerSizes.menuHeight = document.getElementById('menu-height').value || '18px';
-    data.headerSizes.logoHeightNormal = document.getElementById('logo-height-normal').value || '50px';
-    data.headerSizes.logoHeightShrink = document.getElementById('logo-height-shrink').value || '35px';
     data.headerSizes.footerHeight = document.getElementById('footer-height').value || '30px';
     saveData(data);
 }
