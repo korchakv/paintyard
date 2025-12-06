@@ -822,9 +822,23 @@ async function renderSitePreview() {
     const preview = document.getElementById('site-preview');
     
     const logoUrl = data.logo || '';
+    
+    // Get all background images and opacities
     const headerBg = data.sectionBackgrounds?.header?.image || '';
     const headerBgOpacity = data.sectionBackgrounds?.header?.opacity || 100;
+    const aboutBg = data.sectionBackgrounds?.about?.image || '';
+    const aboutBgOpacity = data.sectionBackgrounds?.about?.opacity || 100;
+    const brandsBg = data.sectionBackgrounds?.brands?.image || '';
+    const brandsBgOpacity = data.sectionBackgrounds?.brands?.opacity || 100;
+    const articlesBg = data.sectionBackgrounds?.articles?.image || '';
+    const articlesBgOpacity = data.sectionBackgrounds?.articles?.opacity || 100;
+    const footerBg = data.sectionBackgrounds?.footer?.image || '';
+    const footerBgOpacity = data.sectionBackgrounds?.footer?.opacity || 100;
+    
+    // Get colors
     const headerColor = data.colors?.headerBg || '#2c3e50';
+    const menuColor = data.colors?.menuBg || '#2c3e50';
+    const mainColor = data.colors?.mainBg || '#f4f4f4';
     
     // Load saved logo position if exists
     if (data.logoPosition) {
@@ -837,17 +851,49 @@ async function renderSitePreview() {
     }
     
     preview.innerHTML = `
-        <div class="preview-header" style="background-color: ${headerColor}; position: relative; overflow: hidden;">
-            ${headerBg ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${headerBg}'); background-size: cover; background-position: center; opacity: ${headerBgOpacity / 100};"></div>` : ''}
-            <div class="preview-logo-container" style="position: relative; z-index: 1;">
-                ${logoUrl ? `<img id="preview-logo" src="${logoUrl}" alt="Logo" style="display: block;">` : '<div style="padding: 20px; color: white; text-align: center;">Логотип не завантажено</div>'}
+        <!-- Header Section -->
+        <div class="preview-header" style="background-color: ${headerColor}; position: relative; overflow: hidden; padding: 15px;">
+            ${headerBg ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${headerBg}'); background-size: cover; background-position: center; opacity: ${headerBgOpacity / 100}; pointer-events: none;"></div>` : ''}
+            <div class="preview-logo-container" style="position: relative; z-index: 1; text-align: center;">
+                ${logoUrl ? `<img id="preview-logo" src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 100px; height: auto;">` : '<div style="padding: 10px; color: white;">Логотип не завантажено</div>'}
             </div>
         </div>
-        <div class="preview-menu" style="background-color: ${data.colors?.menuBg || '#2c3e50'}; color: white; padding: 10px; text-align: center;">
+        
+        <!-- Menu Section -->
+        <div class="preview-menu" style="background-color: ${menuColor}; color: white; padding: 8px; text-align: center; font-size: 11px;">
             <span>Меню • Контакти • Про нас • Бренди • Статті</span>
         </div>
-        <div class="preview-content" style="background-color: ${data.colors?.mainBg || '#f4f4f4'}; padding: 20px; text-align: center;">
-            <p style="color: #666;">Прев'ю сайту з логотипом</p>
+        
+        <!-- About Section -->
+        <div class="preview-about" style="background-color: ${mainColor}; position: relative; overflow: hidden; padding: 20px; min-height: 60px;">
+            ${aboutBg ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${aboutBg}'); background-size: cover; background-position: center; opacity: ${aboutBgOpacity / 100}; pointer-events: none;"></div>` : ''}
+            <div style="position: relative; z-index: 1; text-align: center; font-size: 11px; color: #666;">
+                Про нас
+            </div>
+        </div>
+        
+        <!-- Brands Section -->
+        <div class="preview-brands" style="background-color: ${mainColor}; position: relative; overflow: hidden; padding: 20px; min-height: 60px;">
+            ${brandsBg ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${brandsBg}'); background-size: cover; background-position: center; opacity: ${brandsBgOpacity / 100}; pointer-events: none;"></div>` : ''}
+            <div style="position: relative; z-index: 1; text-align: center; font-size: 11px; color: #666;">
+                Бренди
+            </div>
+        </div>
+        
+        <!-- Articles Section -->
+        <div class="preview-articles" style="background-color: ${mainColor}; position: relative; overflow: hidden; padding: 20px; min-height: 60px;">
+            ${articlesBg ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${articlesBg}'); background-size: cover; background-position: center; opacity: ${articlesBgOpacity / 100}; pointer-events: none;"></div>` : ''}
+            <div style="position: relative; z-index: 1; text-align: center; font-size: 11px; color: #666;">
+                Статті
+            </div>
+        </div>
+        
+        <!-- Footer Section -->
+        <div class="preview-footer" style="background-color: ${headerColor}; position: relative; overflow: hidden; padding: 15px; text-align: center;">
+            ${footerBg ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${footerBg}'); background-size: cover; background-position: center; opacity: ${footerBgOpacity / 100}; pointer-events: none;"></div>` : ''}
+            <div style="position: relative; z-index: 1; font-size: 10px; color: #999;">
+                Підвал
+            </div>
         </div>
     `;
     
