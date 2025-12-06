@@ -11,7 +11,7 @@ body {
 }
 
 .admin-container {
-    max-width: 1000px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -47,6 +47,38 @@ body {
 .back-btn:hover {
     background-color: #2c3e50;
 }
+
+/* Sections Grid Layout */
+#admin-panel {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+/* Data Management section (first) spans full width */
+#admin-panel > .section:first-child {
+    grid-column: 1 / -1;
+}
+
+/* General settings section (second to last) and Logout section (last) span full width */
+#admin-panel > .section:nth-last-child(2),
+#admin-panel > .section:last-child {
+    grid-column: 1 / -1;
+}
+
+/* Responsive: single column on smaller screens */
+@media (max-width: 1024px) {
+    #admin-panel {
+        grid-template-columns: 1fr;
+    }
+    
+    #admin-panel > .section:first-child,
+    #admin-panel > .section:nth-last-child(2),
+    #admin-panel > .section:last-child {
+        grid-column: 1;
+    }
+}
+
 
 .section {
     background: white;
