@@ -85,6 +85,14 @@
     "phones": "#333333",
     "address": "#666666"
   },
+  "fontSizes": {
+    "header": "14px",
+    "menu": "10px",
+    "about": "16px",
+    "brands": "16px",
+    "articles": "16px",
+    "footer": "14px"
+  },
   "sectionBackgrounds": {
     "header": {
       "image": "",
