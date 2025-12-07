@@ -220,6 +220,9 @@ function applySectionBackgrounds(backgrounds) {
             
             const opacity = Math.max(0, Math.min(100, bgData.opacity || 100)) / 100;
             
+            // Get position settings if they exist
+            const position = bgData.position || { scale: 100, x: 50, y: 50 };
+            
             // Create overlay div if not exists
             let overlay = section.querySelector('.section-bg-overlay');
             if (!overlay) {
@@ -235,6 +238,10 @@ function applySectionBackgrounds(backgrounds) {
             
             overlay.style.backgroundImage = `url('${imageUrl.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}')`;
             overlay.style.opacity = opacity;
+            
+            // Apply background position and size from saved settings
+            overlay.style.backgroundPosition = `${position.x}% ${position.y}%`;
+            overlay.style.backgroundSize = `${position.scale}%`;
         }
     });
 }
