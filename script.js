@@ -110,8 +110,8 @@ async function renderPage() {
     const headerAddress = document.getElementById('header-address');
     if (addressLink && headerAddress) {
         headerAddress.textContent = data.address;
-        const encodedAddress = encodeURIComponent(data.address);
-        addressLink.href = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+        // Use GPS coordinates for more accurate location
+        addressLink.href = `https://www.google.com/maps/search/?api=1&query=48.92074,24.70602`;
         addressLink.target = '_blank';
         addressLink.rel = 'noopener noreferrer';
     }
