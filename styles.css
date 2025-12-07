@@ -596,8 +596,7 @@ h2 {
     .brand-card,
     .product-card,
     .article-card {
-        min-width: 140px;
-        max-width: 140px;
+        width: 140px;
         height: auto;
         padding: 12px;
     }
