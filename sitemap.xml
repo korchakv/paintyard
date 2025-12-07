@@ -7,12 +7,6 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://korchakv.github.io/paintyard/admin.html</loc>
-    <lastmod>2025-12-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
     <loc>https://korchakv.github.io/paintyard/article.html</loc>
     <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
