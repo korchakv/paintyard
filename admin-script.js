@@ -474,10 +474,6 @@ async function deleteBrand(id) {
 }
 
 function closeBrandModal() {
-    document.getElementById('product-modal').style.display = 'none';
-}
-
-function closeBrandModal() {
     document.getElementById('brand-modal').style.display = 'none';
 }
 
