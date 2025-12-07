@@ -20,7 +20,77 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paintyard - Магазин фарб та будівельних матеріалів</title>
+    <title>Paintyard - Магазин фарб та будівельних матеріалів у Івано-Франківську</title>
+    <meta name="description" content="Paintyard (Малярний двір) - магазин фарб, лаків та будівельних матеріалів у Івано-Франківську. Широкий асортимент лакофарбової продукції від провідних виробників. Професійні консультації та підбір покриттів.">
+    <meta name="keywords" content="фарби, лаки, будівельні матеріалі, Івано-Франківськ, Paintyard, Малярний двір, Caparol, Tikkurila, Dulux, магазин фарб">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="business.business">
+    <meta property="og:title" content="Paintyard - Магазин фарб та будівельних матеріалів">
+    <meta property="og:description" content="Широкий асортимент фарб, лаків та будівельних матеріалів від провідних виробників. Професійна допомога у підборі покриттів.">
+    <meta property="og:url" content="https://korchakv.github.io/paintyard/">
+    <meta property="og:site_name" content="Paintyard">
+    <meta property="business:contact_data:street_address" content="вулиця Вовчинецька, 191">
+    <meta property="business:contact_data:locality" content="Івано-Франківськ">
+    <meta property="business:contact_data:region" content="Івано-Франківська область">
+    <meta property="business:contact_data:postal_code" content="76000">
+    <meta property="business:contact_data:country_name" content="Україна">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Paintyard - Магазин фарб та будівельних матеріалів">
+    <meta name="twitter:description" content="Широкий асортимент фарб, лаків та будівельних матеріалів від провідних виробників.">
+    
+    <!-- Geo tags -->
+    <meta name="geo.position" content="48.92074;24.70602">
+    <meta name="geo.placename" content="Івано-Франківськ">
+    <meta name="geo.region" content="UA-IF">
+    <meta name="ICBM" content="48.92074, 24.70602">
+    
+    <!-- LocalBusiness Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "@id": "https://korchakv.github.io/paintyard/#localbusiness",
+      "name": "Paintyard",
+      "alternateName": "Малярний двір",
+      "description": "Магазин фарб, лаків та будівельних матеріалів. Широкий асортимент лакофарбової продукції від провідних виробників. Професійні консультації та підбір покриттів для різних поверхонь.",
+      "url": "https://korchakv.github.io/paintyard/",
+      "telephone": ["+380637702457", "+380687702457"],
+      "priceRange": "$$",
+      "image": "https://korchakv.github.io/paintyard/images/logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "вулиця Вовчинецька, 191",
+        "addressLocality": "Івано-Франківськ",
+        "addressRegion": "Івано-Франківська область",
+        "postalCode": "76000",
+        "addressCountry": "UA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.92074,
+        "longitude": 24.70602
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "09:00",
+          "closes": "17:00"
+        }
+      ],
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=48.92074,24.70602"
+    }
+    </script>
+    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -52,7 +122,8 @@
             <div class="menu-container">
                 <a href="#about">Про нас</a>
                 <a href="#brands">Бренди</a>
-                <parameter name="articles">Статті</a>
+                <a href="#articles">Статті</a>
+                <a href="#contact">Контакти</a>
             </div>
         </nav>
     </header>
@@ -89,6 +160,46 @@
                     <button class="scroll-btn scroll-left" onclick="scrollArticles('left')">‹</button>
                     <div id="articles-container" class="items-container"></div>
                     <button class="scroll-btn scroll-right" onclick="scrollArticles('right')">›</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Location Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>Контакти та розташування</h2>
+                <div class="contact-wrapper">
+                    <div class="contact-info">
+                        <h3>Графік роботи</h3>
+                        <div class="schedule">
+                            <p><strong>Понеділок - П'ятниця:</strong> 09:00 - 18:00</p>
+                            <p><strong>Субота:</strong> 09:00 - 17:00</p>
+                            <p><strong>Неділя:</strong> Вихідний</p>
+                        </div>
+                        <h3>Контактна інформація</h3>
+                        <div class="contact-details">
+                            <p><strong>Адреса:</strong> вул. Вовчинецька, 191, Івано-Франківськ</p>
+                            <p><strong>Телефони:</strong></p>
+                            <p><a href="tel:+380637702457">+38 (063) 770-24-57</a></p>
+                            <p><a href="tel:+380687702457">+38 (068) 770-24-57</a></p>
+                        </div>
+                    </div>
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2617.8!2d24.70602!3d48.92074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDjCsDU1JzE0LjciTiAyNMKwNDInMjEuNyJF!5e0!3m2!1suk!2sua!4v1234567890"
+                            width="100%" 
+                            height="400" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                        <a href="https://www.google.com/maps/search/?api=1&query=48.92074,24.70602" 
+                           target="_blank" 
+                           class="map-link">
+                            Відкрити в Google Maps →
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
