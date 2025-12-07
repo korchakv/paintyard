@@ -73,23 +73,38 @@
   "sectionBackgrounds": {
     "header": {
       "image": "",
-      "opacity": 100
+      "opacity": 100,
+      "size": "cover",
+      "position": "center",
+      "repeat": "no-repeat"
     },
     "about": {
       "image": "",
-      "opacity": 100
+      "opacity": 100,
+      "size": "cover",
+      "position": "center",
+      "repeat": "no-repeat"
     },
     "brands": {
       "image": "",
-      "opacity": 100
+      "opacity": 100,
+      "size": "cover",
+      "position": "center",
+      "repeat": "no-repeat"
     },
     "articles": {
       "image": "",
-      "opacity": 100
+      "opacity": 100,
+      "size": "cover",
+      "position": "center",
+      "repeat": "no-repeat"
     },
     "footer": {
       "image": "",
-      "opacity": 100
+      "opacity": 100,
+      "size": "cover",
+      "position": "center",
+      "repeat": "no-repeat"
     }
   }
 }

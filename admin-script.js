@@ -59,7 +59,7 @@ async function loadData() {
                 address: '',
                 phones: [],
                 aboutText: '',
-                products: [],
+                brands: [],
                 articles: [],
                 colors: { headerBg: '#2c3e50', mainBg: '#f4f4f4' }
             };
@@ -158,7 +158,7 @@ async function loadAdminData() {
         document.getElementById('text-header-color').value = data.textColors.header || '#333333';
         document.getElementById('text-menu-color').value = data.textColors.menu || '#ffffff';
         document.getElementById('text-about-color').value = data.textColors.about || '#333333';
-        document.getElementById('text-products-color').value = data.textColors.products || '#333333';
+        document.getElementById('text-brands-color').value = data.textColors.brands || '#333333';
         document.getElementById('text-articles-color').value = data.textColors.articles || '#333333';
         document.getElementById('text-footer-color').value = data.textColors.footer || '#ffffff';
     }
@@ -191,16 +191,22 @@ async function loadAdminData() {
     
     // Load section backgrounds
     if (data.sectionBackgrounds) {
-        ['header', 'about', 'products', 'articles', 'footer'].forEach(section => {
+        ['header', 'about', 'brands', 'articles', 'footer'].forEach(section => {
             const bgData = data.sectionBackgrounds[section];
             if (bgData) {
                 const input = document.getElementById(`${section}-bg-input`);
                 const opacity = document.getElementById(`${section}-bg-opacity`);
                 const opacityValue = document.getElementById(`${section}-opacity-value`);
+                const size = document.getElementById(`${section}-bg-size`);
+                const position = document.getElementById(`${section}-bg-position`);
+                const repeat = document.getElementById(`${section}-bg-repeat`);
                 
                 if (input) input.value = bgData.image || '';
                 if (opacity) opacity.value = bgData.opacity || 100;
                 if (opacityValue) opacityValue.textContent = (bgData.opacity || 100) + '%';
+                if (size) size.value = bgData.size || 'cover';
+                if (position) position.value = bgData.position || 'center';
+                if (repeat) repeat.value = bgData.repeat || 'no-repeat';
                 
                 if (bgData.image) {
                     showImagePreview(`${section}-bg-preview`, bgData.image);
@@ -209,7 +215,7 @@ async function loadAdminData() {
         });
     }
 
-    renderProductsList(data.products);
+    renderBrandsList(data.brands);
     renderArticlesList(data.articles);
 }
 
@@ -222,10 +228,10 @@ function handleLogoUpload(input) {
     });
 }
 
-function handleProductImageUpload(input) {
+function handleBrandImageUpload(input) {
     uploadImage(input, (base64) => {
-        document.getElementById('product-image').value = base64;
-        showImagePreview('product-image-preview', base64);
+        document.getElementById('brand-image').value = base64;
+        showImagePreview('brand-image-preview', base64);
     });
 }
 
@@ -293,9 +299,15 @@ async function updateSectionBackground(section) {
     
     const image = document.getElementById(`${section}-bg-input`).value;
     const opacity = parseInt(document.getElementById(`${section}-bg-opacity`).value);
+    const size = document.getElementById(`${section}-bg-size`)?.value || 'cover';
+    const position = document.getElementById(`${section}-bg-position`)?.value || 'center';
+    const repeat = document.getElementById(`${section}-bg-repeat`)?.value || 'no-repeat';
     
     data.sectionBackgrounds[section].image = image;
     data.sectionBackgrounds[section].opacity = opacity;
+    data.sectionBackgrounds[section].size = size;
+    data.sectionBackgrounds[section].position = position;
+    data.sectionBackgrounds[section].repeat = repeat;
     
     saveData(data);
 }
@@ -364,7 +376,7 @@ async function updateTextColors() {
     data.textColors.header = document.getElementById('text-header-color').value;
     data.textColors.menu = document.getElementById('text-menu-color').value;
     data.textColors.about = document.getElementById('text-about-color').value;
-    data.textColors.products = document.getElementById('text-products-color').value;
+    data.textColors.brands = document.getElementById('text-brands-color').value;
     data.textColors.articles = document.getElementById('text-articles-color').value;
     data.textColors.footer = document.getElementById('text-footer-color').value;
     saveData(data);
@@ -394,91 +406,87 @@ async function updateHeaderSizes() {
 }
 
 
-// Products management
-function renderProductsList(products) {
-    const container = document.getElementById('products-list');
-    container.innerHTML = products.map(product => `
-        <div class="product-item">
-            <h4>${product.name} <span class="item-id">(ID: ${product.id})</span></h4>
-            <p>${product.description} - ${product.price}</p>
-            <p class="hint">Зображення: images/products/${product.id}.jpg</p>
+// Brands management
+function renderBrandsList(brands) {
+    const container = document.getElementById('brands-list');
+    container.innerHTML = brands.map(brand => `
+        <div class="brand-item">
+            <h4>${brand.name} <span class="item-id">(ID: ${brand.id})</span></h4>
+            <p>${brand.description}</p>
             <div class="item-actions">
-                <button class="edit-btn" onclick="editProduct(${product.id})">Редагувати</button>
-                <button class="delete-btn" onclick="deleteProduct(${product.id})">Видалити</button>
+                <button class="edit-btn" onclick="editBrand(${brand.id})">Редагувати</button>
+                <button class="delete-btn" onclick="deleteBrand(${brand.id})">Видалити</button>
             </div>
         </div>
     `).join('');
 }
 
-function showAddProductForm() {
-    document.getElementById('product-modal-title').textContent = 'Додати товар';
-    document.getElementById('product-id').value = '';
-    document.getElementById('product-name').value = '';
-    document.getElementById('product-description').value = '';
-    document.getElementById('product-price').value = '';
-    document.getElementById('product-image').value = '';
-    document.getElementById('product-modal').style.display = 'block';
+function showAddBrandForm() {
+    document.getElementById('brand-modal-title').textContent = 'Додати бренд';
+    document.getElementById('brand-id').value = '';
+    document.getElementById('brand-name').value = '';
+    document.getElementById('brand-description').value = '';
+    document.getElementById('brand-image').value = '';
+    document.getElementById('brand-modal').style.display = 'block';
 }
 
-async function editProduct(id) {
+async function editBrand(id) {
     const data = await loadData();
-    const product = data.products.find(p => p.id === id);
-    if (product) {
-        document.getElementById('product-modal-title').textContent = 'Редагувати товар';
-        document.getElementById('product-id').value = product.id;
-        document.getElementById('product-name').value = product.name;
-        document.getElementById('product-description').value = product.description;
-        document.getElementById('product-price').value = product.price;
-        document.getElementById('product-image').value = product.image;
-        if (product.image) {
-            showImagePreview('product-image-preview', product.image);
+    const brand = data.brands.find(b => b.id === id);
+    if (brand) {
+        document.getElementById('brand-modal-title').textContent = 'Редагувати бренд';
+        document.getElementById('brand-id').value = brand.id;
+        document.getElementById('brand-name').value = brand.name;
+        document.getElementById('brand-description').value = brand.description;
+        document.getElementById('brand-image').value = brand.image;
+        if (brand.image) {
+            showImagePreview('brand-image-preview', brand.image);
         }
-        document.getElementById('product-modal').style.display = 'block';
+        document.getElementById('brand-modal').style.display = 'block';
     }
 }
 
-async function saveProduct() {
+async function saveBrand() {
     const data = await loadData();
-    const id = document.getElementById('product-id').value;
-    const name = document.getElementById('product-name').value;
-    const description = document.getElementById('product-description').value;
-    const price = document.getElementById('product-price').value;
-    const image = document.getElementById('product-image').value;
+    const id = document.getElementById('brand-id').value;
+    const name = document.getElementById('brand-name').value;
+    const description = document.getElementById('brand-description').value;
+    const image = document.getElementById('brand-image').value;
 
-    if (!name || !description || !price) {
+    if (!name || !description) {
         alert('Заповніть всі обов\'язкові поля!');
         return;
     }
 
     if (id) {
         // Edit existing
-        const index = data.products.findIndex(p => p.id === parseInt(id));
+        const index = data.brands.findIndex(b => b.id === parseInt(id));
         if (index !== -1) {
-            data.products[index] = { id: parseInt(id), name, description, price, image };
+            data.brands[index] = { id: parseInt(id), name, description, image };
         }
     } else {
         // Add new
-        const newId = data.products.length > 0 ? Math.max(...data.products.map(p => p.id)) + 1 : 1;
-        data.products.push({ id: newId, name, description, price, image });
+        const newId = data.brands.length > 0 ? Math.max(...data.brands.map(b => b.id)) + 1 : 1;
+        data.brands.push({ id: newId, name, description, image });
     }
 
     saveData(data);
-    renderProductsList(data.products);
-    closeProductModal();
-    alert('Товар збережено!');
+    renderBrandsList(data.brands);
+    closeBrandModal();
+    alert('Бренд збережено!');
 }
 
-async function deleteProduct(id) {
-    if (confirm('Ви впевнені, що хочете видалити цей товар?')) {
+async function deleteBrand(id) {
+    if (confirm('Ви впевнені, що хочете видалити цей бренд?')) {
         const data = await loadData();
-        data.products = data.products.filter(p => p.id !== id);
+        data.brands = data.brands.filter(b => b.id !== id);
         saveData(data);
-        renderProductsList(data.products);
+        renderBrandsList(data.brands);
     }
 }
 
-function closeProductModal() {
-    document.getElementById('product-modal').style.display = 'none';
+function closeBrandModal() {
+    document.getElementById('brand-modal').style.display = 'none';
 }
 
 // Articles management

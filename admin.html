@@ -174,9 +174,47 @@
                     <input type="file" id="header-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'header')" class="file-input">
                     <button onclick="document.getElementById('header-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
                     <input type="text" id="header-bg-input" placeholder="Або введіть URL зображення">
-                    <label>Прозорість (0-100%):</label>
-                    <input type="range" id="header-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('header')">
-                    <span id="header-opacity-value">100%</span>
+                    
+                    <div class="bg-controls-grid">
+                        <div>
+                            <label>Прозорість (0-100%):</label>
+                            <input type="range" id="header-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('header')">
+                            <span id="header-opacity-value">100%</span>
+                        </div>
+                        <div>
+                            <label>Розмір:</label>
+                            <select id="header-bg-size">
+                                <option value="cover">Cover (покрити)</option>
+                                <option value="contain">Contain (вмістити)</option>
+                                <option value="auto">Auto (оригінальний)</option>
+                                <option value="100% 100%">Розтягнути</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Позиція:</label>
+                            <select id="header-bg-position">
+                                <option value="center">Center (по центру)</option>
+                                <option value="top">Top (вгорі)</option>
+                                <option value="bottom">Bottom (внизу)</option>
+                                <option value="left">Left (зліва)</option>
+                                <option value="right">Right (справа)</option>
+                                <option value="top left">Top Left</option>
+                                <option value="top right">Top Right</option>
+                                <option value="bottom left">Bottom Left</option>
+                                <option value="bottom right">Bottom Right</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Повторення:</label>
+                            <select id="header-bg-repeat">
+                                <option value="no-repeat">No Repeat (не повторювати)</option>
+                                <option value="repeat">Repeat (повторювати)</option>
+                                <option value="repeat-x">Repeat X (горизонтально)</option>
+                                <option value="repeat-y">Repeat Y (вертикально)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <button onclick="updateSectionBackground('header')">Оновити фон</button>
                     <button onclick="downloadSectionImage('header')" class="download-btn">💾 Завантажити як header-bg.jpg</button>
                     <div id="header-bg-preview" class="image-preview"></div>
@@ -188,26 +226,100 @@
                     <input type="file" id="about-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'about')" class="file-input">
                     <button onclick="document.getElementById('about-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
                     <input type="text" id="about-bg-input" placeholder="Або введіть URL зображення">
-                    <label>Прозорість (0-100%):</label>
-                    <input type="range" id="about-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('about')">
-                    <span id="about-opacity-value">100%</span>
+                    <div class="bg-controls-grid">
+                        <div>
+                            <label>Прозорість (0-100%):</label>
+                            <input type="range" id="about-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('about')">
+                            <span id="about-opacity-value">100%</span>
+                        </div>
+                        <div>
+                            <label>Розмір:</label>
+                            <select id="about-bg-size">
+                                <option value="cover">Cover (покрити)</option>
+                                <option value="contain">Contain (вмістити)</option>
+                                <option value="auto">Auto (оригінальний)</option>
+                                <option value="100% 100%">Розтягнути</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Позиція:</label>
+                            <select id="about-bg-position">
+                                <option value="center">Center (по центру)</option>
+                                <option value="top">Top (вгорі)</option>
+                                <option value="bottom">Bottom (внизу)</option>
+                                <option value="left">Left (зліва)</option>
+                                <option value="right">Right (справа)</option>
+                                <option value="top left">Top Left</option>
+                                <option value="top right">Top Right</option>
+                                <option value="bottom left">Bottom Left</option>
+                                <option value="bottom right">Bottom Right</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Повторення:</label>
+                            <select id="about-bg-repeat">
+                                <option value="no-repeat">No Repeat (не повторювати)</option>
+                                <option value="repeat">Repeat (повторювати)</option>
+                                <option value="repeat-x">Repeat X (горизонтально)</option>
+                                <option value="repeat-y">Repeat Y (вертикально)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <button onclick="updateSectionBackground('about')">Оновити фон</button>
                     <button onclick="downloadSectionImage('about')" class="download-btn">💾 Завантажити як about-bg.jpg</button>
                     <div id="about-bg-preview" class="image-preview"></div>
                 </div>
 
-                <!-- Products Background -->
+                <!-- Brands Background -->
                 <div class="form-group background-section-group">
-                    <h3>Товари (Products)</h3>
-                    <input type="file" id="products-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'products')" class="file-input">
-                    <button onclick="document.getElementById('products-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
-                    <input type="text" id="products-bg-input" placeholder="Або введіть URL зображення">
-                    <label>Прозорість (0-100%):</label>
-                    <input type="range" id="products-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('products')">
-                    <span id="products-opacity-value">100%</span>
-                    <button onclick="updateSectionBackground('products')">Оновити фон</button>
-                    <button onclick="downloadSectionImage('products')" class="download-btn">💾 Завантажити як products-bg.jpg</button>
-                    <div id="products-bg-preview" class="image-preview"></div>
+                    <h3>Бренди (Brands)</h3>
+                    <input type="file" id="brands-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'brands')" class="file-input">
+                    <button onclick="document.getElementById('brands-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
+                    <input type="text" id="brands-bg-input" placeholder="Або введіть URL зображення">
+                    <div class="bg-controls-grid">
+                        <div>
+                            <label>Прозорість (0-100%):</label>
+                            <input type="range" id="brands-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('brands')">
+                            <span id="brands-opacity-value">100%</span>
+                        </div>
+                        <div>
+                            <label>Розмір:</label>
+                            <select id="brands-bg-size">
+                                <option value="cover">Cover (покрити)</option>
+                                <option value="contain">Contain (вмістити)</option>
+                                <option value="auto">Auto (оригінальний)</option>
+                                <option value="100% 100%">Розтягнути</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Позиція:</label>
+                            <select id="brands-bg-position">
+                                <option value="center">Center (по центру)</option>
+                                <option value="top">Top (вгорі)</option>
+                                <option value="bottom">Bottom (внизу)</option>
+                                <option value="left">Left (зліва)</option>
+                                <option value="right">Right (справа)</option>
+                                <option value="top left">Top Left</option>
+                                <option value="top right">Top Right</option>
+                                <option value="bottom left">Bottom Left</option>
+                                <option value="bottom right">Bottom Right</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Повторення:</label>
+                            <select id="brands-bg-repeat">
+                                <option value="no-repeat">No Repeat (не повторювати)</option>
+                                <option value="repeat">Repeat (повторювати)</option>
+                                <option value="repeat-x">Repeat X (горизонтально)</option>
+                                <option value="repeat-y">Repeat Y (вертикально)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button onclick="updateSectionBackground('brands')">Оновити фон</button>
+                    <button onclick="downloadSectionImage('brands')" class="download-btn">💾 Завантажити як brands-bg.jpg</button>
+                    <div id="brands-bg-preview" class="image-preview"></div>
                 </div>
 
                 <!-- Articles Background -->
@@ -216,9 +328,46 @@
                     <input type="file" id="articles-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'articles')" class="file-input">
                     <button onclick="document.getElementById('articles-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
                     <input type="text" id="articles-bg-input" placeholder="Або введіть URL зображення">
-                    <label>Прозорість (0-100%):</label>
-                    <input type="range" id="articles-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('articles')">
-                    <span id="articles-opacity-value">100%</span>
+                    <div class="bg-controls-grid">
+                        <div>
+                            <label>Прозорість (0-100%):</label>
+                            <input type="range" id="articles-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('articles')">
+                            <span id="articles-opacity-value">100%</span>
+                        </div>
+                        <div>
+                            <label>Розмір:</label>
+                            <select id="articles-bg-size">
+                                <option value="cover">Cover (покрити)</option>
+                                <option value="contain">Contain (вмістити)</option>
+                                <option value="auto">Auto (оригінальний)</option>
+                                <option value="100% 100%">Розтягнути</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Позиція:</label>
+                            <select id="articles-bg-position">
+                                <option value="center">Center (по центру)</option>
+                                <option value="top">Top (вгорі)</option>
+                                <option value="bottom">Bottom (внизу)</option>
+                                <option value="left">Left (зліва)</option>
+                                <option value="right">Right (справа)</option>
+                                <option value="top left">Top Left</option>
+                                <option value="top right">Top Right</option>
+                                <option value="bottom left">Bottom Left</option>
+                                <option value="bottom right">Bottom Right</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Повторення:</label>
+                            <select id="articles-bg-repeat">
+                                <option value="no-repeat">No Repeat (не повторювати)</option>
+                                <option value="repeat">Repeat (повторювати)</option>
+                                <option value="repeat-x">Repeat X (горизонтально)</option>
+                                <option value="repeat-y">Repeat Y (вертикально)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <button onclick="updateSectionBackground('articles')">Оновити фон</button>
                     <button onclick="downloadSectionImage('articles')" class="download-btn">💾 Завантажити як articles-bg.jpg</button>
                     <div id="articles-bg-preview" class="image-preview"></div>
@@ -230,20 +379,57 @@
                     <input type="file" id="footer-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'footer')" class="file-input">
                     <button onclick="document.getElementById('footer-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
                     <input type="text" id="footer-bg-input" placeholder="Або введіть URL зображення">
-                    <label>Прозорість (0-100%):</label>
-                    <input type="range" id="footer-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('footer')">
-                    <span id="footer-opacity-value">100%</span>
+                    <div class="bg-controls-grid">
+                        <div>
+                            <label>Прозорість (0-100%):</label>
+                            <input type="range" id="footer-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('footer')">
+                            <span id="footer-opacity-value">100%</span>
+                        </div>
+                        <div>
+                            <label>Розмір:</label>
+                            <select id="footer-bg-size">
+                                <option value="cover">Cover (покрити)</option>
+                                <option value="contain">Contain (вмістити)</option>
+                                <option value="auto">Auto (оригінальний)</option>
+                                <option value="100% 100%">Розтягнути</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Позиція:</label>
+                            <select id="footer-bg-position">
+                                <option value="center">Center (по центру)</option>
+                                <option value="top">Top (вгорі)</option>
+                                <option value="bottom">Bottom (внизу)</option>
+                                <option value="left">Left (зліва)</option>
+                                <option value="right">Right (справа)</option>
+                                <option value="top left">Top Left</option>
+                                <option value="top right">Top Right</option>
+                                <option value="bottom left">Bottom Left</option>
+                                <option value="bottom right">Bottom Right</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Повторення:</label>
+                            <select id="footer-bg-repeat">
+                                <option value="no-repeat">No Repeat (не повторювати)</option>
+                                <option value="repeat">Repeat (повторювати)</option>
+                                <option value="repeat-x">Repeat X (горизонтально)</option>
+                                <option value="repeat-y">Repeat Y (вертикально)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <button onclick="updateSectionBackground('footer')">Оновити фон</button>
                     <button onclick="downloadSectionImage('footer')" class="download-btn">💾 Завантажити як footer-bg.jpg</button>
                     <div id="footer-bg-preview" class="image-preview"></div>
                 </div>
             </div>
 
-            <!-- Products Management -->
+            <!-- Brands Management -->
             <div class="section">
-                <h2>Товари</h2>
-                <div id="products-list"></div>
-                <button onclick="showAddProductForm()" class="add-btn">+ Додати товар</button>
+                <h2>Бренди</h2>
+                <div id="brands-list"></div>
+                <button onclick="showAddBrandForm()" class="add-btn">+ Додати бренд</button>
             </div>
 
             <!-- Articles Management -->
@@ -260,32 +446,28 @@
         </div>
     </div>
 
-    <!-- Product Modal -->
-    <div id="product-modal" class="modal">
+    <!-- Brand Modal -->
+    <div id="brand-modal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeProductModal()">&times;</span>
-            <h2 id="product-modal-title">Додати товар</h2>
+            <span class="close" onclick="closeBrandModal()">&times;</span>
+            <h2 id="brand-modal-title">Додати бренд</h2>
             <div class="form-group">
                 <label>Назва</label>
-                <input type="text" id="product-name">
+                <input type="text" id="brand-name">
             </div>
             <div class="form-group">
                 <label>Опис</label>
-                <textarea id="product-description" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Ціна</label>
-                <input type="text" id="product-price" placeholder="450 грн">
+                <textarea id="brand-description" rows="3"></textarea>
             </div>
             <div class="form-group">
                 <label>Зображення</label>
-                <input type="file" id="product-image-file" accept="image/*" onchange="handleProductImageUpload(this)" class="file-input" style="display: none;">
-                <button type="button" onclick="document.getElementById('product-image-file').click()" class="upload-btn">📤 Завантажити зображення</button>
-                <input type="text" id="product-image" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
-                <div id="product-image-preview" class="image-preview"></div>
+                <input type="file" id="brand-image-file" accept="image/*" onchange="handleBrandImageUpload(this)" class="file-input" style="display: none;">
+                <button type="button" onclick="document.getElementById('brand-image-file').click()" class="upload-btn">📤 Завантажити зображення</button>
+                <input type="text" id="brand-image" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
+                <div id="brand-image-preview" class="image-preview"></div>
             </div>
-            <input type="hidden" id="product-id">
-            <button onclick="saveProduct()">Зберегти</button>
+            <input type="hidden" id="brand-id">
+            <button onclick="saveBrand()">Зберегти</button>
         </div>
     </div>
 
