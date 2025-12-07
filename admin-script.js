@@ -197,16 +197,24 @@ async function loadAdminData() {
                 const input = document.getElementById(`${section}-bg-input`);
                 const opacity = document.getElementById(`${section}-bg-opacity`);
                 const opacityValue = document.getElementById(`${section}-opacity-value`);
-                const size = document.getElementById(`${section}-bg-size`);
-                const position = document.getElementById(`${section}-bg-position`);
-                const repeat = document.getElementById(`${section}-bg-repeat`);
+                const scale = document.getElementById(`${section}-bg-scale`);
+                const scaleValue = document.getElementById(`${section}-scale-value`);
+                const posX = document.getElementById(`${section}-bg-posX`);
+                const posXValue = document.getElementById(`${section}-posX-value`);
+                const posY = document.getElementById(`${section}-bg-posY`);
+                const posYValue = document.getElementById(`${section}-posY-value`);
                 
                 if (input) input.value = bgData.image || '';
                 if (opacity) opacity.value = bgData.opacity || 100;
                 if (opacityValue) opacityValue.textContent = (bgData.opacity || 100) + '%';
-                if (size) size.value = bgData.size || 'cover';
-                if (position) position.value = bgData.position || 'center';
-                if (repeat) repeat.value = bgData.repeat || 'no-repeat';
+                
+                // Load scale and position values
+                if (scale) scale.value = bgData.scale || 100;
+                if (scaleValue) scaleValue.textContent = (bgData.scale || 100) + '%';
+                if (posX) posX.value = bgData.posX || 50;
+                if (posXValue) posXValue.textContent = (bgData.posX || 50) + '%';
+                if (posY) posY.value = bgData.posY || 50;
+                if (posYValue) posYValue.textContent = (bgData.posY || 50) + '%';
                 
                 if (bgData.image) {
                     showImagePreview(`${section}-bg-preview`, bgData.image);
@@ -299,15 +307,15 @@ async function updateSectionBackground(section) {
     
     const image = document.getElementById(`${section}-bg-input`).value;
     const opacity = parseInt(document.getElementById(`${section}-bg-opacity`).value);
-    const size = document.getElementById(`${section}-bg-size`)?.value || 'cover';
-    const position = document.getElementById(`${section}-bg-position`)?.value || 'center';
-    const repeat = document.getElementById(`${section}-bg-repeat`)?.value || 'no-repeat';
+    const scale = parseInt(document.getElementById(`${section}-bg-scale`)?.value || 100);
+    const posX = parseInt(document.getElementById(`${section}-bg-posX`)?.value || 50);
+    const posY = parseInt(document.getElementById(`${section}-bg-posY`)?.value || 50);
     
     data.sectionBackgrounds[section].image = image;
     data.sectionBackgrounds[section].opacity = opacity;
-    data.sectionBackgrounds[section].size = size;
-    data.sectionBackgrounds[section].position = position;
-    data.sectionBackgrounds[section].repeat = repeat;
+    data.sectionBackgrounds[section].scale = scale;
+    data.sectionBackgrounds[section].posX = posX;
+    data.sectionBackgrounds[section].posY = posY;
     
     saveData(data);
 }
@@ -574,6 +582,137 @@ async function deleteArticle(id) {
 
 function closeArticleModal() {
     document.getElementById('article-modal').style.display = 'none';
+}
+
+// New slider update functions for background controls
+function updateScaleValue(section) {
+    const scale = document.getElementById(`${section}-bg-scale`).value;
+    document.getElementById(`${section}-scale-value`).textContent = scale + '%';
+}
+
+function updatePosXValue(section) {
+    const posX = document.getElementById(`${section}-bg-posX`).value;
+    document.getElementById(`${section}-posX-value`).textContent = posX + '%';
+}
+
+function updatePosYValue(section) {
+    const posY = document.getElementById(`${section}-bg-posY`).value;
+    document.getElementById(`${section}-posY-value`).textContent = posY + '%';
+}
+
+// Consolidated update functions for each section
+async function updateHeaderSettings() {
+    const data = await loadData();
+    
+    // Update colors
+    data.colors.headerBg = document.getElementById('header-color').value;
+    if (!data.textColors) data.textColors = {};
+    data.textColors.header = document.getElementById('text-header-color').value;
+    if (!data.contactColors) data.contactColors = {};
+    data.contactColors.phones = document.getElementById('contact-phones-color').value;
+    data.contactColors.address = document.getElementById('contact-address-color').value;
+    
+    // Update sizes
+    if (!data.headerSizes) data.headerSizes = {};
+    data.headerSizes.headerTopHeight = document.getElementById('header-top-height').value || '15px';
+    data.headerSizes.logoHeightNormal = document.getElementById('logo-height-normal').value || '50px';
+    data.headerSizes.logoHeightShrink = document.getElementById('logo-height-shrink').value || '35px';
+    
+    // Update background
+    if (!data.sectionBackgrounds) data.sectionBackgrounds = {};
+    if (!data.sectionBackgrounds.header) data.sectionBackgrounds.header = {};
+    const scale = parseInt(document.getElementById('header-bg-scale')?.value || 100);
+    const posX = parseInt(document.getElementById('header-bg-posX')?.value || 50);
+    const posY = parseInt(document.getElementById('header-bg-posY')?.value || 50);
+    data.sectionBackgrounds.header.scale = scale;
+    data.sectionBackgrounds.header.posX = posX;
+    data.sectionBackgrounds.header.posY = posY;
+    
+    saveData(data);
+}
+
+async function updateMenuSettings() {
+    const data = await loadData();
+    data.colors.menuBg = document.getElementById('menu-color').value;
+    if (!data.textColors) data.textColors = {};
+    data.textColors.menu = document.getElementById('text-menu-color').value;
+    if (!data.headerSizes) data.headerSizes = {};
+    data.headerSizes.menuHeight = document.getElementById('menu-height').value || '18px';
+    saveData(data);
+}
+
+async function updateAboutSettings() {
+    const data = await loadData();
+    if (!data.textColors) data.textColors = {};
+    data.textColors.about = document.getElementById('text-about-color').value;
+    
+    // Update background
+    if (!data.sectionBackgrounds) data.sectionBackgrounds = {};
+    if (!data.sectionBackgrounds.about) data.sectionBackgrounds.about = {};
+    const scale = parseInt(document.getElementById('about-bg-scale')?.value || 100);
+    const posX = parseInt(document.getElementById('about-bg-posX')?.value || 50);
+    const posY = parseInt(document.getElementById('about-bg-posY')?.value || 50);
+    data.sectionBackgrounds.about.scale = scale;
+    data.sectionBackgrounds.about.posX = posX;
+    data.sectionBackgrounds.about.posY = posY;
+    
+    saveData(data);
+}
+
+async function updateBrandsSettings() {
+    const data = await loadData();
+    if (!data.textColors) data.textColors = {};
+    data.textColors.brands = document.getElementById('text-brands-color').value;
+    
+    // Update background
+    if (!data.sectionBackgrounds) data.sectionBackgrounds = {};
+    if (!data.sectionBackgrounds.brands) data.sectionBackgrounds.brands = {};
+    const scale = parseInt(document.getElementById('brands-bg-scale')?.value || 100);
+    const posX = parseInt(document.getElementById('brands-bg-posX')?.value || 50);
+    const posY = parseInt(document.getElementById('brands-bg-posY')?.value || 50);
+    data.sectionBackgrounds.brands.scale = scale;
+    data.sectionBackgrounds.brands.posX = posX;
+    data.sectionBackgrounds.brands.posY = posY;
+    
+    saveData(data);
+}
+
+async function updateArticlesSettings() {
+    const data = await loadData();
+    if (!data.textColors) data.textColors = {};
+    data.textColors.articles = document.getElementById('text-articles-color').value;
+    
+    // Update background
+    if (!data.sectionBackgrounds) data.sectionBackgrounds = {};
+    if (!data.sectionBackgrounds.articles) data.sectionBackgrounds.articles = {};
+    const scale = parseInt(document.getElementById('articles-bg-scale')?.value || 100);
+    const posX = parseInt(document.getElementById('articles-bg-posX')?.value || 50);
+    const posY = parseInt(document.getElementById('articles-bg-posY')?.value || 50);
+    data.sectionBackgrounds.articles.scale = scale;
+    data.sectionBackgrounds.articles.posX = posX;
+    data.sectionBackgrounds.articles.posY = posY;
+    
+    saveData(data);
+}
+
+async function updateFooterSettings() {
+    const data = await loadData();
+    if (!data.textColors) data.textColors = {};
+    data.textColors.footer = document.getElementById('text-footer-color').value;
+    if (!data.headerSizes) data.headerSizes = {};
+    data.headerSizes.footerHeight = document.getElementById('footer-height').value || '30px';
+    
+    // Update background
+    if (!data.sectionBackgrounds) data.sectionBackgrounds = {};
+    if (!data.sectionBackgrounds.footer) data.sectionBackgrounds.footer = {};
+    const scale = parseInt(document.getElementById('footer-bg-scale')?.value || 100);
+    const posX = parseInt(document.getElementById('footer-bg-posX')?.value || 50);
+    const posY = parseInt(document.getElementById('footer-bg-posY')?.value || 50);
+    data.sectionBackgrounds.footer.scale = scale;
+    data.sectionBackgrounds.footer.posX = posX;
+    data.sectionBackgrounds.footer.posY = posY;
+    
+    saveData(data);
 }
 
 // Close modals when clicking outside

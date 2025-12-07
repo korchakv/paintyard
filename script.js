@@ -110,8 +110,8 @@ async function renderPage() {
     const headerAddress = document.getElementById('header-address');
     if (addressLink && headerAddress) {
         headerAddress.textContent = data.address;
-        // Use GPS coordinates for more accurate location
-        addressLink.href = `https://www.google.com/maps/search/?api=1&query=48.92074,24.70602`;
+        // Use GPS coordinates for more accurate location (WPMJ+PG)
+        addressLink.href = `https://www.google.com/maps/search/?api=1&query=48.9366,24.7311`;
         addressLink.target = '_blank';
         addressLink.rel = 'noopener noreferrer';
     }
@@ -219,9 +219,9 @@ function applySectionBackgrounds(backgrounds) {
             }
             
             const opacity = Math.max(0, Math.min(100, bgData.opacity || 100)) / 100;
-            const size = bgData.size || 'cover';
-            const position = bgData.position || 'center';
-            const repeat = bgData.repeat || 'no-repeat';
+            const scale = bgData.scale || 100;
+            const posX = bgData.posX !== undefined ? bgData.posX : 50;
+            const posY = bgData.posY !== undefined ? bgData.posY : 50;
             
             // Create overlay div if not exists
             let overlay = section.querySelector('.section-bg-overlay');
@@ -237,9 +237,9 @@ function applySectionBackgrounds(backgrounds) {
             }
             
             overlay.style.backgroundImage = `url('${imageUrl.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}')`;
-            overlay.style.backgroundSize = size;
-            overlay.style.backgroundPosition = position;
-            overlay.style.backgroundRepeat = repeat;
+            overlay.style.backgroundSize = `${scale}%`;
+            overlay.style.backgroundPosition = `${posX}% ${posY}%`;
+            overlay.style.backgroundRepeat = 'no-repeat';
             overlay.style.opacity = opacity;
         }
     });
