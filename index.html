@@ -20,7 +20,74 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paintyard - Магазин фарб та будівельних матеріалів</title>
+    <title>Малярний Двір - Магазин фарб та лакофарбових матеріалів в Івано-Франківську</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Магазин «Малярний Двір» в Івано-Франківську пропонує широкий асортимент фарб, лаків та будівельних матеріалів. Бренди: Teknos, Herlac, Colorex, Adler, Tikkurila. Підбір та тонування фарб, доставка.">
+    <meta name="keywords" content="фарби івано-франківськ, лаки івано-франківськ, будівельні матеріали, малярний двір, paintyard, тонування фарб, teknos, tikkurila, herlac, colorex, adler">
+    <meta name="author" content="Малярний Двір">
+    <meta name="geo.region" content="UA-26">
+    <meta name="geo.placename" content="Івано-Франківськ">
+    <meta name="geo.position" content="48.934070;24.748270">
+    <meta name="ICBM" content="48.934070, 24.748270">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Малярний Двір - Магазин фарб та лакофарбових матеріалів">
+    <meta property="og:description" content="Широкий асортимент фарб, лаків та будівельних матеріалів в Івано-Франківську. Професійна допомога у підборі покриттів.">
+    <meta property="og:type" content="business.business">
+    <meta property="og:url" content="http://paintyard.net/">
+    <meta property="og:site_name" content="Малярний Двір">
+    <meta property="og:locale" content="uk_UA">
+    <meta property="business:contact_data:street_address" content="вулиця Вовчинецька, 191">
+    <meta property="business:contact_data:locality" content="Івано-Франківськ">
+    <meta property="business:contact_data:region" content="Івано-Франківська область">
+    <meta property="business:contact_data:postal_code" content="76018">
+    <meta property="business:contact_data:country_name" content="Україна">
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "http://paintyard.net/#business",
+      "name": "Малярний Двір",
+      "alternateName": "Paintyard",
+      "description": "Магазин лакофарбової продукції з широким асортиментом товарів для малярних і ремонтних робіт",
+      "url": "http://paintyard.net/",
+      "telephone": ["+380637702457", "+380687702457"],
+      "priceRange": "$$",
+      "image": "http://paintyard.net/images/logo.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "вулиця Вовчинецька, 191",
+        "addressLocality": "Івано-Франківськ",
+        "addressRegion": "Івано-Франківська область",
+        "postalCode": "76018",
+        "addressCountry": "UA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.934070,
+        "longitude": 24.748270
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "09:00",
+          "closes": "17:00"
+        }
+      ],
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=48.934070,24.748270"
+    }
+    </script>
+    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -65,6 +132,11 @@
                 <h2>Про нас</h2>
                 <div id="about-content">
                     <p>Ласкаво просимо до нашого магазину!</p>
+                </div>
+                <div id="working-hours-section" style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 15px;">Графік роботи</h3>
+                    <div id="working-hours" style="display: grid; grid-template-columns: auto 1fr; gap: 10px; max-width: 400px;">
+                    </div>
                 </div>
             </div>
         </section>

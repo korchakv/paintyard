@@ -84,6 +84,10 @@ async function renderPage() {
     }
 
     // Render logo
+    const businessName = data.businessName || 'Paintyard';
+    document.getElementById('header-logo-text').textContent = businessName;
+    document.getElementById('footer-logo-text').textContent = businessName;
+    
     if (data.logo) {
         document.getElementById('header-logo').src = data.logo;
         document.getElementById('header-logo').style.display = 'block';
@@ -110,8 +114,13 @@ async function renderPage() {
     const headerAddress = document.getElementById('header-address');
     if (addressLink && headerAddress) {
         headerAddress.textContent = data.address;
-        const encodedAddress = encodeURIComponent(data.address);
-        addressLink.href = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+        // Use coordinates if available for more accurate map location
+        if (data.coordinates && data.coordinates.lat && data.coordinates.lng) {
+            addressLink.href = `https://www.google.com/maps/search/?api=1&query=${data.coordinates.lat},${data.coordinates.lng}`;
+        } else {
+            const encodedAddress = encodeURIComponent(data.address);
+            addressLink.href = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+        }
         addressLink.target = '_blank';
         addressLink.rel = 'noopener noreferrer';
     }
@@ -124,6 +133,32 @@ async function renderPage() {
 
     // Render about
     document.getElementById('about-content').innerHTML = `<p>${data.aboutText}</p>`;
+
+    // Render working hours
+    if (data.workingHours) {
+        const daysMap = {
+            'monday': 'Понеділок',
+            'tuesday': 'Вівторок',
+            'wednesday': 'Середа',
+            'thursday': 'Четвер',
+            'friday': 'П\'ятниця',
+            'saturday': 'Субота',
+            'sunday': 'Неділя'
+        };
+        
+        const workingHoursHTML = Object.entries(data.workingHours).map(([day, hours]) => {
+            const dayName = daysMap[day] || day;
+            return `
+                <div style="font-weight: 600;">${dayName}:</div>
+                <div>${hours}</div>
+            `;
+        }).join('');
+        
+        const workingHoursElement = document.getElementById('working-hours');
+        if (workingHoursElement) {
+            workingHoursElement.innerHTML = workingHoursHTML;
+        }
+    }
 
     // Render brands (without price)
     const brands = data.brands || data.products || []; // Support both old and new format
