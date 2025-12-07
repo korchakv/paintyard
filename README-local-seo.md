@@ -53,10 +53,13 @@ After deploying this PR to the main site, complete the following tasks:
   - GPS coordinates: 48.92074, 24.70602
 
 ### 4. Social Media & Open Graph
-- [ ] Upload an Open Graph image (og-image.jpg) to `/images/` directory (recommended size: 1200x630px)
-- [ ] Update the following meta tag in index.html if you add the image:
+**Note**: An SVG image (og-image.svg) is currently set, but for best compatibility, convert it to JPG or PNG.
+
+- [ ] Convert og-image.svg to og-image.jpg or og-image.png (1200x630px) for better social media compatibility
+- [ ] If you create a new image, update the meta tags in index.html:
   ```html
   <meta property="og:image" content="https://korchakv.github.io/paintyard/images/og-image.jpg">
+  <meta name="twitter:image" content="https://korchakv.github.io/paintyard/images/og-image.jpg">
   ```
 - [ ] Test social sharing on Facebook using [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/)
 - [ ] Test on Twitter using [Twitter Card Validator](https://cards-dev.twitter.com/validator)
@@ -107,7 +110,7 @@ After 2-4 weeks of being indexed by Google, you should see:
 
 3. **Place ID**: A Google Place ID is not currently in the structured data. You can find yours at https://developers.google.com/maps/documentation/places/web-service/place-id and add it if needed.
 
-4. **Images**: Currently, no Open Graph image is set. Create a 1200x630px image with your logo/branding and add it to improve social sharing.
+4. **Images**: An SVG Open Graph image (og-image.svg) has been added. For better compatibility with Facebook, Twitter, and other social platforms, consider converting it to JPG or PNG format (1200x630px). SVG images may not display properly on all social media platforms.
 
 5. **Consistency**: Always keep NAP (Name, Address, Phone) consistent across:
    - Your website
