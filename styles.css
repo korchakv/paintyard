@@ -706,3 +706,23 @@ h2 {
     margin-left: 20px;
     margin-bottom: 15px;
 }
+
+/* Working Hours Section */
+#working-hours-section {
+    margin-top: 30px;
+}
+
+#working-hours-section h3 {
+    margin-bottom: 15px;
+}
+
+#working-hours {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    max-width: 400px;
+}
+
+#working-hours div:nth-child(odd) {
+    font-weight: 600;
+}

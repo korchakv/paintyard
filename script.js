@@ -149,7 +149,7 @@ async function renderPage() {
         const workingHoursHTML = Object.entries(data.workingHours).map(([day, hours]) => {
             const dayName = daysMap[day] || day;
             return `
-                <div style="font-weight: 600;">${dayName}:</div>
+                <div>${dayName}:</div>
                 <div>${hours}</div>
             `;
         }).join('');
