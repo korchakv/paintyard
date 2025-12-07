@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адмін-панель - Paintyard</title>
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>Адмін-панель</h1>
+            <a href="index.html" class="back-btn">← Повернутися на сайт</a>
+        </header>
+
+        <div id="login-section" class="section">
+            <h2>Вхід</h2>
+            <input type="password" id="admin-password" placeholder="Пароль">
+            <button onclick="login()">Увійти</button>
+            <p class="hint">Пароль за замовчуванням: admin</p>
+        </div>
+
+        <div id="admin-panel" style="display: none;">
+            <!-- Data Management -->
+            <div class="section">
+                <h2>📥 Управління даними</h2>
+                <p class="info-text">⚠️ ВАЖЛИВО: Після внесення змін завантажте файл data.json та закомітьте його в репозиторій GitHub, щоб зміни були видимі на всіх пристроях.</p>
+                <div class="form-group">
+                    <button onclick="downloadDataJson()" class="export-btn">📥 Завантажити data.json</button>
+                    <p class="hint">Завантажте цей файл після внесення змін. Потім закомітьте його в репозиторій GitHub.</p>
+                </div>
+            </div>
+
+            <!-- HEADER SECTION -->
+            <div class="section">
+                <h2>🎨 Шапка (Header)</h2>
+                <div class="form-group">
+                    <label>Логотип</label>
+                    <input type="file" id="logo-file" accept="image/*" onchange="handleLogoUpload(this)" class="file-input">
+                    <button onclick="document.getElementById('logo-file').click()" class="upload-btn">📤 Завантажити логотип</button>
+                    <input type="text" id="logo-input" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
+                    <button onclick="updateLogo()">Оновити логотип</button>
+                    <div id="logo-preview" class="image-preview"></div>
+                </div>
+                <div class="form-group">
+                    <label>Розмір логотипу</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <div>
+                            <label style="font-size: 12px;">Ширина</label>
+                            <input type="text" id="logo-width" placeholder="auto" style="width: 100px;">
+                        </div>
+                        <div>
+                            <label style="font-size: 12px;">Висота (звичайна)</label>
+                            <input type="text" id="logo-height-normal" placeholder="50px" style="width: 100px;">
+                        </div>
+                        <div>
+                            <label style="font-size: 12px;">Висота (зменшена)</label>
+                            <input type="text" id="logo-height-shrink" placeholder="35px" style="width: 100px;">
+                        </div>
+                    </div>
+                    <button onclick="updateLogoSize()">Оновити розмір</button>
+                    <p class="hint">Введіть значення, наприклад: 100px, auto, 50%</p>
+                </div>
+                <div class="form-group">
+                    <label>Висота верхньої шапки (padding)</label>
+                    <input type="text" id="header-top-height" placeholder="15px">
+                    <button onclick="updateHeaderSizes()">Оновити висоту</button>
+                </div>
+                <div class="form-group">
+                    <label>Колір фону шапки</label>
+                    <input type="color" id="header-color">
+                    <button onclick="updateColors()">Оновити колір</button>
+                </div>
+                <div class="form-group">
+                    <label>Колір тексту шапки</label>
+                    <input type="color" id="text-header-color">
+                    <button onclick="updateTextColors()">Оновити колір тексту</button>
+                </div>
+                <div class="form-group">
+                    <label>Розмір шрифту шапки</label>
+                    <input type="text" id="font-size-header" placeholder="14px">
+                    <button onclick="updateFontSizes()">Оновити розмір шрифту</button>
+                </div>
+                <div class="form-group background-section-group">
+                    <label>Фонове зображення шапки</label>
+                    <input type="file" id="header-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'header')" class="file-input">
+                    <button onclick="document.getElementById('header-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
+                    <input type="text" id="header-bg-input" placeholder="Або введіть URL зображення">
+                    <label>Прозорість (0-100%):</label>
+                    <input type="range" id="header-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('header')">
+                    <span id="header-opacity-value">100%</span>
+                    <button onclick="updateSectionBackground('header')">Оновити фон</button>
+                    <button onclick="downloadSectionImage('header')" class="download-btn">💾 Завантажити як header-bg.jpg</button>
+                    <div id="header-bg-preview" class="image-preview"></div>
+                    <button onclick="toggleBackgroundPreview('header')" class="preview-btn" style="margin-top: 15px;">👁️ Показати прев'ю з логотипом</button>
+                    <div id="header-preview-container" class="bg-preview-container" style="display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <label>🔍 Прев'ю сайту з логотипом</label>
+                    <button onclick="toggleSitePreview()" class="preview-btn">👁️ Показати/Сховати прев'ю</button>
+                    <div id="site-preview-container" style="display: none; margin-top: 15px;">
+                        <div class="logo-controls">
+                            <label>Масштаб логотипу:</label>
+                            <input type="range" id="logo-scale" min="20" max="200" value="100" oninput="updateLogoPreview()">
+                            <span id="logo-scale-value">100%</span>
+                            
+                            <label style="margin-top: 10px;">Позиція по горизонталі:</label>
+                            <input type="range" id="logo-position-x" min="0" max="100" value="50" oninput="updateLogoPreview()">
+                            <span id="logo-position-x-value">50%</span>
+                            
+                            <label style="margin-top: 10px;">Позиція по вертикалі:</label>
+                            <input type="range" id="logo-position-y" min="0" max="100" value="50" oninput="updateLogoPreview()">
+                            <span id="logo-position-y-value">50%</span>
+                            
+                            <button onclick="saveLogoPosition()" style="margin-top: 10px;">💾 Зберегти позицію та масштаб</button>
+                        </div>
+                        <div id="site-preview" class="site-preview"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MENU SECTION -->
+            <div class="section">
+                <h2>📋 Меню (Menu)</h2>
+                <div class="form-group">
+                    <label>Висота меню (padding вертикальний)</label>
+                    <input type="text" id="menu-height" placeholder="18px">
+                    <button onclick="updateHeaderSizes()">Оновити висоту</button>
+                </div>
+                <div class="form-group">
+                    <label>Колір фону меню</label>
+                    <input type="color" id="menu-color">
+                    <button onclick="updateColors()">Оновити колір</button>
+                </div>
+                <div class="form-group">
+                    <label>Колір тексту меню</label>
+                    <input type="color" id="text-menu-color">
+                    <button onclick="updateTextColors()">Оновити колір тексту</button>
+                </div>
+                <div class="form-group">
+                    <label>Розмір шрифту меню</label>
+                    <input type="text" id="font-size-menu" placeholder="16px">
+                    <button onclick="updateFontSizes()">Оновити розмір шрифту</button>
+                </div>
+            </div>
+
+            <!-- CONTACTS SECTION -->
+            <div class="section">
+                <h2>📞 Контакти</h2>
+                <div class="form-group">
+                    <label>Адреса</label>
+                    <input type="text" id="address-input" placeholder="м. Київ, вул. Прикладна, 1">
+                    <button onclick="updateAddress()">Оновити адресу</button>
+                </div>
+                <div class="form-group">
+                    <label>Телефони (один на рядок)</label>
+                    <textarea id="phones-input" rows="3" placeholder="+380 (44) 123-45-67&#10;+380 (50) 123-45-67"></textarea>
+                    <button onclick="updatePhones()">Оновити телефони</button>
+                </div>
+                <div class="form-group">
+                    <label>Колір телефонів</label>
+                    <input type="color" id="contact-phones-color">
+                </div>
+                <div class="form-group">
+                    <label>Колір адреси</label>
+                    <input type="color" id="contact-address-color">
+                    <button onclick="updateContactColors()">Оновити кольори контактів</button>
+                </div>
+            </div>
+
+            <!-- ABOUT SECTION -->
+            <div class="section">
+                <h2>ℹ️ Про нас (About)</h2>
+                <div class="form-group">
+                    <label>Текст "Про нас"</label>
+                    <textarea id="about-input" rows="5"></textarea>
+                    <button onclick="updateAbout()">Оновити текст</button>
+                </div>
+                <div class="form-group">
+                    <label>Колір тексту "Про нас"</label>
+                    <input type="color" id="text-about-color">
+                    <button onclick="updateTextColors()">Оновити колір тексту</button>
+                </div>
+                <div class="form-group">
+                    <label>Розмір шрифту "Про нас"</label>
+                    <input type="text" id="font-size-about" placeholder="16px">
+                    <button onclick="updateFontSizes()">Оновити розмір шрифту</button>
+                </div>
+                <div class="form-group background-section-group">
+                    <label>Фонове зображення "Про нас"</label>
+                    <input type="file" id="about-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'about')" class="file-input">
+                    <button onclick="document.getElementById('about-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
+                    <input type="text" id="about-bg-input" placeholder="Або введіть URL зображення">
+                    <label>Прозорість (0-100%):</label>
+                    <input type="range" id="about-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('about')">
+                    <span id="about-opacity-value">100%</span>
+                    <button onclick="updateSectionBackground('about')">Оновити фон</button>
+                    <button onclick="downloadSectionImage('about')" class="download-btn">💾 Завантажити як about-bg.jpg</button>
+                    <div id="about-bg-preview" class="image-preview"></div>
+                    <button onclick="toggleBackgroundPreview('about')" class="preview-btn" style="margin-top: 15px;">👁️ Показати прев'ю з логотипом</button>
+                    <div id="about-preview-container" class="bg-preview-container" style="display: none;"></div>
+                </div>
+            </div>
+
+            <!-- BRANDS SECTION -->
+            <div class="section">
+                <h2>🏷️ Бренди (Brands)</h2>
+                <div class="form-group">
+                    <label>Колір тексту "Бренди"</label>
+                    <input type="color" id="text-brands-color">
+                    <button onclick="updateTextColors()">Оновити колір тексту</button>
+                </div>
+                <div class="form-group">
+                    <label>Розмір шрифту "Бренди"</label>
+                    <input type="text" id="font-size-brands" placeholder="16px">
+                    <button onclick="updateFontSizes()">Оновити розмір шрифту</button>
+                </div>
+                <div class="form-group background-section-group">
+                    <label>Фонове зображення "Бренди"</label>
+                    <input type="file" id="brands-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'brands')" class="file-input">
+                    <button onclick="document.getElementById('brands-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
+                    <input type="text" id="brands-bg-input" placeholder="Або введіть URL зображення">
+                    <label>Прозорість (0-100%):</label>
+                    <input type="range" id="brands-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('brands')">
+                    <span id="brands-opacity-value">100%</span>
+                    <button onclick="updateSectionBackground('brands')">Оновити фон</button>
+                    <button onclick="downloadSectionImage('brands')" class="download-btn">💾 Завантажити як brands-bg.jpg</button>
+                    <div id="brands-bg-preview" class="image-preview"></div>
+                    <button onclick="toggleBackgroundPreview('brands')" class="preview-btn" style="margin-top: 15px;">👁️ Показати прев'ю з логотипом</button>
+                    <div id="brands-preview-container" class="bg-preview-container" style="display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <h3>Список брендів</h3>
+                    <div id="products-list"></div>
+                    <button onclick="showAddProductForm()" class="add-btn">+ Додати бренд</button>
+                </div>
+            </div>
+
+            <!-- ARTICLES SECTION -->
+            <div class="section">
+                <h2>📰 Статті (Articles)</h2>
+                <div class="form-group">
+                    <label>Колір тексту "Статті"</label>
+                    <input type="color" id="text-articles-color">
+                    <button onclick="updateTextColors()">Оновити колір тексту</button>
+                </div>
+                <div class="form-group">
+                    <label>Розмір шрифту "Статті"</label>
+                    <input type="text" id="font-size-articles" placeholder="16px">
+                    <button onclick="updateFontSizes()">Оновити розмір шрифту</button>
+                </div>
+                <div class="form-group background-section-group">
+                    <label>Фонове зображення "Статті"</label>
+                    <input type="file" id="articles-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'articles')" class="file-input">
+                    <button onclick="document.getElementById('articles-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
+                    <input type="text" id="articles-bg-input" placeholder="Або введіть URL зображення">
+                    <label>Прозорість (0-100%):</label>
+                    <input type="range" id="articles-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('articles')">
+                    <span id="articles-opacity-value">100%</span>
+                    <button onclick="updateSectionBackground('articles')">Оновити фон</button>
+                    <button onclick="downloadSectionImage('articles')" class="download-btn">💾 Завантажити як articles-bg.jpg</button>
+                    <div id="articles-bg-preview" class="image-preview"></div>
+                    <button onclick="toggleBackgroundPreview('articles')" class="preview-btn" style="margin-top: 15px;">👁️ Показати прев'ю з логотипом</button>
+                    <div id="articles-preview-container" class="bg-preview-container" style="display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <h3>Список статтей</h3>
+                    <div id="articles-list"></div>
+                    <button onclick="showAddArticleForm()" class="add-btn">+ Додати статтю</button>
+                </div>
+            </div>
+
+            <!-- FOOTER SECTION -->
+            <div class="section">
+                <h2>🔽 Підвал (Footer)</h2>
+                <div class="form-group">
+                    <label>Висота підвалу (padding)</label>
+                    <input type="text" id="footer-height" placeholder="30px">
+                    <button onclick="updateHeaderSizes()">Оновити висоту</button>
+                </div>
+                <div class="form-group">
+                    <label>Колір тексту підвалу</label>
+                    <input type="color" id="text-footer-color">
+                    <button onclick="updateTextColors()">Оновити колір тексту</button>
+                </div>
+                <div class="form-group">
+                    <label>Розмір шрифту підвалу</label>
+                    <input type="text" id="font-size-footer" placeholder="14px">
+                    <button onclick="updateFontSizes()">Оновити розмір шрифту</button>
+                </div>
+                <div class="form-group background-section-group">
+                    <label>Фонове зображення підвалу</label>
+                    <input type="file" id="footer-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'footer')" class="file-input">
+                    <button onclick="document.getElementById('footer-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
+                    <input type="text" id="footer-bg-input" placeholder="Або введіть URL зображення">
+                    <label>Прозорість (0-100%):</label>
+                    <input type="range" id="footer-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('footer')">
+                    <span id="footer-opacity-value">100%</span>
+                    <button onclick="updateSectionBackground('footer')">Оновити фон</button>
+                    <button onclick="downloadSectionImage('footer')" class="download-btn">💾 Завантажити як footer-bg.jpg</button>
+                    <div id="footer-bg-preview" class="image-preview"></div>
+                    <button onclick="toggleBackgroundPreview('footer')" class="preview-btn" style="margin-top: 15px;">👁️ Показати прев'ю з логотипом</button>
+                    <div id="footer-preview-container" class="bg-preview-container" style="display: none;"></div>
+                </div>
+            </div>
+
+            <!-- Main Color (additional setting) -->
+            <div class="section">
+                <h2>🌐 Загальні налаштування сайту</h2>
+                <div class="form-group">
+                    <label>Колір основної сторінки (фон між секціями)</label>
+                    <input type="color" id="main-color">
+                    <button onclick="updateColors()">Оновити колір</button>
+                </div>
+            </div>
+
+            <!-- Logout -->
+            <div class="section">
+                <button onclick="logout()" class="logout-btn">Вийти</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Brand Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeProductModal()">&times;</span>
+            <h2 id="product-modal-title">Додати бренд</h2>
+            <div class="form-group">
+                <label>Назва бренду</label>
+                <input type="text" id="product-name">
+            </div>
+            <div class="form-group">
+                <label>Опис бренду</label>
+                <textarea id="product-description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Зображення (логотип бренду)</label>
+                <input type="file" id="product-image-file" accept="image/*" onchange="handleProductImageUpload(this)" class="file-input" style="display: none;">
+                <button type="button" onclick="document.getElementById('product-image-file').click()" class="upload-btn">📤 Завантажити зображення</button>
+                <input type="text" id="product-image" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
+                <p class="hint">Рекомендована назва: images/brands/[ID бренду].jpg</p>
+                <div id="product-image-preview" class="image-preview"></div>
+            </div>
+            <input type="hidden" id="product-id">
+            <button onclick="saveProduct()">Зберегти</button>
+        </div>
+    </div>
+
+    <!-- Article Modal -->
+    <div id="article-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeArticleModal()">&times;</span>
+            <h2 id="article-modal-title">Додати статтю</h2>
+            <div class="form-group">
+                <label>Назва</label>
+                <input type="text" id="article-name">
+            </div>
+            <div class="form-group">
+                <label>Короткий опис</label>
+                <textarea id="article-excerpt" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Зображення</label>
+                <input type="file" id="article-image-file" accept="image/*" onchange="handleArticleImageUpload(this)" class="file-input" style="display: none;">
+                <button type="button" onclick="document.getElementById('article-image-file').click()" class="upload-btn">📤 Завантажити зображення</button>
+                <input type="text" id="article-image" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
+                <div id="article-image-preview" class="image-preview"></div>
+            </div>
+            <div class="form-group">
+                <label>Вміст статті (HTML)</label>
+                <textarea id="article-content" rows="10"></textarea>
+            </div>
+            <input type="hidden" id="article-id">
+            <button onclick="saveArticle()">Зберегти</button>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

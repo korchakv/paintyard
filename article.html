@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стаття - Paintyard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .article-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .article-content {
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .article-content h1 {
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .article-content h2 {
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .article-content p {
+            margin-bottom: 15px;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="article-container">
+        <a href="index.html" class="back-link">← Повернутися на головну</a>
+        <img id="article-image" class="article-image" src="" alt="Article Image" style="display: none;">
+        <div id="article-content" class="article-content">
+            <p>Завантаження...</p>
+        </div>
+    </div>
+
+    <script>
+        // Get article ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = parseInt(urlParams.get('id'));
+
+        // Load and display article
+        async function loadArticle() {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
+
+                if (data && data.articles) {
+                    const article = data.articles.find(a => a.id === articleId);
+                    if (article) {
+                        if (article.image) {
+                            document.getElementById('article-image').src = article.image;
+                            document.getElementById('article-image').style.display = 'block';
+                        }
+                        document.getElementById('article-content').innerHTML = article.content;
+                        document.title = article.name + ' - Paintyard';
+                    } else {
+                        document.getElementById('article-content').innerHTML = '<p>Стаття не знайдена.</p>';
+                    }
+                } else {
+                    document.getElementById('article-content').innerHTML = '<p>Помилка завантаження статті.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading article:', error);
+                document.getElementById('article-content').innerHTML = '<p>Помилка завантаження статті.</p>';
+            }
+        }
+
+        loadArticle();
+    </script>
+</body>
+</html>
