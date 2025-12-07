@@ -74,57 +74,17 @@
                 </div>
             </div>
 
-            <!-- Color Settings -->
+            <!-- Header Section Settings (consolidated) -->
             <div class="section">
-                <h2>Кольори</h2>
+                <h2>🔧 Налаштування шапки (Header)</h2>
                 <div class="form-group">
-                    <label>Колір шапки (Header Top)</label>
+                    <label>Колір фону шапки</label>
                     <input type="color" id="header-color">
                 </div>
-                <div class="form-group">
-                    <label>Колір меню (Menu Bar)</label>
-                    <input type="color" id="menu-color">
-                </div>
-                <div class="form-group">
-                    <label>Колір основної сторінки</label>
-                    <input type="color" id="main-color">
-                    <button onclick="updateColors()">Оновити кольори</button>
-                </div>
-            </div>
-
-            <!-- Text Colors -->
-            <div class="section">
-                <h2>Кольори шрифтів</h2>
                 <div class="form-group">
                     <label>Колір тексту шапки</label>
                     <input type="color" id="text-header-color">
                 </div>
-                <div class="form-group">
-                    <label>Колір тексту меню</label>
-                    <input type="color" id="text-menu-color">
-                </div>
-                <div class="form-group">
-                    <label>Колір тексту "Про нас"</label>
-                    <input type="color" id="text-about-color">
-                </div>
-                <div class="form-group">
-                    <label>Колір тексту "Бренди"</label>
-                    <input type="color" id="text-brands-color">
-                </div>
-                <div class="form-group">
-                    <label>Колір тексту "Статті"</label>
-                    <input type="color" id="text-articles-color">
-                </div>
-                <div class="form-group">
-                    <label>Колір тексту підвалу</label>
-                    <input type="color" id="text-footer-color">
-                    <button onclick="updateTextColors()">Оновити кольори шрифтів</button>
-                </div>
-            </div>
-
-            <!-- Contact Colors -->
-            <div class="section">
-                <h2>Кольори контактів</h2>
                 <div class="form-group">
                     <label>Колір телефонів</label>
                     <input type="color" id="contact-phones-color">
@@ -132,20 +92,10 @@
                 <div class="form-group">
                     <label>Колір адреси</label>
                     <input type="color" id="contact-address-color">
-                    <button onclick="updateContactColors()">Оновити кольори контактів</button>
                 </div>
-            </div>
-
-            <!-- Header Sizes -->
-            <div class="section">
-                <h2>Розміри шапки та меню</h2>
                 <div class="form-group">
                     <label>Висота верхньої шапки (padding, наприклад: 15px, 20px)</label>
                     <input type="text" id="header-top-height" placeholder="15px">
-                </div>
-                <div class="form-group">
-                    <label>Висота меню (padding вертикальний, наприклад: 18px, 15px)</label>
-                    <input type="text" id="menu-height" placeholder="18px">
                 </div>
                 <div class="form-group">
                     <label>Висота логотипу (звичайний стан, наприклад: 50px, 60px)</label>
@@ -156,62 +106,27 @@
                     <input type="text" id="logo-height-shrink" placeholder="35px">
                 </div>
                 <div class="form-group">
-                    <label>Висота підвалу (padding, наприклад: 30px, 40px)</label>
-                    <input type="text" id="footer-height" placeholder="30px">
-                    <button onclick="updateHeaderSizes()">Оновити розміри</button>
-                    <p class="hint">Ці налаштування дозволяють незалежно контролювати розміри шапки, меню, логотипу та підвалу</p>
-                </div>
-            </div>
-
-            <!-- Section Background Images -->
-            <div class="section">
-                <h2>Фонові зображення секцій</h2>
-                <p class="info-text">📁 Завантажте зображення з автоматичними назвами. Перейменуйте їх та завантажте в папки GitHub: /images/backgrounds/</p>
-                
-                <!-- Header Background -->
-                <div class="form-group background-section-group">
-                    <h3>Шапка (Header)</h3>
+                    <h3>Фонове зображення</h3>
                     <input type="file" id="header-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'header')" class="file-input">
                     <button onclick="document.getElementById('header-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
                     <input type="text" id="header-bg-input" placeholder="Або введіть URL зображення">
                     
                     <div class="bg-controls-grid">
                         <div>
-                            <label>Прозорість (0-100%):</label>
-                            <input type="range" id="header-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('header')">
-                            <span id="header-opacity-value">100%</span>
+                            <label>Прозорість: <span id="header-opacity-value">100%</span></label>
+                            <input type="range" id="header-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('header')" class="slider">
                         </div>
                         <div>
-                            <label>Розмір:</label>
-                            <select id="header-bg-size">
-                                <option value="cover">Cover (покрити)</option>
-                                <option value="contain">Contain (вмістити)</option>
-                                <option value="auto">Auto (оригінальний)</option>
-                                <option value="100% 100%">Розтягнути</option>
-                            </select>
+                            <label>Масштаб: <span id="header-scale-value">100%</span></label>
+                            <input type="range" id="header-bg-scale" min="50" max="200" value="100" oninput="updateScaleValue('header')" class="slider">
                         </div>
                         <div>
-                            <label>Позиція:</label>
-                            <select id="header-bg-position">
-                                <option value="center">Center (по центру)</option>
-                                <option value="top">Top (вгорі)</option>
-                                <option value="bottom">Bottom (внизу)</option>
-                                <option value="left">Left (зліва)</option>
-                                <option value="right">Right (справа)</option>
-                                <option value="top left">Top Left</option>
-                                <option value="top right">Top Right</option>
-                                <option value="bottom left">Bottom Left</option>
-                                <option value="bottom right">Bottom Right</option>
-                            </select>
+                            <label>Позиція X: <span id="header-posX-value">50%</span></label>
+                            <input type="range" id="header-bg-posX" min="0" max="100" value="50" oninput="updatePosXValue('header')" class="slider">
                         </div>
                         <div>
-                            <label>Повторення:</label>
-                            <select id="header-bg-repeat">
-                                <option value="no-repeat">No Repeat (не повторювати)</option>
-                                <option value="repeat">Repeat (повторювати)</option>
-                                <option value="repeat-x">Repeat X (горизонтально)</option>
-                                <option value="repeat-y">Repeat Y (вертикально)</option>
-                            </select>
+                            <label>Позиція Y: <span id="header-posY-value">50%</span></label>
+                            <input type="range" id="header-bg-posY" min="0" max="100" value="50" oninput="updatePosYValue('header')" class="slider">
                         </div>
                     </div>
                     
@@ -219,50 +134,56 @@
                     <button onclick="downloadSectionImage('header')" class="download-btn">💾 Завантажити як header-bg.jpg</button>
                     <div id="header-bg-preview" class="image-preview"></div>
                 </div>
+                <button onclick="updateHeaderSettings()">💾 Зберегти всі налаштування шапки</button>
+            </div>
 
-                <!-- About Background -->
-                <div class="form-group background-section-group">
-                    <h3>Про нас (About)</h3>
+            <!-- Menu Section Settings (consolidated) -->
+            <div class="section">
+                <h2>🔧 Налаштування меню (Menu)</h2>
+                <div class="form-group">
+                    <label>Колір фону меню</label>
+                    <input type="color" id="menu-color">
+                </div>
+                <div class="form-group">
+                    <label>Колір тексту меню</label>
+                    <input type="color" id="text-menu-color">
+                </div>
+                <div class="form-group">
+                    <label>Висота меню (padding вертикальний, наприклад: 18px, 15px)</label>
+                    <input type="text" id="menu-height" placeholder="18px">
+                </div>
+                <button onclick="updateMenuSettings()">💾 Зберегти налаштування меню</button>
+            </div>
+
+            <!-- About Section Settings (consolidated) -->
+            <div class="section">
+                <h2>🔧 Налаштування секції "Про нас" (About)</h2>
+                <div class="form-group">
+                    <label>Колір тексту</label>
+                    <input type="color" id="text-about-color">
+                </div>
+                <div class="form-group">
+                    <h3>Фонове зображення</h3>
                     <input type="file" id="about-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'about')" class="file-input">
                     <button onclick="document.getElementById('about-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
                     <input type="text" id="about-bg-input" placeholder="Або введіть URL зображення">
+                    
                     <div class="bg-controls-grid">
                         <div>
-                            <label>Прозорість (0-100%):</label>
-                            <input type="range" id="about-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('about')">
-                            <span id="about-opacity-value">100%</span>
+                            <label>Прозорість: <span id="about-opacity-value">100%</span></label>
+                            <input type="range" id="about-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('about')" class="slider">
                         </div>
                         <div>
-                            <label>Розмір:</label>
-                            <select id="about-bg-size">
-                                <option value="cover">Cover (покрити)</option>
-                                <option value="contain">Contain (вмістити)</option>
-                                <option value="auto">Auto (оригінальний)</option>
-                                <option value="100% 100%">Розтягнути</option>
-                            </select>
+                            <label>Масштаб: <span id="about-scale-value">100%</span></label>
+                            <input type="range" id="about-bg-scale" min="50" max="200" value="100" oninput="updateScaleValue('about')" class="slider">
                         </div>
                         <div>
-                            <label>Позиція:</label>
-                            <select id="about-bg-position">
-                                <option value="center">Center (по центру)</option>
-                                <option value="top">Top (вгорі)</option>
-                                <option value="bottom">Bottom (внизу)</option>
-                                <option value="left">Left (зліва)</option>
-                                <option value="right">Right (справа)</option>
-                                <option value="top left">Top Left</option>
-                                <option value="top right">Top Right</option>
-                                <option value="bottom left">Bottom Left</option>
-                                <option value="bottom right">Bottom Right</option>
-                            </select>
+                            <label>Позиція X: <span id="about-posX-value">50%</span></label>
+                            <input type="range" id="about-bg-posX" min="0" max="100" value="50" oninput="updatePosXValue('about')" class="slider">
                         </div>
                         <div>
-                            <label>Повторення:</label>
-                            <select id="about-bg-repeat">
-                                <option value="no-repeat">No Repeat (не повторювати)</option>
-                                <option value="repeat">Repeat (повторювати)</option>
-                                <option value="repeat-x">Repeat X (горизонтально)</option>
-                                <option value="repeat-y">Repeat Y (вертикально)</option>
-                            </select>
+                            <label>Позиція Y: <span id="about-posY-value">50%</span></label>
+                            <input type="range" id="about-bg-posY" min="0" max="100" value="50" oninput="updatePosYValue('about')" class="slider">
                         </div>
                     </div>
                     
@@ -270,50 +191,38 @@
                     <button onclick="downloadSectionImage('about')" class="download-btn">💾 Завантажити як about-bg.jpg</button>
                     <div id="about-bg-preview" class="image-preview"></div>
                 </div>
+                <button onclick="updateAboutSettings()">💾 Зберегти налаштування "Про нас"</button>
+            </div>
 
-                <!-- Brands Background -->
-                <div class="form-group background-section-group">
-                    <h3>Бренди (Brands)</h3>
+            <!-- Brands Section Settings (consolidated) -->
+            <div class="section">
+                <h2>🔧 Налаштування секції "Бренди" (Brands)</h2>
+                <div class="form-group">
+                    <label>Колір тексту</label>
+                    <input type="color" id="text-brands-color">
+                </div>
+                <div class="form-group">
+                    <h3>Фонове зображення</h3>
                     <input type="file" id="brands-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'brands')" class="file-input">
                     <button onclick="document.getElementById('brands-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
                     <input type="text" id="brands-bg-input" placeholder="Або введіть URL зображення">
+                    
                     <div class="bg-controls-grid">
                         <div>
-                            <label>Прозорість (0-100%):</label>
-                            <input type="range" id="brands-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('brands')">
-                            <span id="brands-opacity-value">100%</span>
+                            <label>Прозорість: <span id="brands-opacity-value">100%</span></label>
+                            <input type="range" id="brands-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('brands')" class="slider">
                         </div>
                         <div>
-                            <label>Розмір:</label>
-                            <select id="brands-bg-size">
-                                <option value="cover">Cover (покрити)</option>
-                                <option value="contain">Contain (вмістити)</option>
-                                <option value="auto">Auto (оригінальний)</option>
-                                <option value="100% 100%">Розтягнути</option>
-                            </select>
+                            <label>Масштаб: <span id="brands-scale-value">100%</span></label>
+                            <input type="range" id="brands-bg-scale" min="50" max="200" value="100" oninput="updateScaleValue('brands')" class="slider">
                         </div>
                         <div>
-                            <label>Позиція:</label>
-                            <select id="brands-bg-position">
-                                <option value="center">Center (по центру)</option>
-                                <option value="top">Top (вгорі)</option>
-                                <option value="bottom">Bottom (внизу)</option>
-                                <option value="left">Left (зліва)</option>
-                                <option value="right">Right (справа)</option>
-                                <option value="top left">Top Left</option>
-                                <option value="top right">Top Right</option>
-                                <option value="bottom left">Bottom Left</option>
-                                <option value="bottom right">Bottom Right</option>
-                            </select>
+                            <label>Позиція X: <span id="brands-posX-value">50%</span></label>
+                            <input type="range" id="brands-bg-posX" min="0" max="100" value="50" oninput="updatePosXValue('brands')" class="slider">
                         </div>
                         <div>
-                            <label>Повторення:</label>
-                            <select id="brands-bg-repeat">
-                                <option value="no-repeat">No Repeat (не повторювати)</option>
-                                <option value="repeat">Repeat (повторювати)</option>
-                                <option value="repeat-x">Repeat X (горизонтально)</option>
-                                <option value="repeat-y">Repeat Y (вертикально)</option>
-                            </select>
+                            <label>Позиція Y: <span id="brands-posY-value">50%</span></label>
+                            <input type="range" id="brands-bg-posY" min="0" max="100" value="50" oninput="updatePosYValue('brands')" class="slider">
                         </div>
                     </div>
                     
@@ -321,50 +230,38 @@
                     <button onclick="downloadSectionImage('brands')" class="download-btn">💾 Завантажити як brands-bg.jpg</button>
                     <div id="brands-bg-preview" class="image-preview"></div>
                 </div>
+                <button onclick="updateBrandsSettings()">💾 Зберегти налаштування "Бренди"</button>
+            </div>
 
-                <!-- Articles Background -->
-                <div class="form-group background-section-group">
-                    <h3>Статті (Articles)</h3>
+            <!-- Articles Section Settings (consolidated) -->
+            <div class="section">
+                <h2>🔧 Налаштування секції "Статті" (Articles)</h2>
+                <div class="form-group">
+                    <label>Колір тексту</label>
+                    <input type="color" id="text-articles-color">
+                </div>
+                <div class="form-group">
+                    <h3>Фонове зображення</h3>
                     <input type="file" id="articles-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'articles')" class="file-input">
                     <button onclick="document.getElementById('articles-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
                     <input type="text" id="articles-bg-input" placeholder="Або введіть URL зображення">
+                    
                     <div class="bg-controls-grid">
                         <div>
-                            <label>Прозорість (0-100%):</label>
-                            <input type="range" id="articles-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('articles')">
-                            <span id="articles-opacity-value">100%</span>
+                            <label>Прозорість: <span id="articles-opacity-value">100%</span></label>
+                            <input type="range" id="articles-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('articles')" class="slider">
                         </div>
                         <div>
-                            <label>Розмір:</label>
-                            <select id="articles-bg-size">
-                                <option value="cover">Cover (покрити)</option>
-                                <option value="contain">Contain (вмістити)</option>
-                                <option value="auto">Auto (оригінальний)</option>
-                                <option value="100% 100%">Розтягнути</option>
-                            </select>
+                            <label>Масштаб: <span id="articles-scale-value">100%</span></label>
+                            <input type="range" id="articles-bg-scale" min="50" max="200" value="100" oninput="updateScaleValue('articles')" class="slider">
                         </div>
                         <div>
-                            <label>Позиція:</label>
-                            <select id="articles-bg-position">
-                                <option value="center">Center (по центру)</option>
-                                <option value="top">Top (вгорі)</option>
-                                <option value="bottom">Bottom (внизу)</option>
-                                <option value="left">Left (зліва)</option>
-                                <option value="right">Right (справа)</option>
-                                <option value="top left">Top Left</option>
-                                <option value="top right">Top Right</option>
-                                <option value="bottom left">Bottom Left</option>
-                                <option value="bottom right">Bottom Right</option>
-                            </select>
+                            <label>Позиція X: <span id="articles-posX-value">50%</span></label>
+                            <input type="range" id="articles-bg-posX" min="0" max="100" value="50" oninput="updatePosXValue('articles')" class="slider">
                         </div>
                         <div>
-                            <label>Повторення:</label>
-                            <select id="articles-bg-repeat">
-                                <option value="no-repeat">No Repeat (не повторювати)</option>
-                                <option value="repeat">Repeat (повторювати)</option>
-                                <option value="repeat-x">Repeat X (горизонтально)</option>
-                                <option value="repeat-y">Repeat Y (вертикально)</option>
-                            </select>
+                            <label>Позиція Y: <span id="articles-posY-value">50%</span></label>
+                            <input type="range" id="articles-bg-posY" min="0" max="100" value="50" oninput="updatePosYValue('articles')" class="slider">
                         </div>
                     </div>
                     
@@ -372,56 +269,59 @@
                     <button onclick="downloadSectionImage('articles')" class="download-btn">💾 Завантажити як articles-bg.jpg</button>
                     <div id="articles-bg-preview" class="image-preview"></div>
                 </div>
+                <button onclick="updateArticlesSettings()">💾 Зберегти налаштування "Статті"</button>
+            </div>
 
-                <!-- Footer Background -->
-                <div class="form-group background-section-group">
-                    <h3>Підвал (Footer)</h3>
+            <!-- Footer Section Settings (consolidated) -->
+            <div class="section">
+                <h2>🔧 Налаштування підвалу (Footer)</h2>
+                <div class="form-group">
+                    <label>Колір тексту підвалу</label>
+                    <input type="color" id="text-footer-color">
+                </div>
+                <div class="form-group">
+                    <label>Висота підвалу (padding, наприклад: 30px, 40px)</label>
+                    <input type="text" id="footer-height" placeholder="30px">
+                </div>
+                <div class="form-group">
+                    <h3>Фонове зображення</h3>
                     <input type="file" id="footer-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'footer')" class="file-input">
                     <button onclick="document.getElementById('footer-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
                     <input type="text" id="footer-bg-input" placeholder="Або введіть URL зображення">
+                    
                     <div class="bg-controls-grid">
                         <div>
-                            <label>Прозорість (0-100%):</label>
-                            <input type="range" id="footer-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('footer')">
-                            <span id="footer-opacity-value">100%</span>
+                            <label>Прозорість: <span id="footer-opacity-value">100%</span></label>
+                            <input type="range" id="footer-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('footer')" class="slider">
                         </div>
                         <div>
-                            <label>Розмір:</label>
-                            <select id="footer-bg-size">
-                                <option value="cover">Cover (покрити)</option>
-                                <option value="contain">Contain (вмістити)</option>
-                                <option value="auto">Auto (оригінальний)</option>
-                                <option value="100% 100%">Розтягнути</option>
-                            </select>
+                            <label>Масштаб: <span id="footer-scale-value">100%</span></label>
+                            <input type="range" id="footer-bg-scale" min="50" max="200" value="100" oninput="updateScaleValue('footer')" class="slider">
                         </div>
                         <div>
-                            <label>Позиція:</label>
-                            <select id="footer-bg-position">
-                                <option value="center">Center (по центру)</option>
-                                <option value="top">Top (вгорі)</option>
-                                <option value="bottom">Bottom (внизу)</option>
-                                <option value="left">Left (зліва)</option>
-                                <option value="right">Right (справа)</option>
-                                <option value="top left">Top Left</option>
-                                <option value="top right">Top Right</option>
-                                <option value="bottom left">Bottom Left</option>
-                                <option value="bottom right">Bottom Right</option>
-                            </select>
+                            <label>Позиція X: <span id="footer-posX-value">50%</span></label>
+                            <input type="range" id="footer-bg-posX" min="0" max="100" value="50" oninput="updatePosXValue('footer')" class="slider">
                         </div>
                         <div>
-                            <label>Повторення:</label>
-                            <select id="footer-bg-repeat">
-                                <option value="no-repeat">No Repeat (не повторювати)</option>
-                                <option value="repeat">Repeat (повторювати)</option>
-                                <option value="repeat-x">Repeat X (горизонтально)</option>
-                                <option value="repeat-y">Repeat Y (вертикально)</option>
-                            </select>
+                            <label>Позиція Y: <span id="footer-posY-value">50%</span></label>
+                            <input type="range" id="footer-bg-posY" min="0" max="100" value="50" oninput="updatePosYValue('footer')" class="slider">
                         </div>
                     </div>
                     
                     <button onclick="updateSectionBackground('footer')">Оновити фон</button>
                     <button onclick="downloadSectionImage('footer')" class="download-btn">💾 Завантажити як footer-bg.jpg</button>
                     <div id="footer-bg-preview" class="image-preview"></div>
+                </div>
+                <button onclick="updateFooterSettings()">💾 Зберегти налаштування підвалу</button>
+            </div>
+
+            <!-- Main Page Color Settings -->
+            <div class="section">
+                <h2>Колір основної сторінки</h2>
+                <div class="form-group">
+                    <label>Колір основної сторінки</label>
+                    <input type="color" id="main-color">
+                    <button onclick="updateColors()">Оновити колір</button>
                 </div>
             </div>
 

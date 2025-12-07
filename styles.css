@@ -517,6 +517,23 @@ h2 {
         width: 100%;
         justify-content: center;
     }
+    
+    /* Smaller logos on mobile */
+    #header-logo {
+        height: 35px !important;
+    }
+    
+    #header.shrink #header-logo {
+        height: 25px !important;
+    }
+    
+    #header-logo-text {
+        font-size: 22px;
+    }
+    
+    #header.shrink #header-logo-text {
+        font-size: 18px;
+    }
 
     .contacts {
         width: 100%;
@@ -553,6 +570,15 @@ h2 {
     .footer-contacts {
         text-align: center;
     }
+    
+    /* Smaller footer logo */
+    #footer-logo {
+        height: 35px;
+    }
+    
+    #footer-logo-text {
+        font-size: 22px;
+    }
 
     #main-content {
         margin-top: 220px;
@@ -566,11 +592,40 @@ h2 {
         font-size: 32px;
     }
 
+    /* Mobile optimized cards - compact view */
     .brand-card,
     .product-card,
     .article-card {
-        min-width: 260px;
-        max-width: 260px;
+        width: 140px;
+        height: auto;
+        padding: 12px;
+    }
+    
+    .brand-card img,
+    .product-card img,
+    .article-card img {
+        height: 100px;
+        margin-bottom: 8px;
+    }
+    
+    .brand-card h3,
+    .product-card h3,
+    .article-card h3 {
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+    
+    /* Hide descriptions on mobile - show only logo and name */
+    .brand-card p,
+    .product-card p,
+    .article-card .excerpt {
+        display: none;
+    }
+    
+    .brand-card .read-more,
+    .product-card .read-more,
+    .article-card .read-more {
+        display: none;
     }
 
     #about-content {
