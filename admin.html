@@ -196,18 +196,18 @@
                     <div id="about-bg-preview" class="image-preview"></div>
                 </div>
 
-                <!-- Products Background -->
+                <!-- Brands Background -->
                 <div class="form-group background-section-group">
-                    <h3>Товари (Products)</h3>
-                    <input type="file" id="products-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'products')" class="file-input">
-                    <button onclick="document.getElementById('products-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
-                    <input type="text" id="products-bg-input" placeholder="Або введіть URL зображення">
+                    <h3>Бренди (Brands)</h3>
+                    <input type="file" id="brands-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'brands')" class="file-input">
+                    <button onclick="document.getElementById('brands-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
+                    <input type="text" id="brands-bg-input" placeholder="Або введіть URL зображення">
                     <label>Прозорість (0-100%):</label>
-                    <input type="range" id="products-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('products')">
-                    <span id="products-opacity-value">100%</span>
-                    <button onclick="updateSectionBackground('products')">Оновити фон</button>
-                    <button onclick="downloadSectionImage('products')" class="download-btn">💾 Завантажити як products-bg.jpg</button>
-                    <div id="products-bg-preview" class="image-preview"></div>
+                    <input type="range" id="brands-bg-opacity" min="0" max="100" value="100" oninput="updateOpacityValue('brands')">
+                    <span id="brands-opacity-value">100%</span>
+                    <button onclick="updateSectionBackground('brands')">Оновити фон</button>
+                    <button onclick="downloadSectionImage('brands')" class="download-btn">💾 Завантажити як brands-bg.jpg</button>
+                    <div id="brands-bg-preview" class="image-preview"></div>
                 </div>
 
                 <!-- Articles Background -->
@@ -239,11 +239,11 @@
                 </div>
             </div>
 
-            <!-- Products Management -->
+            <!-- Brands Management -->
             <div class="section">
-                <h2>Товари</h2>
-                <div id="products-list"></div>
-                <button onclick="showAddProductForm()" class="add-btn">+ Додати товар</button>
+                <h2>Бренди</h2>
+                <div id="brands-list"></div>
+                <button onclick="showAddBrandForm()" class="add-btn">+ Додати бренд</button>
             </div>
 
             <!-- Articles Management -->
@@ -260,32 +260,28 @@
         </div>
     </div>
 
-    <!-- Product Modal -->
-    <div id="product-modal" class="modal">
+    <!-- Brand Modal -->
+    <div id="brand-modal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeProductModal()">&times;</span>
-            <h2 id="product-modal-title">Додати товар</h2>
+            <span class="close" onclick="closeBrandModal()">&times;</span>
+            <h2 id="brand-modal-title">Додати бренд</h2>
             <div class="form-group">
                 <label>Назва</label>
-                <input type="text" id="product-name">
+                <input type="text" id="brand-name">
             </div>
             <div class="form-group">
                 <label>Опис</label>
-                <textarea id="product-description" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Ціна</label>
-                <input type="text" id="product-price" placeholder="450 грн">
+                <textarea id="brand-description" rows="3"></textarea>
             </div>
             <div class="form-group">
                 <label>Зображення</label>
-                <input type="file" id="product-image-file" accept="image/*" onchange="handleProductImageUpload(this)" class="file-input" style="display: none;">
-                <button type="button" onclick="document.getElementById('product-image-file').click()" class="upload-btn">📤 Завантажити зображення</button>
-                <input type="text" id="product-image" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
-                <div id="product-image-preview" class="image-preview"></div>
+                <input type="file" id="brand-image-file" accept="image/*" onchange="handleBrandImageUpload(this)" class="file-input" style="display: none;">
+                <button type="button" onclick="document.getElementById('brand-image-file').click()" class="upload-btn">📤 Завантажити зображення</button>
+                <input type="text" id="brand-image" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
+                <div id="brand-image-preview" class="image-preview"></div>
             </div>
-            <input type="hidden" id="product-id">
-            <button onclick="saveProduct()">Зберегти</button>
+            <input type="hidden" id="brand-id">
+            <button onclick="saveBrand()">Зберегти</button>
         </div>
     </div>
 
