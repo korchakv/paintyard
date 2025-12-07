@@ -503,10 +503,16 @@ h2 {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+    
     .header-top-content {
         flex-direction: column;
         gap: 12px;
         padding: 0 20px;
+        max-width: 100%;
     }
     
     #header.shrink .header-top-content {
@@ -532,6 +538,7 @@ h2 {
     .menu-container {
         gap: 15px;
         padding: 0 20px;
+        max-width: 100%;
     }
 
     .menu-container a {
@@ -556,26 +563,99 @@ h2 {
 
     #main-content {
         margin-top: 220px;
+        width: 100%;
+        max-width: 100%;
     }
 
     .section {
-        padding: 60px 20px;
+        padding: 60px 15px;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .container {
+        max-width: 100%;
+        width: 100%;
+        padding: 0;
     }
 
     h2 {
-        font-size: 32px;
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    #about-content {
+        padding: 25px;
+        font-size: 16px;
+    }
+    
+    /* Mobile optimized brand and article cards - 3 per row, compact */
+    .scroll-container {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .scroll-btn {
+        display: none; /* Hide scroll buttons on mobile */
+    }
+    
+    .items-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        overflow-x: visible;
+        padding: 20px 0;
+        width: 100%;
     }
 
     .brand-card,
     .product-card,
     .article-card {
-        min-width: 260px;
-        max-width: 260px;
+        min-width: unset;
+        max-width: unset;
+        width: 100%;
+        height: auto;
+        min-height: 140px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    
+    .brand-card img,
+    .product-card img,
+    .article-card img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 8px;
+        flex-shrink: 0;
     }
 
-    #about-content {
-        padding: 30px;
-        font-size: 16px;
+    .brand-card h3,
+    .product-card h3,
+    .article-card h3 {
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 0;
+        text-align: center;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Hide description and read-more on mobile - show only icon and title */
+    .brand-card p,
+    .product-card p,
+    .article-card .excerpt,
+    .brand-card .read-more,
+    .product-card .read-more,
+    .article-card .read-more {
+        display: none;
     }
 }
 

@@ -675,40 +675,44 @@ async function renderBackgroundPreview(section) {
     const menuColor = data.colors?.menuBg || '#2c3e50';
     const mainColor = data.colors?.mainBg || '#f4f4f4';
     
-    // Load saved logo position if exists for this section
-    const savedPosition = data[`${section}LogoPosition`] || { scale: 100, x: 50, y: 50 };
+    // Load saved background position if exists for this section
+    const bgData = data.sectionBackgrounds?.[section] || {};
+    const savedPosition = bgData.position || { scale: 100, x: 50, y: 50 };
+    
+    // Get current section background
+    const currentBg = data.sectionBackgrounds?.[section]?.image || '';
+    const currentOpacity = data.sectionBackgrounds?.[section]?.opacity || 100;
     
     // Determine which section is being previewed and highlight it
     const getSectionStyle = (sectionName, bg, opacity, color) => {
         const isActive = sectionName === section;
         const borderStyle = isActive ? 'border: 3px solid #007bff;' : '';
-        const bgStyle = bg ? `background-image: url('${bg}'); background-size: cover; background-position: center; opacity: ${opacity / 100};` : '';
         return `background-color: ${color}; position: relative; overflow: hidden; ${borderStyle}`;
     };
     
     container.innerHTML = `
         <div class="logo-controls">
-            <label>Масштаб логотипу (для секції "${section}"):</label>
-            <input type="range" id="${section}-logo-scale" min="20" max="200" value="${savedPosition.scale}" oninput="updateBackgroundLogoPreview('${section}')">
-            <span id="${section}-logo-scale-value">${savedPosition.scale}%</span>
+            <label>Масштаб фону (для секції "${section}"):</label>
+            <input type="range" id="${section}-bg-scale" min="50" max="200" value="${savedPosition.scale}" oninput="updateBackgroundPreview('${section}')">
+            <span id="${section}-bg-scale-value">${savedPosition.scale}%</span>
             
-            <label style="margin-top: 10px;">Позиція по горизонталі:</label>
-            <input type="range" id="${section}-logo-position-x" min="0" max="100" value="${savedPosition.x}" oninput="updateBackgroundLogoPreview('${section}')">
-            <span id="${section}-logo-position-x-value">${savedPosition.x}%</span>
+            <label style="margin-top: 10px;">Позиція фону по горизонталі:</label>
+            <input type="range" id="${section}-bg-position-x" min="0" max="100" value="${savedPosition.x}" oninput="updateBackgroundPreview('${section}')">
+            <span id="${section}-bg-position-x-value">${savedPosition.x}%</span>
             
-            <label style="margin-top: 10px;">Позиція по вертикалі:</label>
-            <input type="range" id="${section}-logo-position-y" min="0" max="100" value="${savedPosition.y}" oninput="updateBackgroundLogoPreview('${section}')">
-            <span id="${section}-logo-position-y-value">${savedPosition.y}%</span>
+            <label style="margin-top: 10px;">Позиція фону по вертикалі:</label>
+            <input type="range" id="${section}-bg-position-y" min="0" max="100" value="${savedPosition.y}" oninput="updateBackgroundPreview('${section}')">
+            <span id="${section}-bg-position-y-value">${savedPosition.y}%</span>
             
-            <button onclick="saveBackgroundLogoPosition('${section}')" style="margin-top: 10px;">💾 Зберегти позицію та масштаб</button>
-            <p class="hint" style="margin-top: 10px; font-size: 12px; color: #666;">Синя рамка показує секцію, що редагується</p>
+            <button onclick="saveBackgroundPosition('${section}')" style="margin-top: 10px;">💾 Зберегти позицію та масштаб фону</button>
+            <p class="hint" style="margin-top: 10px; font-size: 12px; color: #666;">Синя рамка показує секцію, що редагується. Змінюйте позицію та масштаб фонового зображення.</p>
         </div>
         <div id="${section}-bg-preview-frame" class="site-preview" style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
             <!-- Header Section -->
             <div class="preview-header" style="${getSectionStyle('header', headerBg, headerBgOpacity, headerColor)} padding: 15px;">
-                ${headerBg && section === 'header' ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${headerBg}'); background-size: cover; background-position: center; opacity: ${headerBgOpacity / 100}; pointer-events: none;"></div>` : ''}
-                <div class="preview-logo-container${section === 'header' ? '-active' : ''}" style="position: relative; z-index: 1; text-align: center;">
-                    ${logoUrl && section === 'header' ? `<img id="${section}-preview-logo" src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 100px; height: auto;">` : (logoUrl ? `<img src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 100px; height: auto;">` : '<div style="padding: 10px; color: #999; font-size: 12px;">Логотип</div>')}
+                ${section === 'header' && headerBg ? `<div id="${section}-preview-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${headerBg}'); background-size: cover; background-position: center; opacity: ${headerBgOpacity / 100}; pointer-events: none;"></div>` : (headerBg ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${headerBg}'); background-size: cover; background-position: center; opacity: ${headerBgOpacity / 100}; pointer-events: none;"></div>` : '')}
+                <div style="position: relative; z-index: 1; text-align: center;">
+                    ${logoUrl ? `<img src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 100px; height: auto;">` : '<div style="padding: 10px; color: #999; font-size: 12px;">Логотип</div>'}
                 </div>
             </div>
             
@@ -719,93 +723,79 @@ async function renderBackgroundPreview(section) {
             
             <!-- About Section -->
             <div class="preview-about" style="${getSectionStyle('about', aboutBg, aboutBgOpacity, mainColor)} padding: 20px; min-height: 60px;">
-                ${aboutBg && section === 'about' ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${aboutBg}'); background-size: cover; background-position: center; opacity: ${aboutBgOpacity / 100}; pointer-events: none;"></div>` : ''}
-                <div class="preview-logo-container${section === 'about' ? '-active' : ''}" style="position: relative; z-index: 1; text-align: center;">
-                    ${logoUrl && section === 'about' ? `<img id="${section}-preview-logo" src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 80px; height: auto;">` : '<div style="padding: 10px; color: #999; font-size: 11px;">Про нас</div>'}
+                ${section === 'about' && aboutBg ? `<div id="${section}-preview-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${aboutBg}'); background-size: cover; background-position: center; opacity: ${aboutBgOpacity / 100}; pointer-events: none;"></div>` : (aboutBg ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${aboutBg}'); background-size: cover; background-position: center; opacity: ${aboutBgOpacity / 100}; pointer-events: none;"></div>` : '')}
+                <div style="position: relative; z-index: 1; text-align: center;">
+                    ${logoUrl ? `<img src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 80px; height: auto;">` : '<div style="padding: 10px; color: #999; font-size: 11px;">Про нас</div>'}
                 </div>
             </div>
             
             <!-- Brands Section -->
             <div class="preview-brands" style="${getSectionStyle('brands', brandsBg, brandsBgOpacity, mainColor)} padding: 20px; min-height: 60px;">
-                ${brandsBg && section === 'brands' ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${brandsBg}'); background-size: cover; background-position: center; opacity: ${brandsBgOpacity / 100}; pointer-events: none;"></div>` : ''}
-                <div class="preview-logo-container${section === 'brands' ? '-active' : ''}" style="position: relative; z-index: 1; text-align: center;">
-                    ${logoUrl && section === 'brands' ? `<img id="${section}-preview-logo" src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 80px; height: auto;">` : '<div style="padding: 10px; color: #999; font-size: 11px;">Бренди</div>'}
+                ${section === 'brands' && brandsBg ? `<div id="${section}-preview-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${brandsBg}'); background-size: cover; background-position: center; opacity: ${brandsBgOpacity / 100}; pointer-events: none;"></div>` : (brandsBg ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${brandsBg}'); background-size: cover; background-position: center; opacity: ${brandsBgOpacity / 100}; pointer-events: none;"></div>` : '')}
+                <div style="position: relative; z-index: 1; text-align: center;">
+                    ${logoUrl ? `<img src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 80px; height: auto;">` : '<div style="padding: 10px; color: #999; font-size: 11px;">Бренди</div>'}
                 </div>
             </div>
             
             <!-- Articles Section -->
             <div class="preview-articles" style="${getSectionStyle('articles', articlesBg, articlesBgOpacity, mainColor)} padding: 20px; min-height: 60px;">
-                ${articlesBg && section === 'articles' ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${articlesBg}'); background-size: cover; background-position: center; opacity: ${articlesBgOpacity / 100}; pointer-events: none;"></div>` : ''}
-                <div class="preview-logo-container${section === 'articles' ? '-active' : ''}" style="position: relative; z-index: 1; text-align: center;">
-                    ${logoUrl && section === 'articles' ? `<img id="${section}-preview-logo" src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 80px; height: auto;">` : '<div style="padding: 10px; color: #999; font-size: 11px;">Статті</div>'}
+                ${section === 'articles' && articlesBg ? `<div id="${section}-preview-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${articlesBg}'); background-size: cover; background-position: center; opacity: ${articlesBgOpacity / 100}; pointer-events: none;"></div>` : (articlesBg ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${articlesBg}'); background-size: cover; background-position: center; opacity: ${articlesBgOpacity / 100}; pointer-events: none;"></div>` : '')}
+                <div style="position: relative; z-index: 1; text-align: center;">
+                    ${logoUrl ? `<img src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 80px; height: auto;">` : '<div style="padding: 10px; color: #999; font-size: 11px;">Статті</div>'}
                 </div>
             </div>
             
             <!-- Footer Section -->
             <div class="preview-footer" style="${getSectionStyle('footer', footerBg, footerBgOpacity, headerColor)} padding: 15px; text-align: center;">
-                ${footerBg && section === 'footer' ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${footerBg}'); background-size: cover; background-position: center; opacity: ${footerBgOpacity / 100}; pointer-events: none;"></div>` : ''}
-                <div class="preview-logo-container${section === 'footer' ? '-active' : ''}" style="position: relative; z-index: 1;">
-                    ${logoUrl && section === 'footer' ? `<img id="${section}-preview-logo" src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 60px; height: auto;">` : '<div style="padding: 8px; color: #999; font-size: 10px;">Підвал</div>'}
+                ${section === 'footer' && footerBg ? `<div id="${section}-preview-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${footerBg}'); background-size: cover; background-position: center; opacity: ${footerBgOpacity / 100}; pointer-events: none;"></div>` : (footerBg ? `<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('${footerBg}'); background-size: cover; background-position: center; opacity: ${footerBgOpacity / 100}; pointer-events: none;"></div>` : '')}
+                <div style="position: relative; z-index: 1;">
+                    ${logoUrl ? `<img src="${logoUrl}" alt="Logo" style="display: inline-block; max-width: 60px; height: auto;">` : '<div style="padding: 8px; color: #999; font-size: 10px;">Підвал</div>'}
                 </div>
             </div>
         </div>
     `;
     
-    updateBackgroundLogoPreview(section);
+    updateBackgroundPreview(section);
 }
 
-function updateBackgroundLogoPreview(section) {
-    const logo = document.getElementById(`${section}-preview-logo`);
-    if (!logo) return;
+function updateBackgroundPreview(section) {
+    const bg = document.getElementById(`${section}-preview-bg`);
+    if (!bg) return;
     
-    const scale = document.getElementById(`${section}-logo-scale`).value;
-    const posX = document.getElementById(`${section}-logo-position-x`).value;
-    const posY = document.getElementById(`${section}-logo-position-y`).value;
+    const scale = document.getElementById(`${section}-bg-scale`).value;
+    const posX = document.getElementById(`${section}-bg-position-x`).value;
+    const posY = document.getElementById(`${section}-bg-position-y`).value;
     
-    document.getElementById(`${section}-logo-scale-value`).textContent = scale + '%';
-    document.getElementById(`${section}-logo-position-x-value`).textContent = posX + '%';
-    document.getElementById(`${section}-logo-position-y-value`).textContent = posY + '%';
+    document.getElementById(`${section}-bg-scale-value`).textContent = scale + '%';
+    document.getElementById(`${section}-bg-position-x-value`).textContent = posX + '%';
+    document.getElementById(`${section}-bg-position-y-value`).textContent = posY + '%';
     
-    const container = logo.parentElement;
+    // Apply background position
+    bg.style.backgroundPosition = `${posX}% ${posY}%`;
     
-    // Apply horizontal alignment
-    if (posX < 33) {
-        container.style.textAlign = 'left';
-        logo.style.marginLeft = '0';
-        logo.style.marginRight = 'auto';
-    } else if (posX > 66) {
-        container.style.textAlign = 'right';
-        logo.style.marginLeft = 'auto';
-        logo.style.marginRight = '0';
-    } else {
-        container.style.textAlign = 'center';
-        logo.style.marginLeft = 'auto';
-        logo.style.marginRight = 'auto';
-    }
-    
-    // Apply vertical positioning with padding
-    container.style.paddingTop = `${posY / 2}px`;
-    container.style.paddingBottom = `${(100 - posY) / 2}px`;
-    
-    // Apply scale
-    logo.style.transform = `scale(${scale / 100})`;
-    logo.style.transformOrigin = posX < 33 ? 'left center' : posX > 66 ? 'right center' : 'center center';
+    // Apply background size (scale)
+    bg.style.backgroundSize = `${scale}%`;
 }
 
-async function saveBackgroundLogoPosition(section) {
+async function saveBackgroundPosition(section) {
     const data = await loadData();
-    const positionKey = `${section}LogoPosition`;
     
-    if (!data[positionKey]) {
-        data[positionKey] = {};
+    if (!data.sectionBackgrounds) {
+        data.sectionBackgrounds = {};
+    }
+    if (!data.sectionBackgrounds[section]) {
+        data.sectionBackgrounds[section] = {};
+    }
+    if (!data.sectionBackgrounds[section].position) {
+        data.sectionBackgrounds[section].position = {};
     }
     
-    data[positionKey].scale = parseInt(document.getElementById(`${section}-logo-scale`).value);
-    data[positionKey].x = parseInt(document.getElementById(`${section}-logo-position-x`).value);
-    data[positionKey].y = parseInt(document.getElementById(`${section}-logo-position-y`).value);
+    data.sectionBackgrounds[section].position.scale = parseInt(document.getElementById(`${section}-bg-scale`).value);
+    data.sectionBackgrounds[section].position.x = parseInt(document.getElementById(`${section}-bg-position-x`).value);
+    data.sectionBackgrounds[section].position.y = parseInt(document.getElementById(`${section}-bg-position-y`).value);
     
     saveData(data);
-    alert('Позицію та масштаб логотипу збережено!');
+    alert('Позицію та масштаб фону збережено!');
 }
 
 // Site preview with logo positioning
