@@ -400,6 +400,7 @@ h2 {
     margin-bottom: 8px;
     color: #1a1a1a;
     flex-shrink: 0;
+    text-align: center;
 }
 
 .article-card .excerpt {
