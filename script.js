@@ -466,7 +466,7 @@ function formatPlaceType(str) {
 
 function parseDaysHours(openingHours) {
     const daysHours = openingHours.weekday_text.map((e) => e.split(/\:\s+/))
-                .map((e) => ({'days': e[0].substr(0, 3), 'hours': e[1]}));
+                .map((e) => ({'days': e[0].substring(0, 3), 'hours': e[1]}));
 
     for (let i = 1; i < daysHours.length; i++) {
         if (daysHours[i - 1].hours === daysHours[i].hours) {
@@ -734,8 +734,10 @@ function NeighborhoodDiscovery(configuration) {
 
         const renderPlaceResults = function(places, startIndex) {
             placeResultsEl.insertAdjacentHTML('beforeend', resultsTemplate({places: places}));
-            placeResultsEl.querySelectorAll('.place-result').forEach((resultEl, i) => {
-                const place = places[i - startIndex];
+            const allResults = placeResultsEl.querySelectorAll('.place-result');
+            const newResults = Array.from(allResults).slice(startIndex);
+            newResults.forEach((resultEl, i) => {
+                const place = places[i];
                 if (!place) return;
                 resultEl.addEventListener('click', () => {
                     widget.selectPlaceById(place.placeId, true);
