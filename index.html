@@ -188,21 +188,42 @@
                         </div>
                     </div>
                     <div class="map-container">
-                        <iframe 
-                            src="https://maps.google.com/maps?q=48.9366,24.7311&z=15&output=embed"
-                            width="100%" 
-                            height="400" 
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade"
-                            title="Paintyard Location">
-                        </iframe>
-                        <a href="https://www.google.com/maps/search/?api=1&query=48.9366,24.7311" 
-                           target="_blank" 
-                           class="map-link">
-                            Відкрити в Google Maps →
-                        </a>
+                        <div class="neighborhood-discovery">
+                            <div class="places-panel panel no-scroll">
+                                <header class="navbar">
+                                    <div class="search-input">
+                                        <input class="place-search-input" placeholder="Пошук місць поблизу">
+                                        <button class="place-search-button">
+                                            <img src="https://fonts.gstatic.com/s/i/googlematerialicons/search/v11/24px.svg" alt="пошук"/>
+                                        </button>
+                                    </div>
+                                </header>
+                                <div class="results">
+                                    <ul class="place-results-list"></ul>
+                                </div>
+                                <button class="show-more-button sticky">
+                                    <span>Показати більше</span>
+                                    <img class="right" src="https://fonts.gstatic.com/s/i/googlematerialicons/expand_more/v11/24px.svg" alt="розгорнути"/>
+                                </button>
+                            </div>
+                            <div class="details-panel panel"></div>
+                            <div class="map"></div>
+                            <div class="photo-modal">
+                                <img alt="фото місця"/>
+                                <div>
+                                    <button class="back-button">
+                                        <img class="icon" src="https://fonts.gstatic.com/s/i/googlematerialicons/arrow_back/v11/24px.svg" alt="назад"/>
+                                    </button>
+                                    <div class="photo-text">
+                                        <div class="photo-place"></div>
+                                        <div class="photo-attrs">Фото від <span></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <svg class="marker-pin" xmlns="http://www.w3.org/2000/svg" width="26" height="38" fill="none">
+                                <path d="M13 0C5.817 0 0 5.93 0 13.267c0 7.862 5.59 10.81 9.555 17.624C12.09 35.248 11.342 38 13 38c1.723 0 .975-2.817 3.445-7.043C20.085 24.503 26 21.162 26 13.267 26 5.93 20.183 0 13 0Z"/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -226,6 +247,98 @@
     <!-- Admin Panel Link (floating button) -->
     <a href="admin.html" class="admin-link" title="Адмін-панель">⚙</a>
 
+    <!-- Neighborhood Discovery Templates -->
+    <script id="nd-place-results-tmpl" type="text/x-handlebars-template">
+      {{#each places}}
+        <li class="place-result">
+          <div class="text">
+            <button class="name">{{name}}</button>
+            <div class="info">{{type}}</div>
+          </div>
+          <button class="photo" style="background-image:url({{photos.0.urlSmall}})" aria-label="показати фото"></button>
+        </li>
+      {{/each}}
+    </script>
+    <script id="nd-place-details-tmpl" type="text/x-handlebars-template">
+      <div class="navbar">
+        <button class="back-button">
+          <img class="icon" src="https://fonts.gstatic.com/s/i/googlematerialicons/arrow_back/v11/24px.svg" alt="назад"/>
+          Назад
+        </button>
+      </div>
+      <header>
+        <h2>{{name}}</h2>
+        <div class="info">
+          <a href="{{url}}" target="_blank">Дивитись на Google Maps</a>
+        </div>
+        {{#if type}}
+          <div class="info">{{type}}</div>
+        {{/if}}
+        {{#if duration}}
+          <div class="info">
+            <img src="https://fonts.gstatic.com/s/i/googlematerialicons/directions_car/v11/24px.svg" alt="авто" class="travel-icon"/>
+            <span>&nbsp;{{duration.text}}</span>
+          </div>
+        {{/if}}
+      </header>
+      <div class="section">
+        {{#if address}}
+          <div class="contact">
+            <img src="https://fonts.gstatic.com/s/i/googlematerialicons/place/v10/24px.svg" alt="Адреса" class="icon"/>
+            <div class="text">
+              {{address}}
+            </div>
+          </div>
+        {{/if}}
+        {{#if website}}
+          <div class="contact">
+            <img src="https://fonts.gstatic.com/s/i/googlematerialicons/public/v10/24px.svg" alt="Веб-сайт" class="icon"/>
+            <div class="text">
+              <a href="{{website}}" target="_blank">{{websiteDomain}}</a>
+            </div>
+          </div>
+        {{/if}}
+        {{#if phoneNumber}}
+          <div class="contact">
+            <img src="https://fonts.gstatic.com/s/i/googlematerialicons/phone/v10/24px.svg" alt="Телефон" class="icon"/>
+            <div class="text">
+              {{phoneNumber}}
+            </div>
+          </div>
+        {{/if}}
+        {{#if openingHours}}
+          <div class="contact">
+            <img src="https://fonts.gstatic.com/s/i/googlematerialicons/schedule/v12/24px.svg" alt="Години роботи" class="icon"/>
+            <div class="text">
+              {{#each openingHours}}
+                <div>
+                  <span class="weekday">{{days}}</span>
+                  <span class="hours">{{hours}}</span>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        {{/if}}
+      </div>
+      {{#if photos}}
+        <div class="photos section">
+          {{#each photos}}
+            <button class="photo" style="background-image:url({{urlLarge}})" aria-label="показати фото"></button>
+          {{/each}}
+        </div>
+      {{/if}}
+      {{#if html_attributions}}
+        <div class="section">
+          {{#each html_attributions}}
+            <p class="attribution">{{{this}}}</p>
+          {{/each}}
+        </div>
+      {{/if}}
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/handlebars/4.7.7/handlebars.min.js"></script>
     <script src="script.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqyiWG8P5OeY8yEjJGoW2yQ65S__oE2Ww&callback=initMap&libraries=places,geometry&solution_channel=GMP_QB_neighborhooddiscovery_v3_cABCDF" async defer></script>
+
 </body>
 </html>
