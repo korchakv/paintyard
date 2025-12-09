@@ -166,15 +166,20 @@
                         </div>
                     </div>
                     <div class="map-container">
-                        <!-- Simple embedded map using OpenStreetMap -->
-                        <iframe 
-                            title="Карта розташування магазину Paintyard в Івано-Франківську"
-                            width="100%" 
-                            height="450" 
-                            loading="lazy"
-                            src="https://www.openstreetmap.org/export/embed.html?bbox=24.7261%2C48.9336%2C24.7361%2C48.9396&amp;layer=mapnik&amp;marker=48.9366%2C24.7311" 
-                            style="border: 1px solid #ccc; border-radius: 8px;">
-                        </iframe>
+                        <!-- Map with address label -->
+                        <div style="position: relative;">
+                            <iframe 
+                                title="Карта розташування магазину Paintyard в Івано-Франківську"
+                                width="100%" 
+                                height="450" 
+                                loading="lazy"
+                                src="https://www.openstreetmap.org/export/embed.html?bbox=24.7261%2C48.9336%2C24.7361%2C48.9396&amp;layer=mapnik&amp;marker=48.9366%2C24.7311" 
+                                style="border: 1px solid #ccc; border-radius: 8px;">
+                            </iframe>
+                            <div class="map-address-label">
+                                📍 Івано-Франківськ, вул. Вовчинецька, 191
+                            </div>
+                        </div>
                         <div style="margin-top: 10px; text-align: center;">
                             <small>
                                 <a href="https://www.openstreetmap.org/?mlat=48.9366&amp;mlon=24.7311#map=16/48.9366/24.7311" target="_blank" rel="noopener noreferrer" style="color: #0078A8; text-decoration: none;">
