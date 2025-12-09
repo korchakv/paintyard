@@ -824,32 +824,6 @@ h2 {
     text-decoration: underline;
 }
 
-.map-container {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.map-container iframe {
-    display: block;
-    width: 100%;
-    min-height: 400px;
-}
-
-.map-address-label {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: white;
-    padding: 8px 12px;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    font-size: 14px;
-    font-weight: 600;
-    z-index: 10;
-}
-
 /* New Map Container Styles */
 .map-container-new {
     background: white;
@@ -928,10 +902,6 @@ h2 {
     .contact-wrapper {
         grid-template-columns: 1fr;
         gap: 30px;
-    }
-    
-    .map-container iframe {
-        min-height: 300px;
     }
     
     .map-header h3 {
