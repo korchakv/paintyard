@@ -228,13 +228,17 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (mobileMenuButton && nav) {
         mobileMenuButton.addEventListener('click', () => {
-            nav.classList.toggle('mobile-open');
+            const isOpen = nav.classList.toggle('mobile-open');
+            mobileMenuButton.setAttribute('aria-expanded', isOpen.toString());
+            mobileMenuButton.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
         });
         
         // Close menu when clicking on a link
         document.querySelectorAll('#header nav a').forEach(link => {
             link.addEventListener('click', () => {
                 nav.classList.remove('mobile-open');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenuButton.setAttribute('aria-label', 'Open menu');
             });
         });
     }
