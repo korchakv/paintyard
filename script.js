@@ -40,28 +40,13 @@ async function loadData() {
 async function renderPage() {
     const data = await loadData();
 
-    // Apply colors
-    const headerTop = document.querySelector('.header-top');
-    if (headerTop) {
-        headerTop.style.backgroundColor = data.colors.headerBg;
-    }
-    
-    const menuBar = document.getElementById('menu-bar');
-    if (menuBar && data.colors.menuBg) {
-        menuBar.style.backgroundColor = data.colors.menuBg;
-    }
-    
+    // Apply colors to footer and main content only
     document.getElementById('footer').style.backgroundColor = data.colors.headerBg;
     document.getElementById('main-content').style.backgroundColor = data.colors.mainBg;
 
     // Apply text colors
     if (data.textColors) {
         applyTextColors(data.textColors);
-    }
-    
-    // Apply header sizes
-    if (data.headerSizes) {
-        applyHeaderSizes(data.headerSizes);
     }
     
     // Apply footer size
@@ -71,26 +56,21 @@ async function renderPage() {
 
     // Apply logo size
     if (data.logoSize) {
-        const headerLogo = document.getElementById('header-logo');
         const footerLogo = document.getElementById('footer-logo');
-        if (headerLogo) {
-            headerLogo.style.width = data.logoSize.width;
-            headerLogo.style.height = data.logoSize.height;
-        }
         if (footerLogo) {
             footerLogo.style.width = data.logoSize.width;
             footerLogo.style.height = data.logoSize.height;
         }
     }
 
-    // Render logo
+    // Render logo in footer only
     if (data.logo) {
-        document.getElementById('header-logo').src = data.logo;
-        document.getElementById('header-logo').style.display = 'block';
-        document.getElementById('header-logo-text').style.display = 'none';
-        document.getElementById('footer-logo').src = data.logo;
-        document.getElementById('footer-logo').style.display = 'block';
-        document.getElementById('footer-logo-text').style.display = 'none';
+        const footerLogo = document.getElementById('footer-logo');
+        if (footerLogo) {
+            footerLogo.src = data.logo;
+            footerLogo.style.display = 'block';
+            document.getElementById('footer-logo-text').style.display = 'none';
+        }
     }
     
     // Apply section backgrounds
@@ -98,24 +78,20 @@ async function renderPage() {
         applySectionBackgrounds(data.sectionBackgrounds);
     }
 
-    // Render phones
+    // Render phones in footer only
     const phonesHTML = data.phones.map(phone => 
         `<a href="tel:${phone.replace(/\D/g, '')}">${phone}</a>`
     ).join('');
-    document.getElementById('header-phones').innerHTML = phonesHTML;
-    document.getElementById('footer-phones').innerHTML = phonesHTML;
-
-    // Render address with map link
-    const addressLink = document.getElementById('header-address-link');
-    const headerAddress = document.getElementById('header-address');
-    if (addressLink && headerAddress) {
-        headerAddress.textContent = data.address;
-        // Use GPS coordinates for more accurate location (WPMJ+PG)
-        addressLink.href = `https://www.google.com/maps/search/?api=1&query=48.9366,24.7311`;
-        addressLink.target = '_blank';
-        addressLink.rel = 'noopener noreferrer';
+    const footerPhones = document.getElementById('footer-phones');
+    if (footerPhones) {
+        footerPhones.innerHTML = phonesHTML;
     }
-    document.getElementById('footer-address').textContent = data.address;
+
+    // Render address in footer only
+    const footerAddress = document.getElementById('footer-address');
+    if (footerAddress) {
+        footerAddress.textContent = data.address;
+    }
     
     // Apply contact colors AFTER rendering (fix for phone colors)
     if (data.contactColors) {
@@ -230,18 +206,8 @@ function scrollArticles(direction) {
     }
 }
 
-// Sticky header shrink on scroll
-window.addEventListener('scroll', () => {
-    const header = document.getElementById('header');
-    if (window.scrollY > 50) {
-        header.classList.add('shrink');
-    } else {
-        header.classList.remove('shrink');
-    }
-});
-
 // Smooth scroll for menu links
-document.querySelectorAll('.menu-container a').forEach(link => {
+document.querySelectorAll('#header nav a').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         const targetId = link.getAttribute('href').substring(1);
@@ -253,6 +219,29 @@ document.querySelectorAll('.menu-container a').forEach(link => {
             });
         }
     });
+});
+
+// Mobile menu toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const nav = document.querySelector('#header nav');
+    
+    if (mobileMenuButton && nav) {
+        mobileMenuButton.addEventListener('click', () => {
+            const isOpen = nav.classList.toggle('mobile-open');
+            mobileMenuButton.setAttribute('aria-expanded', isOpen.toString());
+            mobileMenuButton.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+        });
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('#header nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('mobile-open');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenuButton.setAttribute('aria-label', 'Open menu');
+            });
+        });
+    }
 });
 
 // Apply section backgrounds
