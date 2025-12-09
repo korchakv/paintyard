@@ -624,7 +624,7 @@ function updateBackgroundPreview(section) {
                     left: 0;
                     right: 0;
                     bottom: 0;
-                    background-image: url('${imageUrl.replace(/'/g, "\\'")}');
+                    background-image: url('${imageUrl.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}');
                     background-size: ${scale}%;
                     background-position: ${posX}% ${posY}%;
                     background-repeat: no-repeat;

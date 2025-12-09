@@ -175,8 +175,9 @@ function setupAutoScroll(containerId, speed = 0.5) {
         // Scroll right slowly
         container.scrollLeft += speed;
         
-        // Reset to start when reaching the end
-        if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 1) {
+        // Reset to start when reaching the end (with 1px threshold to handle rounding)
+        const scrollThreshold = 1;
+        if (container.scrollLeft >= container.scrollWidth - container.clientWidth - scrollThreshold) {
             setTimeout(() => {
                 container.scrollLeft = 0;
             }, 2000); // Pause at end for 2 seconds
