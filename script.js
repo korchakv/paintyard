@@ -147,6 +147,66 @@ async function renderPage() {
         </div>
     `).join('');
     document.getElementById('articles-container').innerHTML = articlesHTML;
+    
+    // Setup auto-scroll for brands and articles
+    setTimeout(() => {
+        setupAutoScroll('brands-container', 0.3);
+        setupAutoScroll('articles-container', 0.3);
+    }, 100);
+}
+
+// Auto-scroll functionality for containers with overflow
+function setupAutoScroll(containerId, speed = 0.5) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    let scrollInterval = null;
+    let isPaused = false;
+    
+    // Check if container has overflow
+    function hasOverflow() {
+        return container.scrollWidth > container.clientWidth;
+    }
+    
+    // Auto-scroll function
+    function autoScroll() {
+        if (!hasOverflow() || isPaused) return;
+        
+        // Scroll right slowly
+        container.scrollLeft += speed;
+        
+        // Reset to start when reaching the end (with 1px threshold to handle rounding)
+        const scrollThreshold = 1;
+        if (container.scrollLeft >= container.scrollWidth - container.clientWidth - scrollThreshold) {
+            setTimeout(() => {
+                container.scrollLeft = 0;
+            }, 2000); // Pause at end for 2 seconds
+        }
+    }
+    
+    // Pause on hover
+    container.addEventListener('mouseenter', () => {
+        isPaused = true;
+    });
+    
+    container.addEventListener('mouseleave', () => {
+        isPaused = false;
+    });
+    
+    // Start auto-scroll only if there's overflow
+    if (hasOverflow()) {
+        scrollInterval = setInterval(autoScroll, 30);
+    }
+    
+    // Re-check on window resize
+    window.addEventListener('resize', () => {
+        if (scrollInterval) {
+            clearInterval(scrollInterval);
+        }
+        if (hasOverflow()) {
+            scrollInterval = setInterval(autoScroll, 30);
+        }
+    });
 }
 
 // Scroll functions
