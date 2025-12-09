@@ -25,6 +25,7 @@
             <div class="section">
                 <h2>Управління даними</h2>
                 <p class="info-text">⚠️ ВАЖЛИВО: Після внесення змін завантажте файл data.json та закомітьте його в репозиторій GitHub, щоб зміни були видимі на всіх пристроях.</p>
+                <p class="info-text">📖 <a href="README-IMAGE-UPLOAD.md" target="_blank" style="color: #667eea; font-weight: 600;">Проста інструкція по завантаженню картинок на GitHub</a></p>
                 <div class="form-group">
                     <button onclick="downloadDataJson()" class="export-btn">📥 Завантажити data.json</button>
                     <p class="hint">Завантажте цей файл після внесення змін. Потім закомітьте його в репозиторій GitHub.</p>
@@ -38,8 +39,9 @@
                     <label>Логотип</label>
                     <input type="file" id="logo-file" accept="image/*" onchange="handleLogoUpload(this)" class="file-input">
                     <button onclick="document.getElementById('logo-file').click()" class="upload-btn">📤 Завантажити логотип</button>
-                    <input type="text" id="logo-input" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
+                    <input type="text" id="logo-input" placeholder="Або введіть URL: images/logo.png" style="margin-top: 10px;">
                     <button onclick="updateLogo()">Оновити логотип</button>
+                    <p class="hint">💡 Для постійного зберігання завантажте файл на GitHub в папку /images/ і використовуйте URL: images/logo.png</p>
                     <div id="logo-preview" class="image-preview"></div>
                 </div>
                 <div class="form-group">
@@ -109,7 +111,8 @@
                     <h3>Фонове зображення</h3>
                     <input type="file" id="header-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'header')" class="file-input">
                     <button onclick="document.getElementById('header-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
-                    <input type="text" id="header-bg-input" placeholder="Або введіть URL зображення">
+                    <input type="text" id="header-bg-input" placeholder="Або введіть URL: images/backgrounds/header-bg.jpg">
+                    <p class="hint">💡 Завантажте файл на GitHub в /images/backgrounds/ і використовуйте: images/backgrounds/header-bg.jpg</p>
                     
                     <div class="bg-controls-grid">
                         <div>
@@ -130,7 +133,6 @@
                         </div>
                     </div>
                     
-                    <button onclick="updateSectionBackground('header')">Оновити фон</button>
                     <button onclick="downloadSectionImage('header')" class="download-btn">💾 Завантажити як header-bg.jpg</button>
                     <div id="header-bg-preview" class="image-preview"></div>
                 </div>
@@ -166,7 +168,8 @@
                     <h3>Фонове зображення</h3>
                     <input type="file" id="about-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'about')" class="file-input">
                     <button onclick="document.getElementById('about-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
-                    <input type="text" id="about-bg-input" placeholder="Або введіть URL зображення">
+                    <input type="text" id="about-bg-input" placeholder="Або введіть URL: images/backgrounds/about-bg.jpg">
+                    <p class="hint">💡 Завантажте файл на GitHub в /images/backgrounds/ і використовуйте: images/backgrounds/about-bg.jpg</p>
                     
                     <div class="bg-controls-grid">
                         <div>
@@ -187,7 +190,6 @@
                         </div>
                     </div>
                     
-                    <button onclick="updateSectionBackground('about')">Оновити фон</button>
                     <button onclick="downloadSectionImage('about')" class="download-btn">💾 Завантажити як about-bg.jpg</button>
                     <div id="about-bg-preview" class="image-preview"></div>
                 </div>
@@ -205,7 +207,8 @@
                     <h3>Фонове зображення</h3>
                     <input type="file" id="brands-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'brands')" class="file-input">
                     <button onclick="document.getElementById('brands-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
-                    <input type="text" id="brands-bg-input" placeholder="Або введіть URL зображення">
+                    <input type="text" id="brands-bg-input" placeholder="Або введіть URL: images/backgrounds/brands-bg.jpg">
+                    <p class="hint">💡 Завантажте файл на GitHub в /images/backgrounds/ і використовуйте: images/backgrounds/brands-bg.jpg</p>
                     
                     <div class="bg-controls-grid">
                         <div>
@@ -226,7 +229,6 @@
                         </div>
                     </div>
                     
-                    <button onclick="updateSectionBackground('brands')">Оновити фон</button>
                     <button onclick="downloadSectionImage('brands')" class="download-btn">💾 Завантажити як brands-bg.jpg</button>
                     <div id="brands-bg-preview" class="image-preview"></div>
                 </div>
@@ -244,7 +246,8 @@
                     <h3>Фонове зображення</h3>
                     <input type="file" id="articles-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'articles')" class="file-input">
                     <button onclick="document.getElementById('articles-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
-                    <input type="text" id="articles-bg-input" placeholder="Або введіть URL зображення">
+                    <input type="text" id="articles-bg-input" placeholder="Або введіть URL: images/backgrounds/articles-bg.jpg">
+                    <p class="hint">💡 Завантажте файл на GitHub в /images/backgrounds/ і використовуйте: images/backgrounds/articles-bg.jpg</p>
                     
                     <div class="bg-controls-grid">
                         <div>
@@ -265,7 +268,6 @@
                         </div>
                     </div>
                     
-                    <button onclick="updateSectionBackground('articles')">Оновити фон</button>
                     <button onclick="downloadSectionImage('articles')" class="download-btn">💾 Завантажити як articles-bg.jpg</button>
                     <div id="articles-bg-preview" class="image-preview"></div>
                 </div>
@@ -287,7 +289,8 @@
                     <h3>Фонове зображення</h3>
                     <input type="file" id="footer-bg-file" accept="image/*" onchange="handleSectionBgUpload(this, 'footer')" class="file-input">
                     <button onclick="document.getElementById('footer-bg-file').click()" class="upload-btn">📤 Завантажити фон</button>
-                    <input type="text" id="footer-bg-input" placeholder="Або введіть URL зображення">
+                    <input type="text" id="footer-bg-input" placeholder="Або введіть URL: images/backgrounds/footer-bg.jpg">
+                    <p class="hint">💡 Завантажте файл на GitHub в /images/backgrounds/ і використовуйте: images/backgrounds/footer-bg.jpg</p>
                     
                     <div class="bg-controls-grid">
                         <div>
@@ -308,7 +311,6 @@
                         </div>
                     </div>
                     
-                    <button onclick="updateSectionBackground('footer')">Оновити фон</button>
                     <button onclick="downloadSectionImage('footer')" class="download-btn">💾 Завантажити як footer-bg.jpg</button>
                     <div id="footer-bg-preview" class="image-preview"></div>
                 </div>
@@ -363,7 +365,8 @@
                 <label>Зображення</label>
                 <input type="file" id="brand-image-file" accept="image/*" onchange="handleBrandImageUpload(this)" class="file-input" style="display: none;">
                 <button type="button" onclick="document.getElementById('brand-image-file').click()" class="upload-btn">📤 Завантажити зображення</button>
-                <input type="text" id="brand-image" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
+                <input type="text" id="brand-image" placeholder="Наприклад: images/brands/1.jpg" style="margin-top: 10px;">
+                <p class="hint">💡 Завантажте файл на GitHub в /images/brands/ з назвою ID бренду (наприклад: 1.jpg) та використовуйте: images/brands/1.jpg</p>
                 <div id="brand-image-preview" class="image-preview"></div>
             </div>
             <input type="hidden" id="brand-id">
@@ -388,7 +391,8 @@
                 <label>Зображення</label>
                 <input type="file" id="article-image-file" accept="image/*" onchange="handleArticleImageUpload(this)" class="file-input" style="display: none;">
                 <button type="button" onclick="document.getElementById('article-image-file').click()" class="upload-btn">📤 Завантажити зображення</button>
-                <input type="text" id="article-image" placeholder="Або вставте URL зображення" style="margin-top: 10px;">
+                <input type="text" id="article-image" placeholder="Наприклад: images/articles/1.jpg" style="margin-top: 10px;">
+                <p class="hint">💡 Завантажте файл на GitHub в /images/articles/ з назвою ID статті (наприклад: 1.jpg) та використовуйте: images/articles/1.jpg</p>
                 <div id="article-image-preview" class="image-preview"></div>
             </div>
             <div class="form-group">

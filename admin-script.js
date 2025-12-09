@@ -217,7 +217,7 @@ async function loadAdminData() {
                 if (posYValue) posYValue.textContent = (bgData.posY || 50) + '%';
                 
                 if (bgData.image) {
-                    showImagePreview(`${section}-bg-preview`, bgData.image);
+                    updateBackgroundPreview(section);
                 }
             }
         });
@@ -254,7 +254,7 @@ function handleArticleImageUpload(input) {
 function handleSectionBgUpload(input, section) {
     uploadImage(input, (base64) => {
         document.getElementById(`${section}-bg-input`).value = base64;
-        showImagePreview(`${section}-bg-preview`, base64);
+        updateBackgroundPreview(section);
     });
 }
 
@@ -262,6 +262,7 @@ function handleSectionBgUpload(input, section) {
 function updateOpacityValue(section) {
     const opacity = document.getElementById(`${section}-bg-opacity`).value;
     document.getElementById(`${section}-opacity-value`).textContent = opacity + '%';
+    updateBackgroundPreview(section);
 }
 
 // Download section image with standard name
@@ -588,16 +589,54 @@ function closeArticleModal() {
 function updateScaleValue(section) {
     const scale = document.getElementById(`${section}-bg-scale`).value;
     document.getElementById(`${section}-scale-value`).textContent = scale + '%';
+    updateBackgroundPreview(section);
 }
 
 function updatePosXValue(section) {
     const posX = document.getElementById(`${section}-bg-posX`).value;
     document.getElementById(`${section}-posX-value`).textContent = posX + '%';
+    updateBackgroundPreview(section);
 }
 
 function updatePosYValue(section) {
     const posY = document.getElementById(`${section}-bg-posY`).value;
     document.getElementById(`${section}-posY-value`).textContent = posY + '%';
+    updateBackgroundPreview(section);
+}
+
+// Update background preview dynamically
+function updateBackgroundPreview(section) {
+    const imageUrl = document.getElementById(`${section}-bg-input`)?.value;
+    const opacity = parseInt(document.getElementById(`${section}-bg-opacity`)?.value || 100);
+    const scale = parseInt(document.getElementById(`${section}-bg-scale`)?.value || 100);
+    const posX = parseInt(document.getElementById(`${section}-bg-posX`)?.value || 50);
+    const posY = parseInt(document.getElementById(`${section}-bg-posY`)?.value || 50);
+    
+    const preview = document.getElementById(`${section}-bg-preview`);
+    if (!preview) return;
+    
+    if (imageUrl) {
+        preview.innerHTML = `
+            <div style="position: relative; width: 100%; height: 150px; background: #f0f0f0; border-radius: 8px; overflow: hidden;">
+                <div style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-image: url('${imageUrl.replace(/'/g, "\\'")}');
+                    background-size: ${scale}%;
+                    background-position: ${posX}% ${posY}%;
+                    background-repeat: no-repeat;
+                    opacity: ${opacity / 100};
+                "></div>
+            </div>
+        `;
+        preview.style.display = 'block';
+    } else {
+        preview.innerHTML = '';
+        preview.style.display = 'none';
+    }
 }
 
 // Consolidated update functions for each section
