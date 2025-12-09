@@ -548,18 +548,18 @@ h2 {
     }
 
     .menu-container {
-        gap: 5px;
-        padding: 0 10px;
+        gap: 2px;
+        padding: 0 5px;
     }
 
     .menu-container a {
         font-size: 14px;
-        padding: 15px 8px;
+        padding: 12px 6px;
     }
     
     #header.shrink .menu-container a {
         font-size: 13px;
-        padding: 8px 6px;
+        padding: 8px 4px;
     }
 
     .footer-content {
@@ -593,11 +593,11 @@ h2 {
         font-size: 32px;
     }
 
-    /* Mobile optimized cards - compact view */
+    /* Mobile optimized cards - compact view with square images */
     .brand-card,
     .product-card,
     .article-card {
-        width: 140px;
+        width: 120px;
         height: auto;
         padding: 8px;
         border-radius: 12px;
@@ -607,9 +607,11 @@ h2 {
     .brand-card img,
     .product-card img,
     .article-card img {
-        height: 100px;
-        margin-bottom: 8px;
+        height: 90px;
+        width: 90px;
+        margin: 0 auto 8px;
         border-radius: 8px;
+        object-fit: cover;
     }
     
     .brand-card h3,
