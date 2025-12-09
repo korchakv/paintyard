@@ -609,7 +609,7 @@ h2 {
     .article-card img {
         height: 90px;
         width: 90px;
-        margin: 0 auto 8px auto;
+        margin: 0 auto 8px;
         border-radius: 8px;
         object-fit: cover;
     }
