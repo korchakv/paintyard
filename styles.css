@@ -838,7 +838,7 @@ h2 {
     color: white;
 }
 
-.map-header h3 {
+.map-header h1 {
     font-size: 24px;
     margin-bottom: 8px;
     margin-top: 0;
@@ -904,7 +904,7 @@ h2 {
         gap: 30px;
     }
     
-    .map-header h3 {
+    .map-header h1 {
         font-size: 20px;
     }
     
