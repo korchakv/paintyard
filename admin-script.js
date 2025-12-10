@@ -269,6 +269,20 @@ async function loadAdminData() {
             }
         });
     }
+    
+    // Load content blur settings
+    if (data.contentBlur) {
+        ['about', 'brands', 'articles'].forEach(section => {
+            const blurInput = document.getElementById(`${section}-content-blur`);
+            const blurValue = document.getElementById(`${section}-content-blur-value`);
+            if (blurInput && data.contentBlur[section] !== undefined) {
+                blurInput.value = data.contentBlur[section];
+                if (blurValue) {
+                    blurValue.textContent = data.contentBlur[section] + 'px';
+                }
+            }
+        });
+    }
 
     renderBrandsList(data.brands);
     renderArticlesList(data.articles);
@@ -456,6 +470,10 @@ async function saveAllSettings() {
     if (!data.contentOpacity) data.contentOpacity = {};
     data.contentOpacity.about = parseInt(document.getElementById('about-content-opacity')?.value || 95);
     
+    // Content frame blur settings
+    if (!data.contentBlur) data.contentBlur = {};
+    data.contentBlur.about = parseInt(document.getElementById('about-content-blur')?.value || 20);
+    
     // Brands section
     data.textColors.brands = document.getElementById('text-brands-color').value;
     
@@ -468,6 +486,7 @@ async function saveAllSettings() {
     data.sectionBackgrounds.brands.posY = parseInt(document.getElementById('brands-bg-posY')?.value || 50);
     
     data.contentOpacity.brands = parseInt(document.getElementById('brands-content-opacity')?.value || 95);
+    data.contentBlur.brands = parseInt(document.getElementById('brands-content-blur')?.value || 20);
     
     // Articles section
     data.textColors.articles = document.getElementById('text-articles-color').value;
@@ -481,6 +500,7 @@ async function saveAllSettings() {
     data.sectionBackgrounds.articles.posY = parseInt(document.getElementById('articles-bg-posY')?.value || 50);
     
     data.contentOpacity.articles = parseInt(document.getElementById('articles-content-opacity')?.value || 95);
+    data.contentBlur.articles = parseInt(document.getElementById('articles-content-blur')?.value || 20);
     
     // Footer settings
     data.address = document.getElementById('address-input').value;
@@ -772,6 +792,11 @@ function updatePosYValue(section) {
 function updateContentOpacityValue(section) {
     const opacity = document.getElementById(`${section}-content-opacity`).value;
     document.getElementById(`${section}-content-opacity-value`).textContent = opacity + '%';
+}
+
+function updateContentBlurValue(section) {
+    const blur = document.getElementById(`${section}-content-blur`).value;
+    document.getElementById(`${section}-content-blur-value`).textContent = blur + 'px';
 }
 
 // Update background preview dynamically
