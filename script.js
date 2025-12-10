@@ -386,9 +386,20 @@ function setupScrollButtonHover() {
     
     scrollButtons.forEach(button => {
         let hoverScrollInterval = null;
+        let rafId = null;
         const fastScrollSpeed = 5; // Faster speed on hover
         
         button.addEventListener('mouseenter', () => {
+            // Clear any existing interval/animation to prevent memory leaks
+            if (hoverScrollInterval) {
+                clearInterval(hoverScrollInterval);
+                hoverScrollInterval = null;
+            }
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+            
             // Determine which container and direction
             const section = button.closest('section');
             let container = null;
@@ -405,10 +416,20 @@ function setupScrollButtonHover() {
             }
             
             if (container) {
-                // Start fast scrolling
-                hoverScrollInterval = setInterval(() => {
-                    container.scrollLeft += direction * fastScrollSpeed;
-                }, 20);
+                // Use requestAnimationFrame for smoother performance
+                function animateScroll() {
+                    // Check scroll boundaries
+                    const atStart = container.scrollLeft <= 0 && direction === -1;
+                    const atEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - 1 && direction === 1;
+                    
+                    if (!atStart && !atEnd) {
+                        container.scrollLeft += direction * fastScrollSpeed;
+                        rafId = requestAnimationFrame(animateScroll);
+                    } else {
+                        rafId = null;
+                    }
+                }
+                rafId = requestAnimationFrame(animateScroll);
             }
         });
         
@@ -417,6 +438,10 @@ function setupScrollButtonHover() {
             if (hoverScrollInterval) {
                 clearInterval(hoverScrollInterval);
                 hoverScrollInterval = null;
+            }
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
             }
         });
     });
