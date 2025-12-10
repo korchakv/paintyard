@@ -145,44 +145,42 @@ function uploadImage(inputElement, callback) {
 async function loadAdminData() {
     const data = await loadData();
 
+    // Page background color
+    document.getElementById('page-bg-color').value = data.pageBgColor || data.colors.mainBg || '#e6e6e6';
+
+    // Logo
     document.getElementById('logo-input').value = data.logo || '';
-    document.getElementById('address-input').value = data.address || '';
-    document.getElementById('phones-input').value = data.phones.join('\n');
-    document.getElementById('about-input').value = data.aboutText || '';
-    document.getElementById('header-color').value = data.colors.headerBg;
-    document.getElementById('main-color').value = data.colors.mainBg;
-    document.getElementById('menu-color').value = data.colors.menuBg || '#2c3e50';
-    
-    // Load text colors
-    if (data.textColors) {
-        document.getElementById('text-header-color').value = data.textColors.header || '#333333';
-        document.getElementById('text-menu-color').value = data.textColors.menu || '#ffffff';
-        document.getElementById('text-about-color').value = data.textColors.about || '#333333';
-        document.getElementById('text-brands-color').value = data.textColors.brands || '#333333';
-        document.getElementById('text-articles-color').value = data.textColors.articles || '#333333';
-        document.getElementById('text-footer-color').value = data.textColors.footer || '#ffffff';
-    }
-    
-    // Load contact colors
-    if (data.contactColors) {
-        document.getElementById('contact-phones-color').value = data.contactColors.phones || '#333333';
-        document.getElementById('contact-address-color').value = data.contactColors.address || '#666666';
-    }
-    
-    // Load header sizes
-    if (data.headerSizes) {
-        document.getElementById('header-top-height').value = data.headerSizes.headerTopHeight || '15px';
-        document.getElementById('menu-height').value = data.headerSizes.menuHeight || '18px';
-        document.getElementById('logo-height-normal').value = data.headerSizes.logoHeightNormal || '50px';
-        document.getElementById('logo-height-shrink').value = data.headerSizes.logoHeightShrink || '35px';
-        document.getElementById('footer-height').value = data.headerSizes.footerHeight || '30px';
-    }
-    
-    // Load logo size
     if (data.logoSize) {
         document.getElementById('logo-width').value = data.logoSize.width || 'auto';
         document.getElementById('logo-height').value = data.logoSize.height || '50px';
     }
+
+    // Header settings
+    document.getElementById('header-top-height').value = data.headerSizes?.headerTopHeight || '15px';
+    document.getElementById('header-color').value = data.colors.headerBg || '#efc3c3';
+    document.getElementById('menu-font-size').value = data.menuFontSize || '14px';
+    document.getElementById('text-menu-color').value = data.textColors?.menu || '#ffffff';
+    document.getElementById('button-font-size').value = data.buttonFontSize || '14px';
+    document.getElementById('button-text-color').value = data.buttonTextColor || '#ffffff';
+
+    // About section
+    document.getElementById('about-input').value = data.aboutText || '';
+    document.getElementById('text-about-color').value = data.textColors?.about || '#333333';
+
+    // Brands section
+    document.getElementById('text-brands-color').value = data.textColors?.brands || '#333333';
+
+    // Articles section
+    document.getElementById('text-articles-color').value = data.textColors?.articles || '#333333';
+
+    // Footer settings
+    document.getElementById('address-input').value = data.address || '';
+    document.getElementById('address-font-size').value = data.footerSettings?.addressFontSize || '14px';
+    document.getElementById('address-color').value = data.footerSettings?.addressColor || '#666666';
+    document.getElementById('phones-input').value = data.phones.join('\n');
+    document.getElementById('phones-font-size').value = data.footerSettings?.phonesFontSize || '14px';
+    document.getElementById('phones-color').value = data.footerSettings?.phonesColor || '#333333';
+    document.getElementById('footer-bg-color').value = data.footerSettings?.bgColor || '#2c3e50';
     
     // Show logo preview if exists
     if (data.logo) {
@@ -191,7 +189,7 @@ async function loadAdminData() {
     
     // Load section backgrounds
     if (data.sectionBackgrounds) {
-        ['header', 'about', 'brands', 'articles', 'footer'].forEach(section => {
+        ['about', 'brands', 'articles'].forEach(section => {
             const bgData = data.sectionBackgrounds[section];
             if (bgData) {
                 const input = document.getElementById(`${section}-bg-input`);
@@ -232,7 +230,6 @@ function handleLogoUpload(input) {
     uploadImage(input, (base64) => {
         document.getElementById('logo-input').value = base64;
         showImagePreview('logo-preview', base64);
-        updateLogo();
     });
 }
 
@@ -333,7 +330,86 @@ function showImagePreview(elementId, imageSrc) {
     }
 }
 
-// Update functions
+// Save All Settings - Single button to save everything
+async function saveAllSettings() {
+    const data = await loadData();
+    
+    // Page background color
+    data.pageBgColor = document.getElementById('page-bg-color').value;
+    data.colors.mainBg = data.pageBgColor; // Keep compatibility
+    
+    // Logo settings
+    data.logo = document.getElementById('logo-input').value;
+    if (!data.logoSize) data.logoSize = {};
+    data.logoSize.width = document.getElementById('logo-width').value || 'auto';
+    data.logoSize.height = document.getElementById('logo-height').value || '50px';
+    
+    // Header settings
+    data.colors.headerBg = document.getElementById('header-color').value;
+    if (!data.headerSizes) data.headerSizes = {};
+    data.headerSizes.headerTopHeight = document.getElementById('header-top-height').value || '15px';
+    
+    // Menu settings
+    data.menuFontSize = document.getElementById('menu-font-size').value || '14px';
+    if (!data.textColors) data.textColors = {};
+    data.textColors.menu = document.getElementById('text-menu-color').value;
+    
+    // Button settings
+    data.buttonFontSize = document.getElementById('button-font-size').value || '14px';
+    data.buttonTextColor = document.getElementById('button-text-color').value;
+    
+    // About section
+    data.aboutText = document.getElementById('about-input').value;
+    data.textColors.about = document.getElementById('text-about-color').value;
+    
+    // About background
+    if (!data.sectionBackgrounds) data.sectionBackgrounds = {};
+    if (!data.sectionBackgrounds.about) data.sectionBackgrounds.about = {};
+    data.sectionBackgrounds.about.image = document.getElementById('about-bg-input').value;
+    data.sectionBackgrounds.about.opacity = parseInt(document.getElementById('about-bg-opacity').value);
+    data.sectionBackgrounds.about.scale = parseInt(document.getElementById('about-bg-scale')?.value || 100);
+    data.sectionBackgrounds.about.posX = parseInt(document.getElementById('about-bg-posX')?.value || 50);
+    data.sectionBackgrounds.about.posY = parseInt(document.getElementById('about-bg-posY')?.value || 50);
+    
+    // Brands section
+    data.textColors.brands = document.getElementById('text-brands-color').value;
+    
+    // Brands background
+    if (!data.sectionBackgrounds.brands) data.sectionBackgrounds.brands = {};
+    data.sectionBackgrounds.brands.image = document.getElementById('brands-bg-input').value;
+    data.sectionBackgrounds.brands.opacity = parseInt(document.getElementById('brands-bg-opacity').value);
+    data.sectionBackgrounds.brands.scale = parseInt(document.getElementById('brands-bg-scale')?.value || 100);
+    data.sectionBackgrounds.brands.posX = parseInt(document.getElementById('brands-bg-posX')?.value || 50);
+    data.sectionBackgrounds.brands.posY = parseInt(document.getElementById('brands-bg-posY')?.value || 50);
+    
+    // Articles section
+    data.textColors.articles = document.getElementById('text-articles-color').value;
+    
+    // Articles background
+    if (!data.sectionBackgrounds.articles) data.sectionBackgrounds.articles = {};
+    data.sectionBackgrounds.articles.image = document.getElementById('articles-bg-input').value;
+    data.sectionBackgrounds.articles.opacity = parseInt(document.getElementById('articles-bg-opacity').value);
+    data.sectionBackgrounds.articles.scale = parseInt(document.getElementById('articles-bg-scale')?.value || 100);
+    data.sectionBackgrounds.articles.posX = parseInt(document.getElementById('articles-bg-posX')?.value || 50);
+    data.sectionBackgrounds.articles.posY = parseInt(document.getElementById('articles-bg-posY')?.value || 50);
+    
+    // Footer settings
+    data.address = document.getElementById('address-input').value;
+    const phonesText = document.getElementById('phones-input').value;
+    data.phones = phonesText.split('\n').filter(p => p.trim() !== '');
+    
+    if (!data.footerSettings) data.footerSettings = {};
+    data.footerSettings.addressFontSize = document.getElementById('address-font-size').value || '14px';
+    data.footerSettings.addressColor = document.getElementById('address-color').value;
+    data.footerSettings.phonesFontSize = document.getElementById('phones-font-size').value || '14px';
+    data.footerSettings.phonesColor = document.getElementById('phones-color').value;
+    data.footerSettings.bgColor = document.getElementById('footer-bg-color').value;
+    
+    saveData(data);
+    alert('✓ Всі налаштування збережено! Не забудьте завантажити data.json та закомітити його в GitHub.');
+}
+
+// Update functions (kept for backwards compatibility and individual updates)
 async function updateLogo() {
     const data = await loadData();
     data.logo = document.getElementById('logo-input').value;
