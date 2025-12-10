@@ -675,4 +675,8 @@ button:hover {
     font-weight: bold;
 }
 
+/* Background URL input with top margin */
+.bg-url-input {
+    margin-top: 10px;
+}
 
