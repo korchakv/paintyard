@@ -232,6 +232,8 @@ async function renderPage() {
     setTimeout(() => {
         setupAutoScroll('brands-container', 0.3);
         setupAutoScroll('articles-container', 0.3);
+        setupEdgeHoverRotation('brands-container');
+        setupEdgeHoverRotation('articles-container');
     }, 100);
 }
 
@@ -286,6 +288,57 @@ function setupAutoScroll(containerId, speed = 0.5) {
         if (hasOverflow()) {
             scrollInterval = setInterval(autoScroll, 30);
         }
+    });
+}
+
+// Edge hover rotation for articles and brands
+function setupEdgeHoverRotation(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    container.addEventListener('mousemove', (e) => {
+        const containerRect = container.getBoundingClientRect();
+        const mouseX = e.clientX - containerRect.left;
+        const containerWidth = containerRect.width;
+        const edgeThreshold = 100; // pixels from edge to trigger rotation
+        
+        // Get all cards in the container
+        const cards = container.querySelectorAll('.brand-card, .product-card, .article-card');
+        
+        cards.forEach((card) => {
+            const cardRect = card.getBoundingClientRect();
+            const cardCenter = cardRect.left + cardRect.width / 2 - containerRect.left;
+            
+            // Check if mouse is near left edge and card is on the left side
+            if (mouseX < edgeThreshold && cardCenter < containerWidth / 2) {
+                const distanceFromEdge = Math.abs(mouseX - cardCenter);
+                if (distanceFromEdge < edgeThreshold) {
+                    card.style.transform = 'translateY(-10px) rotate(5deg)';
+                }
+            }
+            // Check if mouse is near right edge and card is on the right side
+            else if (mouseX > containerWidth - edgeThreshold && cardCenter > containerWidth / 2) {
+                const distanceFromEdge = Math.abs((containerWidth - mouseX) - (containerWidth - cardCenter));
+                if (distanceFromEdge < edgeThreshold) {
+                    card.style.transform = 'translateY(-10px) rotate(-5deg)';
+                }
+            }
+            else {
+                // Reset to default hover state
+                if (card.matches(':hover')) {
+                    card.style.transform = 'translateY(-10px)';
+                } else {
+                    card.style.transform = '';
+                }
+            }
+        });
+    });
+    
+    container.addEventListener('mouseleave', () => {
+        const cards = container.querySelectorAll('.brand-card, .product-card, .article-card');
+        cards.forEach((card) => {
+            card.style.transform = '';
+        });
     });
 }
 
