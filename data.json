@@ -1,5 +1,5 @@
 {
-  "logo": "",
+  "logo": "images/logo.png",
   "address": "Івано-Франківськ, вул. Вовчинецька, 191",
   "phones": [
     "+380 (63) 770-24-57",
@@ -13,7 +13,7 @@
   },
   "buttonColors": {
     "call": {
-      "background": "#0d9488",
+      "background": "#c01818",
       "text": "#ffffff"
     },
     "route": {
@@ -24,8 +24,8 @@
   "mapSettings": {
     "image": "https://raw.githubusercontent.com/korchakv/paintyard/main/images/map.png",
     "link": "https://www.google.com/maps/dir/?api=1&destination=Івано-Франківськ,+вул.+Вовчинецька,+191",
-    "width": "600px",
-    "height": "400px"
+    "width": "1000px",
+    "height": "600px"
   },
   "brands": [
     {
@@ -64,14 +64,14 @@
     }
   ],
   "colors": {
-    "headerBg": "#efc3c3",
+    "headerBg": "#c01818",
     "mainBg": "#e6e6e6",
     "menuBg": "#2c3e50"
   },
   "pageBgColor": "#e6e6e6",
   "textColors": {
     "header": "#333333",
-    "menu": "#ffffff",
+    "menu": "#000000",
     "about": "#333333",
     "brands": "#333333",
     "articles": "#333333",
@@ -97,10 +97,10 @@
   },
   "footerSettings": {
     "addressFontSize": "14px",
-    "addressColor": "#666666",
+    "addressColor": "#ffffff",
     "phonesFontSize": "14px",
-    "phonesColor": "#333333",
-    "bgColor": "#2c3e50"
+    "phonesColor": "#ffffff",
+    "bgColor": "#ffffff"
   },
   "sectionBackgrounds": {
     "about": {
@@ -124,5 +124,10 @@
       "posX": 50,
       "posY": 50
     }
+  },
+  "sectionHeights": {
+    "about": "80px 40px",
+    "brands": "80px 40px",
+    "articles": "80px 40px"
   }
 }
