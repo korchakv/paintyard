@@ -162,6 +162,29 @@ async function loadAdminData() {
     document.getElementById('text-menu-color').value = data.textColors?.menu || '#ffffff';
     document.getElementById('button-font-size').value = data.buttonFontSize || '14px';
     document.getElementById('button-text-color').value = data.buttonTextColor || '#ffffff';
+    
+    // Button colors
+    if (data.buttonColors) {
+        document.getElementById('call-button-bg-color').value = data.buttonColors.call?.background || '#0d9488';
+        document.getElementById('call-button-text-color').value = data.buttonColors.call?.text || '#ffffff';
+        document.getElementById('route-button-bg-color').value = data.buttonColors.route?.background || '#f3f4f6';
+        document.getElementById('route-button-text-color').value = data.buttonColors.route?.text || '#0d9488';
+    }
+    
+    // Section headings
+    if (data.sectionHeadings) {
+        document.getElementById('about-heading-text').value = data.sectionHeadings.about || 'Про нас';
+        document.getElementById('brands-heading-text').value = data.sectionHeadings.brands || 'Наші бренди';
+        document.getElementById('articles-heading-text').value = data.sectionHeadings.articles || 'Корисні статті';
+    }
+    
+    // Map settings
+    if (data.mapSettings) {
+        document.getElementById('map-image-url').value = data.mapSettings.image || '';
+        document.getElementById('map-link-url').value = data.mapSettings.link || '';
+        document.getElementById('map-image-width').value = data.mapSettings.width || '600px';
+        document.getElementById('map-image-height').value = data.mapSettings.height || '400px';
+    }
 
     // About section
     document.getElementById('about-input').value = data.aboutText || '';
@@ -357,6 +380,28 @@ async function saveAllSettings() {
     // Button settings
     data.buttonFontSize = document.getElementById('button-font-size').value || '14px';
     data.buttonTextColor = document.getElementById('button-text-color').value;
+    
+    // Button colors
+    if (!data.buttonColors) data.buttonColors = {};
+    if (!data.buttonColors.call) data.buttonColors.call = {};
+    if (!data.buttonColors.route) data.buttonColors.route = {};
+    data.buttonColors.call.background = document.getElementById('call-button-bg-color').value;
+    data.buttonColors.call.text = document.getElementById('call-button-text-color').value;
+    data.buttonColors.route.background = document.getElementById('route-button-bg-color').value;
+    data.buttonColors.route.text = document.getElementById('route-button-text-color').value;
+    
+    // Section headings
+    if (!data.sectionHeadings) data.sectionHeadings = {};
+    data.sectionHeadings.about = document.getElementById('about-heading-text').value || 'Про нас';
+    data.sectionHeadings.brands = document.getElementById('brands-heading-text').value || 'Наші бренди';
+    data.sectionHeadings.articles = document.getElementById('articles-heading-text').value || 'Корисні статті';
+    
+    // Map settings
+    if (!data.mapSettings) data.mapSettings = {};
+    data.mapSettings.image = document.getElementById('map-image-url').value;
+    data.mapSettings.link = document.getElementById('map-link-url').value;
+    data.mapSettings.width = document.getElementById('map-image-width').value || '600px';
+    data.mapSettings.height = document.getElementById('map-image-height').value || '400px';
     
     // About section
     data.aboutText = document.getElementById('about-input').value;
