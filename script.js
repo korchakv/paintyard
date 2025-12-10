@@ -196,6 +196,11 @@ async function renderPage() {
     if (data.contentOpacity) {
         applyContentOpacity(data.contentOpacity);
     }
+    
+    // Apply content blur settings
+    if (data.contentBlur) {
+        applyContentBlur(data.contentBlur);
+    }
 
     // Render about
     document.getElementById('about-content').innerHTML = `<p>${data.aboutText}</p>`;
@@ -425,6 +430,11 @@ function applyTextColors(textColors) {
         if (aboutSection) {
             aboutSection.style.color = textColors.about;
         }
+        // Also apply to about content
+        const aboutContent = document.getElementById('about-content');
+        if (aboutContent) {
+            aboutContent.style.color = textColors.about;
+        }
     }
     
     // Brands section text color
@@ -434,6 +444,19 @@ function applyTextColors(textColors) {
         if (brandsSection) {
             brandsSection.style.color = brandsColor;
         }
+        // Create or update style element for brand cards
+        let styleEl = document.getElementById('brands-text-color-style');
+        if (!styleEl) {
+            styleEl = document.createElement('style');
+            styleEl.id = 'brands-text-color-style';
+            document.head.appendChild(styleEl);
+        }
+        styleEl.textContent = `
+            .brand-card h3, .product-card h3,
+            .brand-card p, .product-card p {
+                color: ${brandsColor} !important;
+            }
+        `;
     }
     
     // Articles section text color
@@ -442,6 +465,19 @@ function applyTextColors(textColors) {
         if (articlesSection) {
             articlesSection.style.color = textColors.articles;
         }
+        // Create or update style element for article cards
+        let styleEl = document.getElementById('articles-text-color-style');
+        if (!styleEl) {
+            styleEl = document.createElement('style');
+            styleEl.id = 'articles-text-color-style';
+            document.head.appendChild(styleEl);
+        }
+        styleEl.textContent = `
+            .article-card h3,
+            .article-card .excerpt {
+                color: ${textColors.articles} !important;
+            }
+        `;
     }
     
     // Footer text color
@@ -722,6 +758,55 @@ function applyContentOpacity(contentOpacity) {
         styleEl.textContent = `
             .article-card {
                 background: rgba(255, 255, 255, ${opacity}) !important;
+            }
+        `;
+    }
+}
+
+// Apply content blur (liquid glass effect) to frames
+function applyContentBlur(contentBlur) {
+    // About content frame
+    if (contentBlur.about !== undefined) {
+        const aboutContent = document.getElementById('about-content');
+        if (aboutContent) {
+            const blur = Math.max(0, Math.min(100, contentBlur.about));
+            aboutContent.style.backdropFilter = `blur(${blur}px)`;
+            aboutContent.style.webkitBackdropFilter = `blur(${blur}px)`;
+        }
+    }
+    
+    // Brands cards
+    if (contentBlur.brands !== undefined) {
+        const blur = Math.max(0, Math.min(100, contentBlur.brands));
+        // Create or update style element for brands
+        let styleEl = document.getElementById('brands-blur-style');
+        if (!styleEl) {
+            styleEl = document.createElement('style');
+            styleEl.id = 'brands-blur-style';
+            document.head.appendChild(styleEl);
+        }
+        styleEl.textContent = `
+            .brand-card, .product-card {
+                backdrop-filter: blur(${blur}px) !important;
+                -webkit-backdrop-filter: blur(${blur}px) !important;
+            }
+        `;
+    }
+    
+    // Articles cards
+    if (contentBlur.articles !== undefined) {
+        const blur = Math.max(0, Math.min(100, contentBlur.articles));
+        // Create or update style element for articles
+        let styleEl = document.getElementById('articles-blur-style');
+        if (!styleEl) {
+            styleEl = document.createElement('style');
+            styleEl.id = 'articles-blur-style';
+            document.head.appendChild(styleEl);
+        }
+        styleEl.textContent = `
+            .article-card {
+                backdrop-filter: blur(${blur}px) !important;
+                -webkit-backdrop-filter: blur(${blur}px) !important;
             }
         `;
     }

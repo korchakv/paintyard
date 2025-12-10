@@ -135,5 +135,10 @@
     "about": 95,
     "brands": 95,
     "articles": 95
+  },
+  "contentBlur": {
+    "about": 20,
+    "brands": 20,
+    "articles": 20
   }
 }

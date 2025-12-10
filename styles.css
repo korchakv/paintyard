@@ -55,26 +55,39 @@ body {
     height: 56px !important;
 }
 
+#header-logo {
+    transition: height 0.3s ease;
+}
+
 #header.shrink #header-logo {
     height: 35px !important;
-    transition: height 0.3s ease;
+}
+
+#header-logo-text {
+    transition: font-size 0.3s ease;
 }
 
 #header.shrink #header-logo-text {
     font-size: 20px !important;
+}
+
+#header nav a {
     transition: font-size 0.3s ease;
 }
 
 #header.shrink nav a {
     font-size: 13px !important;
-    transition: font-size 0.3s ease;
+}
+
+#call-button,
+#route-button {
+    transition: all 0.3s ease;
 }
 
 #header.shrink #call-button,
 #header.shrink #route-button {
     padding: 8px 16px !important;
     font-size: 13px !important;
-    transition: all 0.3s ease;
 }
 
 /* Navigation menu hover effects */
