@@ -611,12 +611,23 @@ function applyFooterSettings(footerSettings) {
 
 // Apply section heights
 function applySectionHeights(sectionHeights) {
-    // Sanitize CSS value - only allow safe units
+    // Sanitize CSS value - only allow safe units and prevent XSS
     function sanitizeCSSValue(value) {
         if (!value) return null;
-        // Allow padding format like "80px 40px" or single values
+        // Only allow safe padding values with px, em, rem, % units
+        // No CSS functions, comments, or special characters allowed
         const safePattern = /^(\d+(\.\d+)?(px|em|rem|%)(\s+\d+(\.\d+)?(px|em|rem|%))?)$/;
-        return safePattern.test(value.trim()) ? value.trim() : null;
+        const trimmedValue = value.trim();
+        
+        // Check for dangerous patterns
+        if (trimmedValue.includes('<') || trimmedValue.includes('>') || 
+            trimmedValue.includes('script') || trimmedValue.includes('expression') ||
+            trimmedValue.includes('url(') || trimmedValue.includes('calc(') ||
+            trimmedValue.includes('var(') || trimmedValue.includes('attr(')) {
+            return null;
+        }
+        
+        return safePattern.test(trimmedValue) ? trimmedValue : null;
     }
     
     // Apply to each section

@@ -86,14 +86,18 @@ body {
     margin: 0 auto;
 }
 
-    h2 {
+h2 {
     font-size: 42px;
     font-weight: 700;
     margin-bottom: 50px;
     text-align: center;
     color: white;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    display: none; /* Hide section headings as requested */
+}
+
+/* Hide section headings in main content as requested */
+.section h2 {
+    display: none;
 }
 
 /* About Section */
