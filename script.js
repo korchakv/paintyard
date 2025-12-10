@@ -727,20 +727,26 @@ function applyContentOpacity(contentOpacity) {
     }
 }
 
-// Header shrink on scroll
-let lastScrollTop = 0;
+// Header shrink on scroll with throttling
+let scrollTimeout;
 window.addEventListener('scroll', () => {
-    const header = document.getElementById('header');
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // Add shrink class when scrolling down past 50px
-    if (scrollTop > 50) {
-        header.classList.add('shrink');
-    } else {
-        header.classList.remove('shrink');
+    if (scrollTimeout) {
+        return;
     }
     
-    lastScrollTop = scrollTop;
+    scrollTimeout = setTimeout(() => {
+        scrollTimeout = null;
+        
+        const header = document.getElementById('header');
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Add shrink class when scrolling down past 50px
+        if (scrollTop > 50) {
+            header.classList.add('shrink');
+        } else {
+            header.classList.remove('shrink');
+        }
+    }, 100); // Throttle to once per 100ms
 });
 
 // Initialize page
