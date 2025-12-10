@@ -191,6 +191,11 @@ async function renderPage() {
     if (data.contactColors) {
         applyContactColors(data.contactColors);
     }
+    
+    // Apply content opacity settings
+    if (data.contentOpacity) {
+        applyContentOpacity(data.contentOpacity);
+    }
 
     // Render about
     document.getElementById('about-content').innerHTML = `<p>${data.aboutText}</p>`;
@@ -674,6 +679,75 @@ function applySectionHeights(sectionHeights) {
         }
     });
 }
+
+// Apply content opacity to frames
+function applyContentOpacity(contentOpacity) {
+    // About content frame
+    if (contentOpacity.about !== undefined) {
+        const aboutContent = document.getElementById('about-content');
+        if (aboutContent) {
+            const opacity = Math.max(0, Math.min(100, contentOpacity.about)) / 100;
+            // Replace the rgba value in the background
+            aboutContent.style.background = `rgba(255, 255, 255, ${opacity})`;
+        }
+    }
+    
+    // Brands cards
+    if (contentOpacity.brands !== undefined) {
+        const opacity = Math.max(0, Math.min(100, contentOpacity.brands)) / 100;
+        // Create or update style element for brands
+        let styleEl = document.getElementById('brands-opacity-style');
+        if (!styleEl) {
+            styleEl = document.createElement('style');
+            styleEl.id = 'brands-opacity-style';
+            document.head.appendChild(styleEl);
+        }
+        styleEl.textContent = `
+            .brand-card, .product-card {
+                background: rgba(255, 255, 255, ${opacity}) !important;
+            }
+        `;
+    }
+    
+    // Articles cards
+    if (contentOpacity.articles !== undefined) {
+        const opacity = Math.max(0, Math.min(100, contentOpacity.articles)) / 100;
+        // Create or update style element for articles
+        let styleEl = document.getElementById('articles-opacity-style');
+        if (!styleEl) {
+            styleEl = document.createElement('style');
+            styleEl.id = 'articles-opacity-style';
+            document.head.appendChild(styleEl);
+        }
+        styleEl.textContent = `
+            .article-card {
+                background: rgba(255, 255, 255, ${opacity}) !important;
+            }
+        `;
+    }
+}
+
+// Header shrink on scroll with throttling
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+    if (scrollTimeout) {
+        return;
+    }
+    
+    scrollTimeout = setTimeout(() => {
+        scrollTimeout = null;
+        
+        const header = document.getElementById('header');
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Add shrink class when scrolling down past 50px
+        if (scrollTop > 50) {
+            header.classList.add('shrink');
+        } else {
+            header.classList.remove('shrink');
+        }
+    }, 100); // Throttle to once per 100ms
+});
 
 // Initialize page
 renderPage();

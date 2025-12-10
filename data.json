@@ -130,5 +130,10 @@
     "about": "200px 40px",
     "brands": "80px 40px",
     "articles": "80px 40px"
+  },
+  "contentOpacity": {
+    "about": 95,
+    "brands": 95,
+    "articles": 95
   }
 }
