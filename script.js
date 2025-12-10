@@ -61,10 +61,27 @@ async function renderPage() {
             footerLogo.style.width = data.logoSize.width;
             footerLogo.style.height = data.logoSize.height;
         }
+        
+        // Apply to header logo as well
+        const headerLogo = document.getElementById('header-logo');
+        if (headerLogo) {
+            headerLogo.style.width = data.logoSize.width;
+            headerLogo.style.height = data.logoSize.height;
+        }
     }
 
-    // Render logo in footer only
+    // Render logo in header and footer
     if (data.logo) {
+        const headerLogo = document.getElementById('header-logo');
+        if (headerLogo) {
+            headerLogo.src = data.logo;
+            headerLogo.style.display = 'block';
+            const headerLogoText = document.getElementById('header-logo-text');
+            if (headerLogoText) {
+                headerLogoText.style.display = 'none';
+            }
+        }
+        
         const footerLogo = document.getElementById('footer-logo');
         if (footerLogo) {
             footerLogo.src = data.logo;
@@ -76,6 +93,58 @@ async function renderPage() {
     // Apply section backgrounds
     if (data.sectionBackgrounds) {
         applySectionBackgrounds(data.sectionBackgrounds);
+    }
+    
+    // Apply section headings
+    if (data.sectionHeadings) {
+        const aboutHeading = document.getElementById('about-heading');
+        if (aboutHeading && data.sectionHeadings.about) {
+            aboutHeading.textContent = data.sectionHeadings.about;
+        }
+        
+        const brandsHeading = document.getElementById('brands-heading');
+        if (brandsHeading && data.sectionHeadings.brands) {
+            brandsHeading.textContent = data.sectionHeadings.brands;
+        }
+        
+        const articlesHeading = document.getElementById('articles-heading');
+        if (articlesHeading && data.sectionHeadings.articles) {
+            articlesHeading.textContent = data.sectionHeadings.articles;
+        }
+    }
+    
+    // Apply button colors
+    if (data.buttonColors) {
+        const callButton = document.getElementById('call-button');
+        if (callButton && data.buttonColors.call) {
+            callButton.style.backgroundColor = data.buttonColors.call.background;
+            callButton.style.color = data.buttonColors.call.text;
+        }
+        
+        const routeButton = document.getElementById('route-button');
+        if (routeButton && data.buttonColors.route) {
+            routeButton.style.backgroundColor = data.buttonColors.route.background;
+            routeButton.style.color = data.buttonColors.route.text;
+        }
+    }
+    
+    // Apply map settings
+    if (data.mapSettings) {
+        const mapImage = document.getElementById('map-image');
+        if (mapImage && data.mapSettings.image) {
+            mapImage.src = data.mapSettings.image;
+            if (data.mapSettings.width) {
+                mapImage.style.width = data.mapSettings.width;
+            }
+            if (data.mapSettings.height) {
+                mapImage.style.height = data.mapSettings.height;
+            }
+        }
+        
+        const mapLink = document.getElementById('map-link');
+        if (mapLink && data.mapSettings.link) {
+            mapLink.href = data.mapSettings.link;
+        }
     }
 
     // Render phones in footer only
