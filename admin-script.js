@@ -160,6 +160,11 @@ async function loadAdminData() {
     document.getElementById('header-color').value = data.colors.headerBg || '#efc3c3';
     document.getElementById('menu-font-size').value = data.menuFontSize || '14px';
     document.getElementById('text-menu-color').value = data.textColors?.menu || '#ffffff';
+    
+    // Menu underline color (remove # if present)
+    const menuUnderlineColor = data.menuUnderlineColor || '#C01818';
+    document.getElementById('menu-underline-color').value = menuUnderlineColor.replace('#', '');
+    
     document.getElementById('button-font-size').value = data.buttonFontSize || '14px';
     document.getElementById('button-text-color').value = data.buttonTextColor || '#ffffff';
     
@@ -383,6 +388,10 @@ async function saveAllSettings() {
     data.menuFontSize = document.getElementById('menu-font-size').value || '14px';
     if (!data.textColors) data.textColors = {};
     data.textColors.menu = document.getElementById('text-menu-color').value;
+    
+    // Menu underline color - add # prefix if not present
+    const menuUnderlineInput = document.getElementById('menu-underline-color').value.trim();
+    data.menuUnderlineColor = menuUnderlineInput.startsWith('#') ? menuUnderlineInput : '#' + menuUnderlineInput;
     
     // Button settings
     data.buttonFontSize = document.getElementById('button-font-size').value || '14px';
@@ -893,6 +902,15 @@ window.onclick = function(event) {
     if (event.target.className === 'modal') {
         event.target.style.display = 'none';
     }
+}
+
+// Sync menu underline color with footer background color
+function syncMenuColorWithFooter() {
+    const footerBgColor = document.getElementById('footer-bg-color').value;
+    // Remove # if present
+    const colorWithoutHash = footerBgColor.replace('#', '');
+    document.getElementById('menu-underline-color').value = colorWithoutHash;
+    alert('Колір підкреслювання меню синхронізовано з кольором підвалу!');
 }
 
 // Initialize
