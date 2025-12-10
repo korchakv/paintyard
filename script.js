@@ -105,6 +105,11 @@ async function renderPage() {
         applySectionBackgrounds(data.sectionBackgrounds);
     }
     
+    // Apply section heights
+    if (data.sectionHeights) {
+        applySectionHeights(data.sectionHeights);
+    }
+    
     // Apply section headings
     if (data.sectionHeadings) {
         const aboutHeading = document.getElementById('about-heading');
@@ -172,7 +177,12 @@ async function renderPage() {
         footerAddress.textContent = data.address;
     }
     
-    // Apply contact colors AFTER rendering (fix for phone colors)
+    // Apply footer settings (colors and font sizes)
+    if (data.footerSettings) {
+        applyFooterSettings(data.footerSettings);
+    }
+    
+    // Apply contact colors AFTER rendering (fix for phone colors) - legacy support
     if (data.contactColors) {
         applyContactColors(data.contactColors);
     }
@@ -565,6 +575,63 @@ function applyFooterSize(footerHeight) {
     if (footer) {
         footer.style.padding = `${footerHeight} 0`;
     }
+}
+
+// Apply footer settings (colors and font sizes)
+function applyFooterSettings(footerSettings) {
+    const footer = document.getElementById('footer');
+    
+    // Apply footer background color
+    if (footer && footerSettings.bgColor) {
+        footer.style.backgroundColor = footerSettings.bgColor;
+    }
+    
+    // Apply address styles
+    const addressElements = document.querySelectorAll('#footer-address');
+    addressElements.forEach(element => {
+        if (footerSettings.addressColor) {
+            element.style.color = footerSettings.addressColor;
+        }
+        if (footerSettings.addressFontSize) {
+            element.style.fontSize = footerSettings.addressFontSize;
+        }
+    });
+    
+    // Apply phone styles
+    const phoneLinks = document.querySelectorAll('#footer-phones a');
+    phoneLinks.forEach(link => {
+        if (footerSettings.phonesColor) {
+            link.style.color = footerSettings.phonesColor;
+        }
+        if (footerSettings.phonesFontSize) {
+            link.style.fontSize = footerSettings.phonesFontSize;
+        }
+    });
+}
+
+// Apply section heights
+function applySectionHeights(sectionHeights) {
+    // Sanitize CSS value - only allow safe units
+    function sanitizeCSSValue(value) {
+        if (!value) return null;
+        // Allow padding format like "80px 40px" or single values
+        const safePattern = /^(\d+(\.\d+)?(px|em|rem|%)(\s+\d+(\.\d+)?(px|em|rem|%))?)$/;
+        return safePattern.test(value.trim()) ? value.trim() : null;
+    }
+    
+    // Apply to each section
+    const sections = ['about', 'brands', 'articles'];
+    sections.forEach(sectionName => {
+        if (sectionHeights[sectionName]) {
+            const padding = sanitizeCSSValue(sectionHeights[sectionName]);
+            if (padding) {
+                const section = document.getElementById(sectionName);
+                if (section) {
+                    section.style.padding = padding;
+                }
+            }
+        }
+    });
 }
 
 // Initialize page

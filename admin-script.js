@@ -189,6 +189,13 @@ async function loadAdminData() {
     // About section
     document.getElementById('about-input').value = data.aboutText || '';
     document.getElementById('text-about-color').value = data.textColors?.about || '#333333';
+    
+    // Section heights
+    if (data.sectionHeights) {
+        document.getElementById('about-section-height').value = data.sectionHeights.about || '80px 40px';
+        document.getElementById('brands-section-height').value = data.sectionHeights.brands || '80px 40px';
+        document.getElementById('articles-section-height').value = data.sectionHeights.articles || '80px 40px';
+    }
 
     // Brands section
     document.getElementById('text-brands-color').value = data.textColors?.brands || '#333333';
@@ -406,6 +413,12 @@ async function saveAllSettings() {
     // About section
     data.aboutText = document.getElementById('about-input').value;
     data.textColors.about = document.getElementById('text-about-color').value;
+    
+    // Section heights
+    if (!data.sectionHeights) data.sectionHeights = {};
+    data.sectionHeights.about = document.getElementById('about-section-height').value || '80px 40px';
+    data.sectionHeights.brands = document.getElementById('brands-section-height').value || '80px 40px';
+    data.sectionHeights.articles = document.getElementById('articles-section-height').value || '80px 40px';
     
     // About background
     if (!data.sectionBackgrounds) data.sectionBackgrounds = {};
