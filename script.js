@@ -296,45 +296,60 @@ function setupEdgeHoverRotation(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
     
+    let rafId = null;
+    
     container.addEventListener('mousemove', (e) => {
-        const containerRect = container.getBoundingClientRect();
-        const mouseX = e.clientX - containerRect.left;
-        const containerWidth = containerRect.width;
-        const edgeThreshold = 100; // pixels from edge to trigger rotation
+        // Cancel previous animation frame to throttle updates
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+        }
         
-        // Get all cards in the container
-        const cards = container.querySelectorAll('.brand-card, .product-card, .article-card');
-        
-        cards.forEach((card) => {
-            const cardRect = card.getBoundingClientRect();
-            const cardCenter = cardRect.left + cardRect.width / 2 - containerRect.left;
+        rafId = requestAnimationFrame(() => {
+            const containerRect = container.getBoundingClientRect();
+            const mouseX = e.clientX - containerRect.left;
+            const containerWidth = containerRect.width;
+            const edgeThreshold = 100; // pixels from edge to trigger rotation
             
-            // Check if mouse is near left edge and card is on the left side
-            if (mouseX < edgeThreshold && cardCenter < containerWidth / 2) {
-                const distanceFromEdge = Math.abs(mouseX - cardCenter);
-                if (distanceFromEdge < edgeThreshold) {
-                    card.style.transform = 'translateY(-10px) rotate(5deg)';
+            // Get all cards in the container
+            const cards = container.querySelectorAll('.brand-card, .product-card, .article-card');
+            
+            cards.forEach((card) => {
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + cardRect.width / 2 - containerRect.left;
+                
+                // Check if mouse is near left edge and card is on the left side
+                if (mouseX < edgeThreshold && cardCenter < containerWidth / 2) {
+                    const distanceFromEdge = Math.abs(mouseX - cardCenter);
+                    if (distanceFromEdge < edgeThreshold) {
+                        card.style.transform = 'translateY(-10px) rotate(5deg)';
+                    }
                 }
-            }
-            // Check if mouse is near right edge and card is on the right side
-            else if (mouseX > containerWidth - edgeThreshold && cardCenter > containerWidth / 2) {
-                const distanceFromEdge = Math.abs((containerWidth - mouseX) - (containerWidth - cardCenter));
-                if (distanceFromEdge < edgeThreshold) {
-                    card.style.transform = 'translateY(-10px) rotate(-5deg)';
+                // Check if mouse is near right edge and card is on the right side
+                else if (mouseX > containerWidth - edgeThreshold && cardCenter > containerWidth / 2) {
+                    const distanceFromEdge = Math.abs(mouseX - cardCenter);
+                    if (distanceFromEdge < edgeThreshold) {
+                        card.style.transform = 'translateY(-10px) rotate(-5deg)';
+                    }
                 }
-            }
-            else {
-                // Reset to default hover state
-                if (card.matches(':hover')) {
-                    card.style.transform = 'translateY(-10px)';
-                } else {
-                    card.style.transform = '';
+                else {
+                    // Reset to default hover state
+                    if (card.matches(':hover')) {
+                        card.style.transform = 'translateY(-10px)';
+                    } else {
+                        card.style.transform = '';
+                    }
                 }
-            }
+            });
+            
+            rafId = null;
         });
     });
     
     container.addEventListener('mouseleave', () => {
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
         const cards = container.querySelectorAll('.brand-card, .product-card, .article-card');
         cards.forEach((card) => {
             card.style.transform = '';
