@@ -255,7 +255,7 @@ h2 {
 }
 
 .scroll-btn:hover {
-    transform: scale(1.1) rotate(360deg);
+    transform: scale(1.1);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
     background: #1a1a1a;
 }
