@@ -35,6 +35,29 @@ body {
     font-size: 24px;
 }
 
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.save-all-btn {
+    background-color: #27ae60;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.save-all-btn:hover {
+    background-color: #229954;
+}
+
 .back-btn {
     color: white;
     text-decoration: none;
@@ -239,7 +262,8 @@ button:hover {
 
 /* Product/Article List - Compact Design */
 #products-list,
-#articles-list {
+#articles-list,
+#brands-list {
     max-height: 400px;
     overflow-y: auto;
     padding-right: 10px;
@@ -247,7 +271,8 @@ button:hover {
 
 /* List item styling - more compact */
 .product-item,
-.article-item {
+.article-item,
+.brand-item {
     padding: 12px;
     margin-bottom: 10px;
     background: #f8f9fa;
@@ -256,57 +281,66 @@ button:hover {
 }
 
 .product-item:hover,
-.article-item:hover {
+.article-item:hover,
+.brand-item:hover {
     background: #e9ecef;
 }
 
 .product-item h4,
-.article-item h4 {
+.article-item h4,
+.brand-item h4 {
     font-size: 16px;
     margin-bottom: 5px;
     color: #2c3e50;
 }
 
 .product-item p,
-.article-item p {
+.article-item p,
+.brand-item p {
     font-size: 13px;
     color: #666;
     margin-bottom: 5px;
 }
 
 .product-item .item-actions,
-.article-item .item-actions {
+.article-item .item-actions,
+.brand-item .item-actions {
     margin-top: 8px;
     display: flex;
     gap: 8px;
 }
 
 .product-item .item-actions button,
-.article-item .item-actions button {
+.article-item .item-actions button,
+.brand-item .item-actions button {
     padding: 6px 12px;
     font-size: 13px;
     margin-top: 0;
 }
 
 #products-list::-webkit-scrollbar,
-#articles-list::-webkit-scrollbar {
+#articles-list::-webkit-scrollbar,
+#brands-list::-webkit-scrollbar {
     width: 8px;
 }
 
 #products-list::-webkit-scrollbar-track,
-#articles-list::-webkit-scrollbar-track {
+#articles-list::-webkit-scrollbar-track,
+#brands-list::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 10px;
 }
 
 #products-list::-webkit-scrollbar-thumb,
-#articles-list::-webkit-scrollbar-thumb {
+#articles-list::-webkit-scrollbar-thumb,
+#brands-list::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 10px;
 }
 
 #products-list::-webkit-scrollbar-thumb:hover,
-#articles-list::-webkit-scrollbar-thumb:hover {
+#articles-list::-webkit-scrollbar-thumb:hover,
+#brands-list::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 
@@ -398,6 +432,17 @@ button:hover {
     .admin-header {
         flex-direction: column;
         gap: 15px;
+    }
+
+    .header-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .save-all-btn,
+    .back-btn {
+        width: 100%;
+        text-align: center;
     }
 
     .item-card {

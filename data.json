@@ -47,6 +47,7 @@
     "mainBg": "#e6e6e6",
     "menuBg": "#2c3e50"
   },
+  "pageBgColor": "#e6e6e6",
   "textColors": {
     "header": "#333333",
     "menu": "#ffffff",
@@ -66,45 +67,55 @@
     "logoHeightShrink": "35px",
     "footerHeight": "30px"
   },
+  "menuFontSize": "14px",
+  "buttonFontSize": "14px",
+  "buttonTextColor": "#ffffff",
   "contactColors": {
     "phones": "#333333",
     "address": "#666666"
+  },
+  "footerSettings": {
+    "addressFontSize": "14px",
+    "addressColor": "#666666",
+    "phonesFontSize": "14px",
+    "phonesColor": "#333333",
+    "bgColor": "#2c3e50"
   },
   "sectionBackgrounds": {
     "header": {
       "image": "",
       "opacity": 100,
-      "size": "cover",
-      "position": "center",
-      "repeat": "no-repeat"
+      "scale": 100,
+      "posX": 50,
+      "posY": 50
     },
     "about": {
       "image": "",
       "opacity": 100,
-      "size": "cover",
-      "position": "center",
-      "repeat": "no-repeat"
+      "scale": 100,
+      "posX": 50,
+      "posY": 50
     },
     "brands": {
       "image": "",
       "opacity": 100,
-      "size": "cover",
-      "position": "center",
-      "repeat": "no-repeat"
+      "scale": 100,
+      "posX": 50,
+      "posY": 50
     },
     "articles": {
       "image": "",
       "opacity": 100,
-      "size": "cover",
-      "position": "center",
-      "repeat": "no-repeat"
+      "scale": 100,
+      "posX": 50,
+      "posY": 50
     },
     "footer": {
       "image": "",
       "opacity": 100,
-      "size": "cover",
-      "position": "center",
-      "repeat": "no-repeat"
+      "scale": 100,
+      "posX": 50,
+      "posY": 50
     }
   }
 }
