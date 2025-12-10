@@ -129,8 +129,8 @@
                 </div>
             </div>
             
-            <!-- Section Headings Settings -->
-            <div class="section">
+            <!-- Section Headings Settings - HIDDEN as requested -->
+            <div class="section" style="display: none;">
                 <h2>📝 Налаштування заголовків секцій</h2>
                 <p class="hint">Тут ви можете змінити текст заголовків для основних секцій сайту</p>
                 
@@ -182,6 +182,12 @@
                 <h2>📄 Налаштування секції "Про нас"</h2>
                 
                 <div class="form-group">
+                    <label>Висота секції (padding)</label>
+                    <input type="text" id="about-section-height" placeholder="80px 40px">
+                    <p class="hint">Формат: вертикальний горизонтальний (наприклад: 80px 40px, 100px 50px)</p>
+                </div>
+                
+                <div class="form-group">
                     <label>Текст "Про нас" (HTML формат)</label>
                     <textarea id="about-input" rows="8" placeholder="Введіть текст в HTML форматі, наприклад: <p>Ласкаво просимо до нашого магазину!</p>"></textarea>
                     <p class="hint">Підтримується HTML: &lt;p&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;ul&gt;, &lt;li&gt; тощо</p>
@@ -229,6 +235,12 @@
                 <h2>🏷️ Налаштування секції "Бренди"</h2>
                 
                 <div class="form-group">
+                    <label>Висота секції (padding)</label>
+                    <input type="text" id="brands-section-height" placeholder="80px 40px">
+                    <p class="hint">Формат: вертикальний горизонтальний (наприклад: 80px 40px, 100px 50px)</p>
+                </div>
+                
+                <div class="form-group">
                     <label>Колір тексту в секції "Бренди"</label>
                     <input type="color" id="text-brands-color">
                     <p class="hint">Цей колір застосовується до всього тексту в секції "Бренди"</p>
@@ -268,6 +280,12 @@
             <!-- Articles Section Settings -->
             <div class="section">
                 <h2>📰 Налаштування секції "Статті"</h2>
+                
+                <div class="form-group">
+                    <label>Висота секції (padding)</label>
+                    <input type="text" id="articles-section-height" placeholder="80px 40px">
+                    <p class="hint">Формат: вертикальний горизонтальний (наприклад: 80px 40px, 100px 50px)</p>
+                </div>
                 
                 <div class="form-group">
                     <label>Колір тексту в секції "Статті"</label>
