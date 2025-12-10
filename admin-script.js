@@ -255,6 +255,20 @@ async function loadAdminData() {
             }
         });
     }
+    
+    // Load content opacity settings
+    if (data.contentOpacity) {
+        ['about', 'brands', 'articles'].forEach(section => {
+            const opacityInput = document.getElementById(`${section}-content-opacity`);
+            const opacityValue = document.getElementById(`${section}-content-opacity-value`);
+            if (opacityInput && data.contentOpacity[section] !== undefined) {
+                opacityInput.value = data.contentOpacity[section];
+                if (opacityValue) {
+                    opacityValue.textContent = data.contentOpacity[section] + '%';
+                }
+            }
+        });
+    }
 
     renderBrandsList(data.brands);
     renderArticlesList(data.articles);
@@ -438,6 +452,10 @@ async function saveAllSettings() {
     data.sectionBackgrounds.about.posX = parseInt(document.getElementById('about-bg-posX')?.value || 50);
     data.sectionBackgrounds.about.posY = parseInt(document.getElementById('about-bg-posY')?.value || 50);
     
+    // Content frame opacity settings
+    if (!data.contentOpacity) data.contentOpacity = {};
+    data.contentOpacity.about = parseInt(document.getElementById('about-content-opacity')?.value || 95);
+    
     // Brands section
     data.textColors.brands = document.getElementById('text-brands-color').value;
     
@@ -449,6 +467,8 @@ async function saveAllSettings() {
     data.sectionBackgrounds.brands.posX = parseInt(document.getElementById('brands-bg-posX')?.value || 50);
     data.sectionBackgrounds.brands.posY = parseInt(document.getElementById('brands-bg-posY')?.value || 50);
     
+    data.contentOpacity.brands = parseInt(document.getElementById('brands-content-opacity')?.value || 95);
+    
     // Articles section
     data.textColors.articles = document.getElementById('text-articles-color').value;
     
@@ -459,6 +479,8 @@ async function saveAllSettings() {
     data.sectionBackgrounds.articles.scale = parseInt(document.getElementById('articles-bg-scale')?.value || 100);
     data.sectionBackgrounds.articles.posX = parseInt(document.getElementById('articles-bg-posX')?.value || 50);
     data.sectionBackgrounds.articles.posY = parseInt(document.getElementById('articles-bg-posY')?.value || 50);
+    
+    data.contentOpacity.articles = parseInt(document.getElementById('articles-content-opacity')?.value || 95);
     
     // Footer settings
     data.address = document.getElementById('address-input').value;
@@ -745,6 +767,11 @@ function updatePosYValue(section) {
     const posY = document.getElementById(`${section}-bg-posY`).value;
     document.getElementById(`${section}-posY-value`).textContent = posY + '%';
     updateBackgroundPreview(section);
+}
+
+function updateContentOpacityValue(section) {
+    const opacity = document.getElementById(`${section}-content-opacity`).value;
+    document.getElementById(`${section}-content-opacity-value`).textContent = opacity + '%';
 }
 
 // Update background preview dynamically
