@@ -22,7 +22,7 @@
     }
   },
   "mapSettings": {
-    "image": "https://github.com/korchakv/paintyard/blob/main/images/map.png",
+    "image": "https://raw.githubusercontent.com/korchakv/paintyard/main/images/map.png",
     "link": "https://www.google.com/maps/dir/?api=1&destination=Івано-Франківськ,+вул.+Вовчинецька,+191",
     "width": "600px",
     "height": "400px"
