@@ -387,8 +387,7 @@ function applyTextColors(textColors) {
     if (textColors.menu) {
         const menuLinks = document.querySelectorAll('#header nav a');
         menuLinks.forEach(link => {
-            link.style.color = textColors.menu;
-            // Override Tailwind classes
+            // Override Tailwind classes with important flag
             link.style.setProperty('color', textColors.menu, 'important');
         });
     }
