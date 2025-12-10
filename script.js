@@ -380,10 +380,10 @@ function applySectionBackgrounds(backgrounds) {
             }
             
             overlay.style.backgroundImage = `url('${imageUrl.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}')`;
-            // On mobile (screen width < 768px), use 'cover' to avoid empty strips
-            // Otherwise use the custom scale
+            // On mobile (screen width < 768px), always use 'cover' to avoid empty strips
+            // On desktop, use the custom scale
             const isMobile = window.innerWidth < 768;
-            if (isMobile && scale === 100) {
+            if (isMobile) {
                 overlay.style.backgroundSize = 'cover';
             } else {
                 overlay.style.backgroundSize = `${scale}%`;
