@@ -135,7 +135,7 @@
   },
   "sectionBackgrounds": {
     "about": {
-      "image": "images/backgrounds/about-bg.jpg",
+      "image": "images/backgrounds/about-bg.png",
       "opacity": 100,
       "scale": 100,
       "posX": 50,
@@ -157,7 +157,7 @@
     }
   },
   "sectionHeights": {
-    "about": "100px 40px",
+    "about": "100px 200px",
     "brands": "60px 40px",
     "articles": "80px 40px"
   },
