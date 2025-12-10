@@ -88,6 +88,16 @@ async function renderPage() {
             footerLogo.style.display = 'block';
             document.getElementById('footer-logo-text').style.display = 'none';
         }
+    } else {
+        // Show text logo when no logo image is set
+        const headerLogo = document.getElementById('header-logo');
+        if (headerLogo) {
+            headerLogo.style.display = 'none';
+        }
+        const headerLogoText = document.getElementById('header-logo-text');
+        if (headerLogoText) {
+            headerLogoText.style.display = 'inline';
+        }
     }
     
     // Apply section backgrounds
