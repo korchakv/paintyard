@@ -49,6 +49,11 @@ async function renderPage() {
         applyTextColors(data.textColors);
     }
     
+    // Apply menu underline color
+    if (data.menuUnderlineColor) {
+        applyMenuUnderlineColor(data.menuUnderlineColor);
+    }
+    
     // Apply footer size
     if (data.headerSizes && data.headerSizes.footerHeight) {
         applyFooterSize(data.headerSizes.footerHeight);
@@ -375,7 +380,14 @@ function applySectionBackgrounds(backgrounds) {
             }
             
             overlay.style.backgroundImage = `url('${imageUrl.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}')`;
-            overlay.style.backgroundSize = `${scale}%`;
+            // On mobile (screen width < 768px), always use 'cover' to avoid empty strips
+            // On desktop, use the custom scale
+            const isMobile = window.innerWidth < 768;
+            if (isMobile) {
+                overlay.style.backgroundSize = 'cover';
+            } else {
+                overlay.style.backgroundSize = `${scale}%`;
+            }
             overlay.style.backgroundPosition = `${posX}% ${posY}%`;
             overlay.style.backgroundRepeat = 'no-repeat';
             overlay.style.opacity = opacity;
@@ -434,6 +446,24 @@ function applyTextColors(textColors) {
             footer.style.color = textColors.footer;
         }
     }
+}
+
+// Apply menu underline color
+function applyMenuUnderlineColor(color) {
+    // Create or update style element for menu underline
+    let styleEl = document.getElementById('menu-underline-style');
+    if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = 'menu-underline-style';
+        document.head.appendChild(styleEl);
+    }
+    
+    // Set the menu underline color
+    styleEl.textContent = `
+        #header nav a::after {
+            background: ${color} !important;
+        }
+    `;
 }
 
 // Apply contact colors

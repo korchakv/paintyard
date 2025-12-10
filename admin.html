@@ -100,6 +100,15 @@
                     <p class="hint">⚠️ Цей колір застосується до посилань "Про нас", "Бренди", "Статті", "Контакти"</p>
                 </div>
                 
+                <div class="form-group">
+                    <label>Колір підкреслювання меню</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="text" id="menu-underline-color" placeholder="C01818" maxlength="6" pattern="[0-9A-Fa-f]{6}" style="flex: 1;">
+                        <button type="button" onclick="syncMenuColorWithFooter()" class="upload-btn" style="white-space: nowrap;">🔄 Синхронізувати з підвалом</button>
+                    </div>
+                    <p class="hint">💡 Введіть колір в форматі без #, наприклад: C01818. Натисніть "Синхронізувати", щоб взяти колір фону підвалу.</p>
+                </div>
+                
                 <!-- Buttons Settings -->
                 <h3 style="margin-top: 20px; margin-bottom: 10px;">Кнопки в шапці</h3>
                 <div class="form-group">

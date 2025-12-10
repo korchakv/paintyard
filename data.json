@@ -91,6 +91,7 @@
   "menuFontSize": "14px",
   "buttonFontSize": "14px",
   "buttonTextColor": "#ffffff",
+  "menuUnderlineColor": "#C01818",
   "contactColors": {
     "phones": "#333333",
     "address": "#666666"
