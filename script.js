@@ -234,6 +234,7 @@ async function renderPage() {
         setupAutoScroll('articles-container', 0.3);
         setupEdgeHoverRotation('brands-container');
         setupEdgeHoverRotation('articles-container');
+        setupScrollButtonHover();
     }, 100);
 }
 
@@ -357,7 +358,7 @@ function setupEdgeHoverRotation(containerId) {
     });
 }
 
-// Scroll functions
+// Scroll functions (legacy - kept for backwards compatibility, but now using hover)
 function scrollBrands(direction) {
     const container = document.getElementById('brands-container');
     const scrollAmount = 290;
@@ -376,6 +377,49 @@ function scrollArticles(direction) {
     } else {
         container.scrollLeft += scrollAmount;
     }
+}
+
+// Setup hover-based scroll acceleration for navigation buttons
+function setupScrollButtonHover() {
+    // Get all scroll buttons
+    const scrollButtons = document.querySelectorAll('.scroll-btn');
+    
+    scrollButtons.forEach(button => {
+        let hoverScrollInterval = null;
+        const fastScrollSpeed = 5; // Faster speed on hover
+        
+        button.addEventListener('mouseenter', () => {
+            // Determine which container and direction
+            const section = button.closest('section');
+            let container = null;
+            let direction = 1; // 1 for right, -1 for left
+            
+            if (section && section.id === 'brands') {
+                container = document.getElementById('brands-container');
+            } else if (section && section.id === 'articles') {
+                container = document.getElementById('articles-container');
+            }
+            
+            if (button.classList.contains('scroll-left')) {
+                direction = -1;
+            }
+            
+            if (container) {
+                // Start fast scrolling
+                hoverScrollInterval = setInterval(() => {
+                    container.scrollLeft += direction * fastScrollSpeed;
+                }, 20);
+            }
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            // Stop fast scrolling
+            if (hoverScrollInterval) {
+                clearInterval(hoverScrollInterval);
+                hoverScrollInterval = null;
+            }
+        });
+    });
 }
 
 // Smooth scroll for menu links
