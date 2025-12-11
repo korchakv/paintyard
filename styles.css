@@ -161,8 +161,8 @@ h2 {
 
 /* About Section */
 #about {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 60px;
+    padding-right: 60px;
 }
 
 #about-content {
@@ -177,7 +177,10 @@ h2 {
     color: #333;
     border: 1px solid rgba(255, 255, 255, 0.2);
     width: 100%;
-    margin: 0;
+    max-width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 #about-content .bold {
@@ -479,6 +482,12 @@ h2 {
 /* Responsive Design */
 /* Tablet and smaller desktop screens - proportional scaling */
 @media (max-width: 1200px) {
+    /* Reduce about section margins progressively */
+    #about {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    
     .brand-card,
     .product-card,
     .article-card {
@@ -509,6 +518,12 @@ h2 {
 }
 
 @media (max-width: 992px) {
+    /* Further reduce about section margins */
+    #about {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+    
     .brand-card,
     .product-card,
     .article-card {
@@ -651,7 +666,7 @@ h2 {
         font-size: 32px;
     }
     
-    /* About section stays full width on mobile */
+    /* About section full width on mobile - margins reach 0 */
     #about {
         padding-left: 0;
         padding-right: 0;
@@ -662,6 +677,8 @@ h2 {
         padding: clamp(12px, 4vw, 20px);
         font-size: clamp(12px, 3.5vw, 14px);
         border-radius: 0;
+        text-align: center;
+        margin: 0 auto;
     }
     
     #about-content .bold {
