@@ -160,17 +160,26 @@ h2 {
 }
 
 /* About Section */
+#about {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
 #about-content {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 50px;
-    border-radius: 24px;
+    border-radius: 0;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     font-size: clamp(14px, 1.5vw, 18px);
     line-height: 1.8;
     color: #333;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
 }
 
 #about-content .bold {
@@ -644,11 +653,19 @@ h2 {
         font-size: 32px;
     }
     
+    /* About section stays full width on mobile */
+    #about {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
     /* Scale about-content frame proportionally on mobile */
     #about-content {
         padding: clamp(12px, 4vw, 20px);
         font-size: clamp(12px, 3.5vw, 14px);
-        border-radius: 12px;
+        border-radius: 0;
+        width: 100%;
+        max-width: 100%;
     }
     
     #about-content .bold {
