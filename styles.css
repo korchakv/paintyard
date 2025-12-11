@@ -637,7 +637,7 @@ h2 {
     }
     
     .container {
-        padding: 0 10px;
+        padding: 0 12px;
     }
 
     h2 {
@@ -711,7 +711,7 @@ h2 {
     }
     
     .items-container {
-        padding: 20px 2px;
+        padding: 20px 5px;
         gap: 15px;
     }
 }
