@@ -177,7 +177,6 @@ h2 {
     color: #333;
     border: 1px solid rgba(255, 255, 255, 0.2);
     width: 100%;
-    max-width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
     text-align: center;
@@ -677,8 +676,6 @@ h2 {
         padding: clamp(12px, 4vw, 20px);
         font-size: clamp(12px, 3.5vw, 14px);
         border-radius: 0;
-        text-align: center;
-        margin: 0 auto;
     }
     
     #about-content .bold {
