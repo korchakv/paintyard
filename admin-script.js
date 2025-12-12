@@ -189,6 +189,8 @@ async function loadAdminData() {
         document.getElementById('map-link-url').value = data.mapSettings.link || '';
         document.getElementById('map-image-width').value = data.mapSettings.width || '600px';
         document.getElementById('map-image-height').value = data.mapSettings.height || '400px';
+        document.getElementById('map-address-font-size').value = data.mapSettings.addressFontSize || '16px';
+        document.getElementById('map-phones-font-size').value = data.mapSettings.phonesFontSize || '16px';
     }
 
     // About section
@@ -446,6 +448,8 @@ async function saveAllSettings() {
     data.mapSettings.link = document.getElementById('map-link-url').value;
     data.mapSettings.width = document.getElementById('map-image-width').value || '600px';
     data.mapSettings.height = document.getElementById('map-image-height').value || '400px';
+    data.mapSettings.addressFontSize = document.getElementById('map-address-font-size').value || '16px';
+    data.mapSettings.phonesFontSize = document.getElementById('map-phones-font-size').value || '16px';
     
     // About section
     data.aboutText = document.getElementById('about-input').value;
