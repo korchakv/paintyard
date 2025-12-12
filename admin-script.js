@@ -953,7 +953,6 @@ async function updateFooterSettings() {
 
 // Modals can only be closed by clicking the X button
 // Removed: window.onclick functionality that closed modals on outside click
-}
 
 // Sync menu underline color with footer background color
 function syncMenuColorWithFooter() {
