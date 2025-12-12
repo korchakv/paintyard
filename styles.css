@@ -221,14 +221,17 @@ h2 {
     font-size: clamp(14px, 1.5vw, 18px) !important;
 }
 
-/* Scroll Container */
+/* Scroll Container - Always full width independent of content */
 .scroll-container {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 0;
     padding: 0;
     width: 100%;
+    max-width: 100vw; /* Prevent overflow */
+    margin-left: calc(50% - 50vw); /* Expand to full viewport width */
+    margin-right: calc(50% - 50vw); /* Expand to full viewport width */
 }
 
 .items-container {
@@ -236,13 +239,13 @@ h2 {
     flex-wrap: nowrap;
     gap: 20px;
     padding: 30px 1rem;
-    width: 100%;
+    flex: 1; /* Take remaining space */
     overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
 }
 
-/* Scroll Buttons */
+/* Scroll Buttons - Positioned at edges of full-width container */
 .scroll-btn {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
@@ -261,6 +264,16 @@ h2 {
     transition: all 0.3s ease;
     flex-shrink: 0;
     z-index: 10;
+}
+
+.scroll-btn.scroll-left {
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+.scroll-btn.scroll-right {
+    margin-left: 5px;
+    margin-right: 10px;
 }
 
 .scroll-btn:hover {
@@ -750,10 +763,12 @@ h2 {
         display: none;
     }
     
-    /* Make scroll container full width */
+    /* Make scroll container full width but prevent overflow on mobile */
     .scroll-container {
         gap: 0;
         width: 100%;
+        margin-left: 0;
+        margin-right: 0;
     }
     
     /* Hide scroll buttons on mobile */
