@@ -41,8 +41,14 @@ async function renderPage() {
     const data = await loadData();
 
     // Apply colors to footer and main content only
-    document.getElementById('footer').style.backgroundColor = data.colors.headerBg;
-    document.getElementById('main-content').style.backgroundColor = data.colors.mainBg;
+    const safeHeaderBg = sanitizeCSSColor(data.colors.headerBg);
+    const safeMainBg = sanitizeCSSColor(data.colors.mainBg);
+    if (safeHeaderBg) {
+        document.getElementById('footer').style.backgroundColor = safeHeaderBg;
+    }
+    if (safeMainBg) {
+        document.getElementById('main-content').style.backgroundColor = safeMainBg;
+    }
 
     // Apply text colors
     if (data.textColors) {
@@ -157,14 +163,18 @@ async function renderPage() {
     if (data.buttonColors) {
         const callButton = document.getElementById('call-button');
         if (callButton && data.buttonColors.call) {
-            callButton.style.backgroundColor = data.buttonColors.call.background;
-            callButton.style.color = data.buttonColors.call.text;
+            const safeBg = sanitizeCSSColor(data.buttonColors.call.background);
+            const safeText = sanitizeCSSColor(data.buttonColors.call.text);
+            if (safeBg) callButton.style.backgroundColor = safeBg;
+            if (safeText) callButton.style.color = safeText;
         }
         
         const routeButton = document.getElementById('route-button');
         if (routeButton && data.buttonColors.route) {
-            routeButton.style.backgroundColor = data.buttonColors.route.background;
-            routeButton.style.color = data.buttonColors.route.text;
+            const safeBg = sanitizeCSSColor(data.buttonColors.route.background);
+            const safeText = sanitizeCSSColor(data.buttonColors.route.text);
+            if (safeBg) routeButton.style.backgroundColor = safeBg;
+            if (safeText) routeButton.style.color = safeText;
         }
     }
     
@@ -594,88 +604,109 @@ function applySectionBackgrounds(backgrounds) {
 function applyTextColors(textColors) {
     // Header text color
     if (textColors.header) {
-        const headerTop = document.querySelector('.header-top');
-        if (headerTop) {
-            headerTop.style.color = textColors.header;
+        const safeColor = sanitizeCSSColor(textColors.header);
+        if (safeColor) {
+            const headerTop = document.querySelector('.header-top');
+            if (headerTop) {
+                headerTop.style.color = safeColor;
+            }
         }
     }
     
     // Menu text color
     if (textColors.menu) {
-        const menuLinks = document.querySelectorAll('#header nav a');
-        menuLinks.forEach(link => {
-            // Override Tailwind classes with important flag
-            link.style.setProperty('color', textColors.menu, 'important');
-        });
+        const safeColor = sanitizeCSSColor(textColors.menu);
+        if (safeColor) {
+            const menuLinks = document.querySelectorAll('#header nav a');
+            menuLinks.forEach(link => {
+                // Override Tailwind classes with important flag
+                link.style.setProperty('color', safeColor, 'important');
+            });
+        }
     }
     
     // About section text color
     if (textColors.about) {
-        const aboutSection = document.getElementById('about');
-        if (aboutSection) {
-            aboutSection.style.color = textColors.about;
-        }
-        // Also apply to about content
-        const aboutContent = document.getElementById('about-content');
-        if (aboutContent) {
-            aboutContent.style.color = textColors.about;
+        const safeColor = sanitizeCSSColor(textColors.about);
+        if (safeColor) {
+            const aboutSection = document.getElementById('about');
+            if (aboutSection) {
+                aboutSection.style.color = safeColor;
+            }
+            // Also apply to about content
+            const aboutContent = document.getElementById('about-content');
+            if (aboutContent) {
+                aboutContent.style.color = safeColor;
+            }
         }
     }
     
     // Brands section text color
     const brandsColor = textColors.brands || textColors.products;
     if (brandsColor) {
-        const brandsSection = document.getElementById('brands');
-        if (brandsSection) {
-            brandsSection.style.color = brandsColor;
-        }
-        // Create or update style element for brand cards
-        let styleEl = document.getElementById('brands-text-color-style');
-        if (!styleEl) {
-            styleEl = document.createElement('style');
-            styleEl.id = 'brands-text-color-style';
-            document.head.appendChild(styleEl);
-        }
-        styleEl.textContent = `
-            .brand-card h3, .product-card h3,
-            .brand-card p, .product-card p {
-                color: ${brandsColor} !important;
+        const safeColor = sanitizeCSSColor(brandsColor);
+        if (safeColor) {
+            const brandsSection = document.getElementById('brands');
+            if (brandsSection) {
+                brandsSection.style.color = safeColor;
             }
-        `;
+            // Create or update style element for brand cards
+            let styleEl = document.getElementById('brands-text-color-style');
+            if (!styleEl) {
+                styleEl = document.createElement('style');
+                styleEl.id = 'brands-text-color-style';
+                document.head.appendChild(styleEl);
+            }
+            styleEl.textContent = `
+                .brand-card h3, .product-card h3,
+                .brand-card p, .product-card p {
+                    color: ${safeColor} !important;
+                }
+            `;
+        }
     }
     
     // Articles section text color
     if (textColors.articles) {
-        const articlesSection = document.getElementById('articles');
-        if (articlesSection) {
-            articlesSection.style.color = textColors.articles;
-        }
-        // Create or update style element for article cards
-        let styleEl = document.getElementById('articles-text-color-style');
-        if (!styleEl) {
-            styleEl = document.createElement('style');
-            styleEl.id = 'articles-text-color-style';
-            document.head.appendChild(styleEl);
-        }
-        styleEl.textContent = `
-            .article-card h3,
-            .article-card .excerpt {
-                color: ${textColors.articles} !important;
+        const safeColor = sanitizeCSSColor(textColors.articles);
+        if (safeColor) {
+            const articlesSection = document.getElementById('articles');
+            if (articlesSection) {
+                articlesSection.style.color = safeColor;
             }
-        `;
+            // Create or update style element for article cards
+            let styleEl = document.getElementById('articles-text-color-style');
+            if (!styleEl) {
+                styleEl = document.createElement('style');
+                styleEl.id = 'articles-text-color-style';
+                document.head.appendChild(styleEl);
+            }
+            styleEl.textContent = `
+                .article-card h3,
+                .article-card .excerpt {
+                    color: ${safeColor} !important;
+                }
+            `;
+        }
     }
     
     // Footer text color
     if (textColors.footer) {
-        const footer = document.getElementById('footer');
-        if (footer) {
-            footer.style.color = textColors.footer;
+        const safeColor = sanitizeCSSColor(textColors.footer);
+        if (safeColor) {
+            const footer = document.getElementById('footer');
+            if (footer) {
+                footer.style.color = safeColor;
+            }
         }
     }
 }
 
 // Apply menu underline color
 function applyMenuUnderlineColor(color) {
+    const safeColor = sanitizeCSSColor(color);
+    if (!safeColor) return;
+    
     // Create or update style element for menu underline
     let styleEl = document.getElementById('menu-underline-style');
     if (!styleEl) {
@@ -687,7 +718,7 @@ function applyMenuUnderlineColor(color) {
     // Set the menu underline color
     styleEl.textContent = `
         #header nav a::after {
-            background: ${color} !important;
+            background: ${safeColor} !important;
         }
     `;
 }
@@ -695,23 +726,65 @@ function applyMenuUnderlineColor(color) {
 // Apply contact colors
 function applyContactColors(contactColors) {
     if (contactColors.phones) {
-        const phoneLinks = document.querySelectorAll('#header-phones a, #footer-phones a');
-        phoneLinks.forEach(link => {
-            link.style.color = contactColors.phones;
-        });
+        const safeColor = sanitizeCSSColor(contactColors.phones);
+        if (safeColor) {
+            const phoneLinks = document.querySelectorAll('#header-phones a, #footer-phones a');
+            phoneLinks.forEach(link => {
+                link.style.color = safeColor;
+            });
+        }
     }
     
     if (contactColors.address) {
-        const addressElements = document.querySelectorAll('#header-address, #footer-address');
-        addressElements.forEach(element => {
-            element.style.color = contactColors.address;
-        });
-        // Also color the address link
-        const addressLink = document.getElementById('header-address-link');
-        if (addressLink) {
-            addressLink.style.color = contactColors.address;
+        const safeColor = sanitizeCSSColor(contactColors.address);
+        if (safeColor) {
+            const addressElements = document.querySelectorAll('#header-address, #footer-address');
+            addressElements.forEach(element => {
+                element.style.color = safeColor;
+            });
+            // Also color the address link
+            const addressLink = document.getElementById('header-address-link');
+            if (addressLink) {
+                addressLink.style.color = safeColor;
+            }
         }
     }
+}
+
+// Shared CSS sanitization utility
+function sanitizeCSSValue(value) {
+    if (!value) return null;
+    const trimmedValue = value.trim();
+    
+    // Check for dangerous patterns
+    if (trimmedValue.includes('<') || trimmedValue.includes('>') || 
+        trimmedValue.includes('script') || trimmedValue.includes('expression') ||
+        trimmedValue.includes('url(') || trimmedValue.includes('calc(') ||
+        trimmedValue.includes('var(') || trimmedValue.includes('attr(')) {
+        return null;
+    }
+    
+    // Only allow px, em, rem, %, auto values
+    const safePattern = /^(auto|(\d+(\.\d+)?(px|em|rem|%)))$/;
+    return safePattern.test(trimmedValue) ? trimmedValue : null;
+}
+
+// Sanitize CSS color value
+function sanitizeCSSColor(color) {
+    if (!color) return null;
+    const trimmedColor = color.trim();
+    
+    // Check for dangerous patterns
+    if (trimmedColor.includes('<') || trimmedColor.includes('>') || 
+        trimmedColor.includes('script') || trimmedColor.includes('expression') ||
+        trimmedColor.includes('url(') || trimmedColor.includes('calc(') ||
+        trimmedColor.includes('var(') || trimmedColor.includes('attr(')) {
+        return null;
+    }
+    
+    // Allow hex colors, rgb/rgba, hsl/hsla, and named colors
+    const colorPattern = /^(#[0-9A-Fa-f]{3,8}|rgba?\([^)]+\)|hsla?\([^)]+\)|[a-z]+)$/;
+    return colorPattern.test(trimmedColor) ? trimmedColor : null;
 }
 
 // Apply header sizes
@@ -722,14 +795,6 @@ function applyHeaderSizes(headerSizes) {
         styleEl = document.createElement('style');
         styleEl.id = 'dynamic-header-styles';
         document.head.appendChild(styleEl);
-    }
-    
-    // Sanitize CSS values - only allow safe units
-    function sanitizeCSSValue(value) {
-        if (!value) return null;
-        // Only allow px, em, rem, %, auto values
-        const safePattern = /^(auto|(\d+(\.\d+)?(px|em|rem|%)))$/;
-        return safePattern.test(value.trim()) ? value.trim() : null;
     }
     
     // Build CSS rules
@@ -764,14 +829,6 @@ function applyHeaderSizes(headerSizes) {
 
 // Apply header padding
 function applyHeaderPadding(headerPadding) {
-    // Sanitize CSS values - only allow safe units
-    function sanitizeCSSValue(value) {
-        if (!value) return null;
-        // Only allow px, em, rem, %, auto values
-        const safePattern = /^(auto|(\d+(\.\d+)?(px|em|rem|%)))$/;
-        return safePattern.test(value.trim()) ? value.trim() : null;
-    }
-    
     const header = document.getElementById('header');
     if (!header) return;
     
@@ -793,6 +850,10 @@ function applyHeaderPadding(headerPadding) {
 function applyMobileMenuBackground(bgColor) {
     if (!bgColor) return;
     
+    // Sanitize color value
+    const safeColor = sanitizeCSSColor(bgColor);
+    if (!safeColor) return;
+    
     // Create or update style element
     let styleEl = document.getElementById('mobile-menu-bg-style');
     if (!styleEl) {
@@ -805,7 +866,7 @@ function applyMobileMenuBackground(bgColor) {
     styleEl.textContent = `
         @media (max-width: 768px) {
             #header nav {
-                background: ${bgColor} !important;
+                background: ${safeColor} !important;
             }
         }
     `;
@@ -816,8 +877,8 @@ function applyMenuFontSize(fontSize) {
     if (!fontSize) return;
     
     // Sanitize CSS value
-    const safePattern = /^(auto|(\d+(\.\d+)?(px|em|rem|%)))$/;
-    if (!safePattern.test(fontSize.trim())) return;
+    const safeFontSize = sanitizeCSSValue(fontSize);
+    if (!safeFontSize) return;
     
     // Create or update style element
     let styleEl = document.getElementById('menu-font-size-style');
@@ -829,7 +890,7 @@ function applyMenuFontSize(fontSize) {
     
     styleEl.textContent = `
         #header nav a {
-            font-size: ${fontSize} !important;
+            font-size: ${safeFontSize} !important;
         }
     `;
 }
@@ -839,14 +900,14 @@ function applyButtonFontSize(fontSize) {
     if (!fontSize) return;
     
     // Sanitize CSS value
-    const safePattern = /^(auto|(\d+(\.\d+)?(px|em|rem|%)))$/;
-    if (!safePattern.test(fontSize.trim())) return;
+    const safeFontSize = sanitizeCSSValue(fontSize);
+    if (!safeFontSize) return;
     
     const callButton = document.getElementById('call-button');
     const routeButton = document.getElementById('route-button');
     
-    if (callButton) callButton.style.fontSize = fontSize;
-    if (routeButton) routeButton.style.fontSize = fontSize;
+    if (callButton) callButton.style.fontSize = safeFontSize;
+    if (routeButton) routeButton.style.fontSize = safeFontSize;
 }
 
 // Modal functions for brands
@@ -926,17 +987,26 @@ function applyFooterSettings(footerSettings) {
     
     // Apply footer background color
     if (footer && footerSettings.bgColor) {
-        footer.style.backgroundColor = footerSettings.bgColor;
+        const safeColor = sanitizeCSSColor(footerSettings.bgColor);
+        if (safeColor) {
+            footer.style.backgroundColor = safeColor;
+        }
     }
     
     // Apply address styles
     const addressElements = document.querySelectorAll('#footer-address');
     addressElements.forEach(element => {
         if (footerSettings.addressColor) {
-            element.style.color = footerSettings.addressColor;
+            const safeColor = sanitizeCSSColor(footerSettings.addressColor);
+            if (safeColor) {
+                element.style.color = safeColor;
+            }
         }
         if (footerSettings.addressFontSize) {
-            element.style.fontSize = footerSettings.addressFontSize;
+            const safeFontSize = sanitizeCSSValue(footerSettings.addressFontSize);
+            if (safeFontSize) {
+                element.style.fontSize = safeFontSize;
+            }
         }
     });
     
@@ -944,10 +1014,16 @@ function applyFooterSettings(footerSettings) {
     const phoneLinks = document.querySelectorAll('#footer-phones a');
     phoneLinks.forEach(link => {
         if (footerSettings.phonesColor) {
-            link.style.color = footerSettings.phonesColor;
+            const safeColor = sanitizeCSSColor(footerSettings.phonesColor);
+            if (safeColor) {
+                link.style.color = safeColor;
+            }
         }
         if (footerSettings.phonesFontSize) {
-            link.style.fontSize = footerSettings.phonesFontSize;
+            const safeFontSize = sanitizeCSSValue(footerSettings.phonesFontSize);
+            if (safeFontSize) {
+                link.style.fontSize = safeFontSize;
+            }
         }
     });
 }
