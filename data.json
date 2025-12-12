@@ -24,8 +24,8 @@
   "mapSettings": {
     "image": "images/map.png",
     "link": "https://www.google.com/maps/dir/?api=1&destination=Івано-Франківськ,+вул.+Вовчинецька,+191",
-    "width": "900px",
-    "height": "500px",
+    "width": "600px",
+    "height": "250px",
     "addressFontSize": "16px",
     "phonesFontSize": "16px"
   },
@@ -164,9 +164,9 @@
     "address": "#666666"
   },
   "footerSettings": {
-    "addressFontSize": "10px",
+    "addressFontSize": "16px",
     "addressColor": "#ffffff",
-    "phonesFontSize": "10px",
+    "phonesFontSize": "16px",
     "phonesColor": "#ffffff",
     "bgColor": "#ffffff"
   },
