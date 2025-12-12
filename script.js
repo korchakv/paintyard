@@ -769,6 +769,24 @@ function sanitizeCSSValue(value) {
     return safePattern.test(trimmedValue) ? trimmedValue : null;
 }
 
+// Sanitize CSS padding value (allows multiple space-separated values)
+function sanitizeCSSPadding(value) {
+    if (!value) return null;
+    const trimmedValue = value.trim();
+    
+    // Check for dangerous patterns
+    if (trimmedValue.includes('<') || trimmedValue.includes('>') || 
+        trimmedValue.includes('script') || trimmedValue.includes('expression') ||
+        trimmedValue.includes('url(') || trimmedValue.includes('calc(') ||
+        trimmedValue.includes('var(') || trimmedValue.includes('attr(')) {
+        return null;
+    }
+    
+    // Allow safe padding values with px, em, rem, % units (supports up to 4 space-separated values)
+    const safePattern = /^(\d+(\.\d+)?(px|em|rem|%)(\s+\d+(\.\d+)?(px|em|rem|%)){0,3})$/;
+    return safePattern.test(trimmedValue) ? trimmedValue : null;
+}
+
 // Sanitize CSS color value
 function sanitizeCSSColor(color) {
     if (!color) return null;
@@ -972,12 +990,12 @@ function applyFooterSize(footerHeight) {
     if (!footerHeight) return;
     
     // Sanitize CSS value
-    const safePattern = /^(auto|(\d+(\.\d+)?(px|em|rem|%)))$/;
-    if (!safePattern.test(footerHeight.trim())) return;
+    const safeValue = sanitizeCSSValue(footerHeight);
+    if (!safeValue) return;
     
     const footer = document.getElementById('footer');
     if (footer) {
-        footer.style.padding = `${footerHeight} 0`;
+        footer.style.padding = `${safeValue} 0`;
     }
 }
 
@@ -1030,30 +1048,11 @@ function applyFooterSettings(footerSettings) {
 
 // Apply section heights
 function applySectionHeights(sectionHeights) {
-    // Sanitize CSS value - only allow safe units and prevent XSS
-    function sanitizeCSSValue(value) {
-        if (!value) return null;
-        // Only allow safe padding values with px, em, rem, % units
-        // No CSS functions, comments, or special characters allowed
-        const safePattern = /^(\d+(\.\d+)?(px|em|rem|%)(\s+\d+(\.\d+)?(px|em|rem|%))?)$/;
-        const trimmedValue = value.trim();
-        
-        // Check for dangerous patterns
-        if (trimmedValue.includes('<') || trimmedValue.includes('>') || 
-            trimmedValue.includes('script') || trimmedValue.includes('expression') ||
-            trimmedValue.includes('url(') || trimmedValue.includes('calc(') ||
-            trimmedValue.includes('var(') || trimmedValue.includes('attr(')) {
-            return null;
-        }
-        
-        return safePattern.test(trimmedValue) ? trimmedValue : null;
-    }
-    
     // Apply to each section
     const sections = ['about', 'brands', 'articles'];
     sections.forEach(sectionName => {
         if (sectionHeights[sectionName]) {
-            const padding = sanitizeCSSValue(sectionHeights[sectionName]);
+            const padding = sanitizeCSSPadding(sectionHeights[sectionName]);
             if (padding) {
                 const section = document.getElementById(sectionName);
                 if (section) {
