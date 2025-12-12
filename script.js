@@ -151,8 +151,21 @@ async function renderPage() {
     // Apply map settings
     if (data.mapSettings) {
         const mapImage = document.getElementById('map-image');
+        const mapContainer = document.querySelector('.map-container-new');
+        
         if (mapImage && data.mapSettings.image) {
             mapImage.src = data.mapSettings.image;
+        }
+        
+        // Apply dimensions to both container and image
+        if (mapContainer) {
+            if (data.mapSettings.width) {
+                mapContainer.style.maxWidth = data.mapSettings.width;
+            }
+            // Container height will be determined by image aspect ratio
+        }
+        
+        if (mapImage) {
             if (data.mapSettings.width) {
                 mapImage.style.width = data.mapSettings.width;
             }
