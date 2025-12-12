@@ -148,9 +148,9 @@
     "address": "#666666"
   },
   "footerSettings": {
-    "addressFontSize": "14px",
+    "addressFontSize": "10px",
     "addressColor": "#ffffff",
-    "phonesFontSize": "14px",
+    "phonesFontSize": "10px",
     "phonesColor": "#ffffff",
     "bgColor": "#ffffff"
   },
@@ -159,8 +159,8 @@
       "image": "images/backgrounds/about-bg.png",
       "opacity": 100,
       "scale": 100,
-      "posX": 50,
-      "posY": 50
+      "posX": 17,
+      "posY": 58
     },
     "brands": {
       "image": "images/backgrounds/brands-bg.jpg",
