@@ -232,11 +232,45 @@ h2 {
 }
 
 .items-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
+    flex-wrap: nowrap;
     gap: 20px;
     padding: 30px 1rem;
     width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+}
+
+/* Scroll Buttons */
+.scroll-btn {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 30px;
+    color: #333;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.scroll-btn:hover {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transform: scale(1.1);
+}
+
+.scroll-btn:active {
+    transform: scale(0.95);
 }
 
 /* Brand Card (previously Product Card) */
@@ -247,7 +281,8 @@ h2 {
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 20px;
-    width: 100%; /* Full width within grid cell */
+    width: 250px; /* Fixed width for horizontal scrolling */
+    flex-shrink: 0; /* Prevent shrinking */
     min-height: 380px;
     display: flex;
     flex-direction: column;
@@ -310,7 +345,8 @@ h2 {
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 20px;
-    width: 100%; /* Full width within grid cell */
+    width: 250px; /* Fixed width for horizontal scrolling */
+    flex-shrink: 0; /* Prevent shrinking */
     min-height: 380px;
     display: flex;
     flex-direction: column;
@@ -459,13 +495,11 @@ h2 {
         padding-right: 0;
     }
     
-    .items-container {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-    
+    /* Cards maintain fixed width for horizontal scrolling */
     .brand-card,
     .product-card,
     .article-card {
+        width: 220px;
         min-height: 360px;
         padding: 18px;
         border-radius: 18px;
@@ -498,13 +532,11 @@ h2 {
         padding-right: 0;
     }
     
-    .items-container {
-        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    }
-    
+    /* Cards maintain fixed width for horizontal scrolling */
     .brand-card,
     .product-card,
     .article-card {
+        width: 190px;
         min-height: 340px;
         padding: 16px;
         border-radius: 16px;
@@ -671,6 +703,7 @@ h2 {
 
     /* Mobile optimized cards - compact view with square images */
     .items-container {
+        display: grid;
         grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
         padding: 20px 1rem;
         gap: 15px;
@@ -721,6 +754,11 @@ h2 {
     .scroll-container {
         gap: 0;
         width: 100%;
+    }
+    
+    /* Hide scroll buttons on mobile */
+    .scroll-btn {
+        display: none;
     }
 }
 
