@@ -238,6 +238,7 @@ h2 {
     padding: 30px 1rem;
     width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-behavior: smooth;
 }
 
