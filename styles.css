@@ -161,8 +161,8 @@ h2 {
 
 /* About Section */
 #about {
-    padding-left: 60px;
-    padding-right: 60px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 #about-content {
