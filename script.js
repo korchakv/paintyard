@@ -115,6 +115,26 @@ async function renderPage() {
         applySectionHeights(data.sectionHeights);
     }
     
+    // Apply header padding
+    if (data.headerPadding) {
+        applyHeaderPadding(data.headerPadding);
+    }
+    
+    // Apply header background color to mobile menu
+    if (data.colors && data.colors.headerBg) {
+        applyMobileMenuBackground(data.colors.headerBg);
+    }
+    
+    // Apply menu font size
+    if (data.menuFontSize) {
+        applyMenuFontSize(data.menuFontSize);
+    }
+    
+    // Apply button font size
+    if (data.buttonFontSize) {
+        applyButtonFontSize(data.buttonFontSize);
+    }
+    
     // Apply section headings
     if (data.sectionHeadings) {
         const aboutHeading = document.getElementById('about-heading');
@@ -740,6 +760,93 @@ function applyHeaderSizes(headerSizes) {
     }
     
     styleEl.textContent = css;
+}
+
+// Apply header padding
+function applyHeaderPadding(headerPadding) {
+    // Sanitize CSS values - only allow safe units
+    function sanitizeCSSValue(value) {
+        if (!value) return null;
+        // Only allow px, em, rem, %, auto values
+        const safePattern = /^(auto|(\d+(\.\d+)?(px|em|rem|%)))$/;
+        return safePattern.test(value.trim()) ? value.trim() : null;
+    }
+    
+    const header = document.getElementById('header');
+    if (!header) return;
+    
+    const headerDiv = header.querySelector('div.mx-auto');
+    if (!headerDiv) return;
+    
+    const paddingTop = sanitizeCSSValue(headerPadding.top);
+    const paddingBottom = sanitizeCSSValue(headerPadding.bottom);
+    const paddingLeft = sanitizeCSSValue(headerPadding.left);
+    const paddingRight = sanitizeCSSValue(headerPadding.right);
+    
+    if (paddingTop) headerDiv.style.paddingTop = paddingTop;
+    if (paddingBottom) headerDiv.style.paddingBottom = paddingBottom;
+    if (paddingLeft) headerDiv.style.paddingLeft = paddingLeft;
+    if (paddingRight) headerDiv.style.paddingRight = paddingRight;
+}
+
+// Apply mobile menu background color
+function applyMobileMenuBackground(bgColor) {
+    if (!bgColor) return;
+    
+    // Create or update style element
+    let styleEl = document.getElementById('mobile-menu-bg-style');
+    if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = 'mobile-menu-bg-style';
+        document.head.appendChild(styleEl);
+    }
+    
+    // Apply background color to mobile menu
+    styleEl.textContent = `
+        @media (max-width: 768px) {
+            #header nav {
+                background: ${bgColor} !important;
+            }
+        }
+    `;
+}
+
+// Apply menu font size
+function applyMenuFontSize(fontSize) {
+    if (!fontSize) return;
+    
+    // Sanitize CSS value
+    const safePattern = /^(auto|(\d+(\.\d+)?(px|em|rem|%)))$/;
+    if (!safePattern.test(fontSize.trim())) return;
+    
+    // Create or update style element
+    let styleEl = document.getElementById('menu-font-size-style');
+    if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = 'menu-font-size-style';
+        document.head.appendChild(styleEl);
+    }
+    
+    styleEl.textContent = `
+        #header nav a {
+            font-size: ${fontSize} !important;
+        }
+    `;
+}
+
+// Apply button font size
+function applyButtonFontSize(fontSize) {
+    if (!fontSize) return;
+    
+    // Sanitize CSS value
+    const safePattern = /^(auto|(\d+(\.\d+)?(px|em|rem|%)))$/;
+    if (!safePattern.test(fontSize.trim())) return;
+    
+    const callButton = document.getElementById('call-button');
+    const routeButton = document.getElementById('route-button');
+    
+    if (callButton) callButton.style.fontSize = fontSize;
+    if (routeButton) routeButton.style.fontSize = fontSize;
 }
 
 // Modal functions for brands
