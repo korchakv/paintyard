@@ -238,7 +238,7 @@ h2 {
     display: flex;
     flex-wrap: nowrap;
     gap: 20px;
-    padding: 30px 1rem;
+    padding: 30px 5px;
     flex: 1; /* Take remaining space */
     overflow-x: auto;
     overflow-y: hidden;
@@ -267,13 +267,13 @@ h2 {
 }
 
 .scroll-btn.scroll-left {
-    margin-left: 10px;
+    margin-left: 5px;
     margin-right: 5px;
 }
 
 .scroll-btn.scroll-right {
     margin-left: 5px;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .scroll-btn:hover {
