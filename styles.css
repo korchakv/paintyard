@@ -11,6 +11,8 @@ body {
     line-height: 1.6;
     color: #1a1a1a;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 /* Section Background Overlay */
@@ -140,7 +142,7 @@ body {
 
 .container {
     width: 100%;
-    padding: 0 20px;
+    padding: 0;
 }
 
 h2 {
@@ -175,7 +177,7 @@ h2 {
     color: #333;
     border: 1px solid rgba(255, 255, 255, 0.2);
     width: 100%;
-    margin: 0 auto;
+    margin: 0;
     box-sizing: border-box;
     text-align: center;
 }
@@ -408,11 +410,12 @@ h2 {
 }
 
 .footer-content {
-    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
 }
 
 .footer-logo-container {
@@ -479,10 +482,10 @@ h2 {
 /* Responsive Design */
 /* Tablet and smaller desktop screens - proportional scaling */
 @media (max-width: 1200px) {
-    /* Reduce about section margins progressively */
+    /* Ensure no margins */
     #about {
-        padding-left: 40px;
-        padding-right: 40px;
+        padding-left: 0;
+        padding-right: 0;
     }
     
     .brand-card,
@@ -515,10 +518,10 @@ h2 {
 }
 
 @media (max-width: 992px) {
-    /* Further reduce about section margins */
+    /* Ensure no margins */
     #about {
-        padding-left: 24px;
-        padding-right: 24px;
+        padding-left: 0;
+        padding-right: 0;
     }
     
     .brand-card,
@@ -656,7 +659,7 @@ h2 {
     }
     
     .container {
-        padding: 0 12px;
+        padding: 0;
     }
 
     h2 {
