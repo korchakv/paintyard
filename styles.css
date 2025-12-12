@@ -239,9 +239,6 @@ h2 {
     width: 100%;
 }
 
-
-
-
 /* Brand Card (previously Product Card) */
 .brand-card, .product-card {
     background: rgba(255, 255, 255, 0.95);
@@ -692,9 +689,9 @@ h2 {
     .brand-card img,
     .product-card img,
     .article-card img {
-        height: 85px;
-        max-width: 85px;
         width: 100%;
+        max-width: 85px;
+        height: 85px;
         margin: 0 auto 5px;
         border-radius: 8px;
         object-fit: contain;
