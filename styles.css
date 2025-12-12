@@ -11,6 +11,9 @@ body {
     line-height: 1.6;
     color: #1a1a1a;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
 /* Section Background Overlay */
@@ -136,11 +139,13 @@ body {
 
 .section {
     padding: 80px 0;
+    width: 100%;
 }
 
 .container {
     width: 100%;
-    padding: 0 20px;
+    max-width: 100%;
+    padding: 0;
 }
 
 h2 {
@@ -161,6 +166,7 @@ h2 {
 #about {
     padding-left: 0;
     padding-right: 0;
+    width: 100%;
 }
 
 #about-content {
@@ -194,6 +200,7 @@ h2 {
     display: flex;
     align-items: center;
     gap: 15px;
+    padding: 0 20px;
 }
 
 .items-container {
@@ -408,11 +415,12 @@ h2 {
 }
 
 .footer-content {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
 }
 
 .footer-logo-container {
@@ -481,8 +489,8 @@ h2 {
 @media (max-width: 1200px) {
     /* Reduce about section margins progressively */
     #about {
-        padding-left: 40px;
-        padding-right: 40px;
+        padding-left: 0;
+        padding-right: 0;
     }
     
     .brand-card,
@@ -517,8 +525,8 @@ h2 {
 @media (max-width: 992px) {
     /* Further reduce about section margins */
     #about {
-        padding-left: 24px;
-        padding-right: 24px;
+        padding-left: 0;
+        padding-right: 0;
     }
     
     .brand-card,
@@ -874,11 +882,23 @@ h2 {
     background: #f8f9fa;
 }
 
+#contact .container {
+    padding: 0 20px;
+}
+
+#contact h2 {
+    display: block;
+    text-align: center;
+    color: #1a1a1a;
+    text-shadow: none;
+}
+
 .contact-wrapper {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: 40px;
     margin-top: 30px;
+    padding: 0 20px;
 }
 
 .contact-info h3 {
