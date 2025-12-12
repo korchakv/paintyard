@@ -217,8 +217,9 @@ async function renderPage() {
     `).join('');
     document.getElementById('brands-container').innerHTML = brandsHTML;
 
-    // Render articles
-    const articlesHTML = data.articles.map(article => `
+    // Render articles in reverse order (newest first)
+    const reversedArticles = [...data.articles].reverse();
+    const articlesHTML = reversedArticles.map(article => `
         <div class="article-card" onclick="openArticleModal(${article.id})">
             <img src="${article.image}" alt="${article.name}">
             <h3>${article.name}</h3>

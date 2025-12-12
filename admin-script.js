@@ -686,7 +686,9 @@ function closeBrandModal() {
 // Articles management
 function renderArticlesList(articles) {
     const container = document.getElementById('articles-list');
-    container.innerHTML = articles.map(article => `
+    // Reverse the articles array to show newest first
+    const reversedArticles = [...articles].reverse();
+    container.innerHTML = reversedArticles.map(article => `
         <div class="article-item">
             <h4>${article.name} <span class="item-id">(ID: ${article.id})</span></h4>
             <p>${article.excerpt}</p>
@@ -949,12 +951,8 @@ async function updateFooterSettings() {
     saveData(data);
 }
 
-// Close modals when clicking outside
-window.onclick = function(event) {
-    if (event.target.className === 'modal') {
-        event.target.style.display = 'none';
-    }
-}
+// Modals can only be closed by clicking the X button
+// Removed: window.onclick functionality that closed modals on outside click
 
 // Sync menu underline color with footer background color
 function syncMenuColorWithFooter() {
@@ -964,6 +962,61 @@ function syncMenuColorWithFooter() {
     document.getElementById('menu-underline-color').value = colorWithoutHash;
     alert('Колір підкреслювання меню синхронізовано з кольором підвалу!');
 }
+
+// Sidebar navigation functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('.admin-nav .nav-link');
+    
+    // Smooth scroll to sections
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            
+            if (targetSection) {
+                // Scroll to section with offset for sticky header
+                const headerHeight = document.querySelector('.admin-header').offsetHeight;
+                const targetPosition = targetSection.offsetTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Update active state
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+    
+    // Update active state on scroll
+    const sections = document.querySelectorAll('.section[id]');
+    const observerOptions = {
+        root: null,
+        rootMargin: '-100px 0px -60% 0px',
+        threshold: 0
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const sectionId = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+    
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+});
 
 // Initialize
 checkAuth();

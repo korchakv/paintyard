@@ -24,8 +24,25 @@
         </div>
 
         <div id="admin-panel" style="display: none;">
+            <!-- Sidebar Navigation -->
+            <aside class="admin-sidebar">
+                <nav class="admin-nav">
+                    <a href="#data-management" class="nav-link">💾 Управління даними</a>
+                    <a href="#general-settings" class="nav-link">🎨 Загальні налаштування</a>
+                    <a href="#header-settings" class="nav-link">🔧 Налаштування шапки</a>
+                    <a href="#map-settings" class="nav-link">🗺️ Налаштування карти</a>
+                    <a href="#about-settings" class="nav-link">📄 Секція "Про нас"</a>
+                    <a href="#brands-settings" class="nav-link">🏷️ Секція "Бренди"</a>
+                    <a href="#articles-settings" class="nav-link">📰 Секція "Статті"</a>
+                    <a href="#footer-settings" class="nav-link">🔧 Підвал</a>
+                    <a href="#brands-management" class="nav-link">Управління брендами</a>
+                    <a href="#articles-management" class="nav-link">Управління статтями</a>
+                </nav>
+            </aside>
+            
+            <div class="admin-content">
             <!-- Data Management -->
-            <div class="section" style="background: #fff3cd; border-left: 4px solid #ffc107;">
+            <div class="section" id="data-management" style="background: #fff3cd; border-left: 4px solid #ffc107;">
                 <h2>💾 Управління даними</h2>
                 <p class="info-text">⚠️ ВАЖЛИВО: Після внесення змін завантажте файл data.json та закомітьте його в репозиторій GitHub, щоб зміни були видимі на всіх пристроях.</p>
                 <p class="info-text">📖 <a href="README-IMAGE-UPLOAD.md" target="_blank" style="color: #667eea; font-weight: 600;">Проста інструкція по завантаженню картинок на GitHub</a></p>
@@ -36,7 +53,7 @@
             </div>
             
             <!-- General Settings Section -->
-            <div class="section">
+            <div class="section" id="general-settings">
                 <h2>🎨 Загальні налаштування сторінки</h2>
                 <div class="form-group">
                     <label>Колір фону всієї сторінки</label>
@@ -46,7 +63,7 @@
             </div>
 
             <!-- Header Settings (consolidated) -->
-            <div class="section">
+            <div class="section" id="header-settings">
                 <h2>🔧 Налаштування шапки</h2>
                 
                 <!-- Logo -->
@@ -160,7 +177,7 @@
             </div>
             
             <!-- Map Settings -->
-            <div class="section">
+            <div class="section" id="map-settings">
                 <h2>🗺️ Налаштування карти</h2>
                 
                 <div class="form-group">
@@ -187,7 +204,7 @@
             </div>
 
             <!-- About Section Settings -->
-            <div class="section">
+            <div class="section" id="about-settings">
                 <h2>📄 Налаштування секції "Про нас"</h2>
                 
                 <div class="form-group">
@@ -252,7 +269,7 @@
             </div>
 
             <!-- Brands Section Settings -->
-            <div class="section">
+            <div class="section" id="brands-settings">
                 <h2>🏷️ Налаштування секції "Бренди"</h2>
                 
                 <div class="form-group">
@@ -311,7 +328,7 @@
             </div>
 
             <!-- Articles Section Settings -->
-            <div class="section">
+            <div class="section" id="articles-settings">
                 <h2>📰 Налаштування секції "Статті"</h2>
                 
                 <div class="form-group">
@@ -370,7 +387,7 @@
             </div>
 
             <!-- Footer Settings -->
-            <div class="section">
+            <div class="section" id="footer-settings">
                 <h2>🔧 Налаштування підвалу</h2>
                 
                 <div class="form-group">
@@ -410,14 +427,14 @@
             </div>
 
             <!-- Brands Management -->
-            <div class="section">
+            <div class="section" id="brands-management">
                 <h2>Бренди</h2>
                 <div id="brands-list"></div>
                 <button onclick="showAddBrandForm()" class="add-btn">+ Додати бренд</button>
             </div>
 
             <!-- Articles Management -->
-            <div class="section">
+            <div class="section" id="articles-management">
                 <h2>Статті</h2>
                 <div id="articles-list"></div>
                 <button onclick="showAddArticleForm()" class="add-btn">+ Додати статтю</button>
@@ -427,7 +444,8 @@
             <div class="section">
                 <button onclick="logout()" class="logout-btn">Вийти</button>
             </div>
-        </div>
+            </div><!-- End of admin-content -->
+        </div><!-- End of admin-panel -->
     </div>
 
     <!-- Brand Modal -->
