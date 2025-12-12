@@ -151,8 +151,20 @@ async function renderPage() {
     // Apply map settings
     if (data.mapSettings) {
         const mapImage = document.getElementById('map-image');
+        const mapContainer = document.querySelector('.map-container-new');
+        
         if (mapImage && data.mapSettings.image) {
             mapImage.src = data.mapSettings.image;
+        }
+        
+        // Apply dimensions to container to constrain maximum size
+        if (mapContainer && data.mapSettings.width) {
+            mapContainer.style.maxWidth = data.mapSettings.width;
+        }
+        
+        // Apply explicit dimensions to image
+        // The clickable map link will automatically wrap to match these dimensions
+        if (mapImage) {
             if (data.mapSettings.width) {
                 mapImage.style.width = data.mapSettings.width;
             }
