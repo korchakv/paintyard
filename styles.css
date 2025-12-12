@@ -227,47 +227,28 @@ h2 {
     display: flex;
     align-items: center;
     gap: 15px;
-    padding: 0 0 0 1rem;
+    padding: 0;
+    width: 100%;
 }
 
 .items-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    overflow-x: auto;
+    padding: 30px 1rem;
+    width: 100%;
+    overflow-x: visible;
     scroll-behavior: smooth;
-    padding: 30px 0;
-    flex: 1;
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
 }
 
-.items-container > :first-child {
-    margin-left: 0;
-}
 
-.items-container > :last-child {
-    margin-right: 0;
-}
 
-.items-container::-webkit-scrollbar {
-    height: 6px;
-}
 
-.items-container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-}
-
-.items-container::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 10px;
-}
-
-.items-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.7);
-}
 
 .scroll-btn {
+    display: none; /* Hidden since we're using grid auto-fit */
     background: #000000;
     color: white;
     border: none;
@@ -319,11 +300,10 @@ h2 {
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 20px;
-    width: 270px;
-    height: 380px;
+    width: 100%; /* Full width within grid cell */
+    min-height: 380px;
     display: flex;
     flex-direction: column;
-    flex-shrink: 0;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
@@ -335,7 +315,8 @@ h2 {
 }
 
 .brand-card img, .product-card img {
-    width: 200px;
+    width: 100%;
+    max-width: 200px;
     height: 200px;
     object-fit: contain;
     border-radius: 16px;
@@ -382,11 +363,10 @@ h2 {
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 20px;
-    width: 270px;
-    height: 380px;
+    width: 100%; /* Full width within grid cell */
+    min-height: 380px;
     display: flex;
     flex-direction: column;
-    flex-shrink: 0;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration: none;
@@ -400,7 +380,8 @@ h2 {
 }
 
 .article-card img {
-    width: 200px;
+    width: 100%;
+    max-width: 200px;
     height: 200px;
     object-fit: contain;
     border-radius: 16px;
@@ -531,11 +512,14 @@ h2 {
         padding-right: 0;
     }
     
+    .items-container {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    
     .brand-card,
     .product-card,
     .article-card {
-        width: 240px;
-        height: 360px;
+        min-height: 360px;
         padding: 18px;
         border-radius: 18px;
     }
@@ -543,7 +527,7 @@ h2 {
     .brand-card img,
     .product-card img,
     .article-card img {
-        width: 180px;
+        max-width: 180px;
         height: 180px;
     }
     
@@ -567,11 +551,14 @@ h2 {
         padding-right: 0;
     }
     
+    .items-container {
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    }
+    
     .brand-card,
     .product-card,
     .article-card {
-        width: 210px;
-        height: 340px;
+        min-height: 340px;
         padding: 16px;
         border-radius: 16px;
     }
@@ -579,7 +566,7 @@ h2 {
     .brand-card img,
     .product-card img,
     .article-card img {
-        width: 160px;
+        max-width: 160px;
         height: 160px;
     }
     
@@ -736,11 +723,17 @@ h2 {
     }
 
     /* Mobile optimized cards - compact view with square images */
+    .items-container {
+        grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+        padding: 20px 1rem;
+        gap: 15px;
+    }
+    
     .brand-card,
     .product-card,
     .article-card {
-        width: 95px;
-        height: auto;
+        width: 100%;
+        min-height: auto;
         padding: 5px;
         border-radius: 10px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -750,7 +743,8 @@ h2 {
     .product-card img,
     .article-card img {
         height: 85px;
-        width: 85px;
+        max-width: 85px;
+        width: 100%;
         margin: 0 auto 5px;
         border-radius: 8px;
         object-fit: contain;
@@ -784,11 +778,7 @@ h2 {
     /* Make scroll container full width without buttons */
     .scroll-container {
         gap: 0;
-    }
-    
-    .items-container {
-        padding: 20px 0;
-        gap: 15px;
+        width: 100%;
     }
 }
 
