@@ -237,60 +237,10 @@ h2 {
     gap: 20px;
     padding: 30px 1rem;
     width: 100%;
-    overflow-x: visible;
-    scroll-behavior: smooth;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
 }
 
 
 
-
-
-.scroll-btn {
-    display: none; /* Hidden since we're using grid auto-fit */
-    background: #000000;
-    color: white;
-    border: none;
-    width: 45px;
-    height: 45px;
-    font-size: 0;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.scroll-btn::before {
-    content: '';
-    display: block;
-    width: 12px;
-    height: 12px;
-    border-top: 2.5px solid white;
-    border-right: 2.5px solid white;
-    position: absolute;
-}
-
-.scroll-btn.scroll-left::before {
-    transform: rotate(-135deg);
-    margin-left: 3px;
-}
-
-.scroll-btn.scroll-right::before {
-    transform: rotate(45deg);
-    margin-right: 3px;
-}
-
-.scroll-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-    background: #1a1a1a;
-}
 
 /* Brand Card (previously Product Card) */
 .brand-card, .product-card {
@@ -770,12 +720,7 @@ h2 {
         display: none;
     }
     
-    /* Hide scroll buttons on mobile */
-    .scroll-btn {
-        display: none;
-    }
-    
-    /* Make scroll container full width without buttons */
+    /* Make scroll container full width */
     .scroll-container {
         gap: 0;
         width: 100%;
