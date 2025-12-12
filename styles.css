@@ -227,7 +227,7 @@ h2 {
     display: flex;
     align-items: center;
     gap: 15px;
-    padding: 0;
+    padding: 0 1rem;
 }
 
 .items-container {
@@ -242,11 +242,11 @@ h2 {
 }
 
 .items-container > :first-child {
-    margin-left: 1rem;
+    margin-left: 0;
 }
 
 .items-container > :last-child {
-    margin-right: 1rem;
+    margin-right: 0;
 }
 
 .items-container::-webkit-scrollbar {
@@ -478,10 +478,16 @@ h2 {
 }
 
 .footer-contacts {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-contacts-info {
     text-align: right;
 }
 
-.footer-contacts a {
+.footer-contacts-info a {
     color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     display: block;
@@ -490,33 +496,30 @@ h2 {
     transition: color 0.3s ease;
 }
 
-.footer-contacts a:hover {
+.footer-contacts-info a:hover {
     color: #667eea;
 }
 
 /* Admin Link */
 .admin-link {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    font-size: 26px;
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 999;
+    flex-shrink: 0;
 }
 
 .admin-link:hover {
     transform: scale(1.1) rotate(90deg);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
 }
 
 /* Responsive Design */
@@ -678,6 +681,11 @@ h2 {
     }
 
     .footer-contacts {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-contacts-info {
         text-align: center;
     }
     
@@ -934,6 +942,12 @@ h2 {
     gap: 40px;
     margin-top: 30px;
     padding: 0 1rem;
+    align-items: center;
+}
+
+.contact-info {
+    justify-self: center;
+    text-align: left;
 }
 
 .contact-info h3 {
@@ -972,6 +986,8 @@ h2 {
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     overflow: hidden;
+    justify-self: center;
+    max-width: 100%;
 }
 
 .static-map-link {

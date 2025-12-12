@@ -177,6 +177,21 @@ async function renderPage() {
         if (mapLink && data.mapSettings.link) {
             mapLink.href = data.mapSettings.link;
         }
+        
+        // Apply font sizes to contact info in map section
+        if (data.mapSettings.addressFontSize) {
+            const addressLinks = document.querySelectorAll('.address-link-contact, .address-link-bottom');
+            addressLinks.forEach(link => {
+                link.style.fontSize = data.mapSettings.addressFontSize;
+            });
+        }
+        
+        if (data.mapSettings.phonesFontSize) {
+            const phoneLinks = document.querySelectorAll('.contact-details a[href^="tel:"]');
+            phoneLinks.forEach(link => {
+                link.style.fontSize = data.mapSettings.phonesFontSize;
+            });
+        }
     }
 
     // Render phones in footer only
