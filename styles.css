@@ -706,14 +706,12 @@ h2 {
         grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
         padding: 20px 1rem;
         gap: 15px;
-        overflow-x: visible;
     }
     
     .brand-card,
     .product-card,
     .article-card {
         width: 100%;
-        flex-shrink: 1;
         min-height: auto;
         padding: 5px;
         border-radius: 10px;
