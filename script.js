@@ -157,14 +157,13 @@ async function renderPage() {
             mapImage.src = data.mapSettings.image;
         }
         
-        // Apply dimensions to both container and image
-        if (mapContainer) {
-            if (data.mapSettings.width) {
-                mapContainer.style.maxWidth = data.mapSettings.width;
-            }
-            // Container height will be determined by image aspect ratio
+        // Apply dimensions to container to constrain maximum size
+        if (mapContainer && data.mapSettings.width) {
+            mapContainer.style.maxWidth = data.mapSettings.width;
         }
         
+        // Apply explicit dimensions to image
+        // The clickable map link will automatically wrap to match these dimensions
         if (mapImage) {
             if (data.mapSettings.width) {
                 mapImage.style.width = data.mapSettings.width;
