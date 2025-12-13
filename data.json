@@ -149,14 +149,14 @@
     "height": "60px"
   },
   "headerSizes": {
-    "headerTopHeight": "30px",
+    "headerTopHeight": "20px",
     "menuHeight": "18px",
     "logoHeightNormal": "50px",
     "logoHeightShrink": "35px",
     "footerHeight": "30px"
   },
-  "menuFontSize": "30px",
-  "buttonFontSize": "20px",
+  "menuFontSize": "16px",
+  "buttonFontSize": "16px",
   "buttonTextColor": "#ffffff",
   "menuUnderlineColor": "#C01818",
   "contactColors": {
@@ -195,8 +195,8 @@
   },
   "sectionHeights": {
     "about": "50px 50px",
-    "brands": "50px 0px",
-    "articles": "0px 0px"
+    "brands": "100px 0px",
+    "articles": "50px 0px"
   },
   "contentOpacity": {
     "about": 3,
@@ -207,5 +207,11 @@
     "about": 2,
     "brands": 97,
     "articles": 63
+  },
+  "headerPadding": {
+    "top": "2px",
+    "bottom": "2px",
+    "left": "50px",
+    "right": "50px"
   }
 }
