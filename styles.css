@@ -334,7 +334,7 @@ h2 {
 .brand-card p, .product-card p {
     font-size: 13px;
     color: #666;
-    line-height: 1.4;
+    line-height: 1.5;
     flex-grow: 1;
     overflow: hidden;
     display: -webkit-box;
@@ -401,7 +401,7 @@ h2 {
 .article-card .excerpt {
     font-size: 13px;
     color: #666;
-    line-height: 1.4;
+    line-height: 1.5;
     flex-grow: 1;
     overflow: hidden;
     display: -webkit-box;
@@ -726,7 +726,7 @@ h2 {
     /* Mobile optimized cards - compact view with square images */
     .items-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
         padding: 10px 0.5rem;
         gap: 8px;
         justify-items: center;
