@@ -73,6 +73,9 @@ body {
     #header > div {
         padding-left: 1rem;
         padding-right: 1rem;
+        max-width: 2000px;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
@@ -208,6 +211,7 @@ h2 {
     color: #333;
     border: 1px solid rgba(255, 255, 255, 0.2);
     width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
     box-sizing: border-box;
     text-align: center;
@@ -430,7 +434,7 @@ h2 {
 }
 
 .footer-content {
-    max-width: 100%;
+    max-width: 2000px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -938,6 +942,9 @@ h2 {
     margin-top: 30px;
     padding: 0 1rem;
     align-items: center;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .contact-info {
@@ -1083,6 +1090,61 @@ h2 {
     .contact-wrapper {
         grid-template-columns: 1fr;
         gap: 30px;
+    }
+}
+
+/* Optimizations for 16:9 aspect ratio screens */
+/* Large desktop screens (1920x1080, 2560x1440, etc.) */
+@media (min-width: 1400px) {
+    /* Ensure about content doesn't stretch too wide */
+    #about-content {
+        padding: 60px 80px;
+    }
+    
+    /* Optimize scroll containers for wide screens */
+    .scroll-container {
+        padding: 0 2rem;
+    }
+    
+    /* Better spacing for brand/article cards on wide screens */
+    .items-container {
+        gap: 15px;
+        padding: 20px 10px;
+    }
+    
+    /* Ensure contact section remains centered and readable */
+    .contact-wrapper {
+        padding: 0 2rem;
+    }
+}
+
+/* Extra large screens (2560x1440 and above) */
+@media (min-width: 2000px) {
+    /* Further constrain about content for readability */
+    #about-content {
+        max-width: 1600px;
+        padding: 70px 100px;
+    }
+    
+    /* Ensure cards don't get lost on ultra-wide screens */
+    .brand-card,
+    .product-card,
+    .article-card {
+        width: 220px;
+        min-height: 340px;
+    }
+    
+    .brand-card img,
+    .product-card img,
+    .article-card img {
+        max-width: 200px;
+        height: 200px;
+    }
+    
+    /* Better contact section layout for ultra-wide */
+    .contact-wrapper {
+        max-width: 1800px;
+        gap: 60px;
     }
 }
 
