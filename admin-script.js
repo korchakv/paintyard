@@ -158,6 +158,15 @@ async function loadAdminData() {
     // Header settings
     document.getElementById('header-top-height').value = data.headerSizes?.headerTopHeight || '15px';
     document.getElementById('header-color').value = data.colors.headerBg || '#efc3c3';
+    
+    // Header padding settings
+    if (data.headerPadding) {
+        document.getElementById('header-padding-top').value = data.headerPadding.top || '15px';
+        document.getElementById('header-padding-bottom').value = data.headerPadding.bottom || '15px';
+        document.getElementById('header-padding-left').value = data.headerPadding.left || '20px';
+        document.getElementById('header-padding-right').value = data.headerPadding.right || '20px';
+    }
+    
     document.getElementById('menu-font-size').value = data.menuFontSize || '14px';
     document.getElementById('text-menu-color').value = data.textColors?.menu || '#ffffff';
     
@@ -413,6 +422,13 @@ async function saveAllSettings() {
     data.colors.headerBg = document.getElementById('header-color').value;
     if (!data.headerSizes) data.headerSizes = {};
     data.headerSizes.headerTopHeight = document.getElementById('header-top-height').value || '15px';
+    
+    // Header padding settings
+    if (!data.headerPadding) data.headerPadding = {};
+    data.headerPadding.top = document.getElementById('header-padding-top').value || '15px';
+    data.headerPadding.bottom = document.getElementById('header-padding-bottom').value || '15px';
+    data.headerPadding.left = document.getElementById('header-padding-left').value || '20px';
+    data.headerPadding.right = document.getElementById('header-padding-right').value || '20px';
     
     // Menu settings
     data.menuFontSize = document.getElementById('menu-font-size').value || '14px';
