@@ -165,7 +165,7 @@ body {
 }
 
 .section {
-    padding: 80px 0;
+    padding: 50px 0;
     width: 100%;
 }
 
@@ -237,12 +237,13 @@ h2 {
 .items-container {
     display: flex;
     flex-wrap: nowrap;
-    gap: 20px;
-    padding: 30px 5px;
+    gap: 10px;
+    padding: 15px 5px;
     flex: 1; /* Take remaining space */
     overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
+    justify-content: center;
 }
 
 /* Scroll Buttons - Positioned at edges of full-width container */
@@ -293,10 +294,10 @@ h2 {
     -webkit-backdrop-filter: blur(20px);
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-    padding: 20px;
-    width: 250px; /* Fixed width for horizontal scrolling */
+    padding: 12px;
+    width: 200px; /* Fixed width for horizontal scrolling */
     flex-shrink: 0; /* Prevent shrinking */
-    min-height: 380px;
+    min-height: 320px;
     display: flex;
     flex-direction: column;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -311,35 +312,36 @@ h2 {
 
 .brand-card img, .product-card img {
     width: 100%;
-    max-width: 200px;
-    height: 200px;
+    max-width: 180px;
+    height: 180px;
     object-fit: contain;
     border-radius: 16px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     flex-shrink: 0;
     margin-left: auto;
     margin-right: auto;
 }
 
 .brand-card h3, .product-card h3 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     color: #1a1a1a;
     flex-shrink: 0;
     text-align: center;
 }
 
 .brand-card p, .product-card p {
-    font-size: 14px;
+    font-size: 13px;
     color: #666;
-    line-height: 1.5;
+    line-height: 1.4;
     flex-grow: 1;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
+    text-align: center;
 }
 
 .brand-card .read-more, .product-card .read-more {
@@ -357,10 +359,10 @@ h2 {
     -webkit-backdrop-filter: blur(20px);
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-    padding: 20px;
-    width: 250px; /* Fixed width for horizontal scrolling */
+    padding: 12px;
+    width: 200px; /* Fixed width for horizontal scrolling */
     flex-shrink: 0; /* Prevent shrinking */
-    min-height: 380px;
+    min-height: 320px;
     display: flex;
     flex-direction: column;
     cursor: pointer;
@@ -377,35 +379,36 @@ h2 {
 
 .article-card img {
     width: 100%;
-    max-width: 200px;
-    height: 200px;
+    max-width: 180px;
+    height: 180px;
     object-fit: contain;
     border-radius: 16px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     flex-shrink: 0;
     margin-left: auto;
     margin-right: auto;
 }
 
 .article-card h3 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     color: #1a1a1a;
     flex-shrink: 0;
     text-align: center;
 }
 
 .article-card .excerpt {
-    font-size: 14px;
+    font-size: 13px;
     color: #666;
-    line-height: 1.5;
+    line-height: 1.4;
     flex-grow: 1;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
+    text-align: center;
 }
 
 .article-card .read-more {
@@ -512,29 +515,32 @@ h2 {
     .brand-card,
     .product-card,
     .article-card {
-        width: 220px;
-        min-height: 360px;
-        padding: 18px;
+        width: 180px;
+        min-height: 300px;
+        padding: 10px;
         border-radius: 18px;
     }
     
     .brand-card img,
     .product-card img,
     .article-card img {
-        max-width: 180px;
-        height: 180px;
+        max-width: 160px;
+        height: 160px;
+        margin-bottom: 6px;
     }
     
     .brand-card h3,
     .product-card h3,
     .article-card h3 {
-        font-size: 17px;
+        font-size: 15px;
+        margin-bottom: 5px;
     }
     
     .brand-card p,
     .product-card p,
     .article-card .excerpt {
-        font-size: 13px;
+        font-size: 12px;
+        margin-bottom: 5px;
     }
 }
 
@@ -549,29 +555,32 @@ h2 {
     .brand-card,
     .product-card,
     .article-card {
-        width: 190px;
-        min-height: 340px;
-        padding: 16px;
+        width: 160px;
+        min-height: 280px;
+        padding: 10px;
         border-radius: 16px;
     }
     
     .brand-card img,
     .product-card img,
     .article-card img {
-        max-width: 160px;
-        height: 160px;
+        max-width: 140px;
+        height: 140px;
+        margin-bottom: 6px;
     }
     
     .brand-card h3,
     .product-card h3,
     .article-card h3 {
-        font-size: 16px;
+        font-size: 14px;
+        margin-bottom: 5px;
     }
     
     .brand-card p,
     .product-card p,
     .article-card .excerpt {
-        font-size: 13px;
+        font-size: 12px;
+        margin-bottom: 5px;
     }
 }
 
@@ -682,7 +691,7 @@ h2 {
     }
 
     .section {
-        padding: 60px 0;
+        padding: 30px 0;
     }
     
     .container {
@@ -717,9 +726,10 @@ h2 {
     /* Mobile optimized cards - compact view with square images */
     .items-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
-        padding: 20px 1rem;
-        gap: 15px;
+        grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+        padding: 10px 0.5rem;
+        gap: 8px;
+        justify-items: center;
     }
     
     .brand-card,
