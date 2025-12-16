@@ -258,6 +258,11 @@ async function renderPage() {
     if (data.contentBlur) {
         applyContentBlur(data.contentBlur);
     }
+    
+    // Apply scroll button margins
+    if (data.scrollButtonMargins) {
+        applyScrollButtonMargins(data.scrollButtonMargins);
+    }
 
     // Render about
     document.getElementById('about-content').innerHTML = `<p>${data.aboutText}</p>`;
@@ -1156,6 +1161,41 @@ function applyContentBlur(contentBlur) {
                 -webkit-backdrop-filter: blur(${blur}px) !important;
             }
         `;
+    }
+}
+
+// Apply scroll button margins
+function applyScrollButtonMargins(scrollButtonMargins) {
+    // Apply margins to brands section scroll buttons
+    if (scrollButtonMargins.brands) {
+        const brandsSection = document.getElementById('brands');
+        if (brandsSection) {
+            const leftBtn = brandsSection.querySelector('.scroll-btn.scroll-left');
+            const rightBtn = brandsSection.querySelector('.scroll-btn.scroll-right');
+            
+            if (leftBtn && scrollButtonMargins.brands.left) {
+                leftBtn.style.marginLeft = scrollButtonMargins.brands.left;
+            }
+            if (rightBtn && scrollButtonMargins.brands.right) {
+                rightBtn.style.marginRight = scrollButtonMargins.brands.right;
+            }
+        }
+    }
+    
+    // Apply margins to articles section scroll buttons
+    if (scrollButtonMargins.articles) {
+        const articlesSection = document.getElementById('articles');
+        if (articlesSection) {
+            const leftBtn = articlesSection.querySelector('.scroll-btn.scroll-left');
+            const rightBtn = articlesSection.querySelector('.scroll-btn.scroll-right');
+            
+            if (leftBtn && scrollButtonMargins.articles.left) {
+                leftBtn.style.marginLeft = scrollButtonMargins.articles.left;
+            }
+            if (rightBtn && scrollButtonMargins.articles.right) {
+                rightBtn.style.marginRight = scrollButtonMargins.articles.right;
+            }
+        }
     }
 }
 

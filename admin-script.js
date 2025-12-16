@@ -294,6 +294,20 @@ async function loadAdminData() {
             }
         });
     }
+    
+    // Load scroll button margin settings
+    if (data.scrollButtonMargins) {
+        ['brands', 'articles'].forEach(section => {
+            const leftInput = document.getElementById(`${section}-scroll-btn-left`);
+            const rightInput = document.getElementById(`${section}-scroll-btn-right`);
+            if (leftInput && data.scrollButtonMargins[section]?.left !== undefined) {
+                leftInput.value = data.scrollButtonMargins[section].left;
+            }
+            if (rightInput && data.scrollButtonMargins[section]?.right !== undefined) {
+                rightInput.value = data.scrollButtonMargins[section].right;
+            }
+        });
+    }
 
     renderBrandsList(data.brands);
     renderArticlesList(data.articles);
@@ -521,6 +535,15 @@ async function saveAllSettings() {
     
     data.contentOpacity.articles = parseInt(document.getElementById('articles-content-opacity')?.value || 95);
     data.contentBlur.articles = parseInt(document.getElementById('articles-content-blur')?.value || 20);
+    
+    // Scroll button margin settings
+    if (!data.scrollButtonMargins) data.scrollButtonMargins = {};
+    if (!data.scrollButtonMargins.brands) data.scrollButtonMargins.brands = {};
+    if (!data.scrollButtonMargins.articles) data.scrollButtonMargins.articles = {};
+    data.scrollButtonMargins.brands.left = document.getElementById('brands-scroll-btn-left').value || '5px';
+    data.scrollButtonMargins.brands.right = document.getElementById('brands-scroll-btn-right').value || '5px';
+    data.scrollButtonMargins.articles.left = document.getElementById('articles-scroll-btn-left').value || '5px';
+    data.scrollButtonMargins.articles.right = document.getElementById('articles-scroll-btn-right').value || '5px';
     
     // Footer settings
     data.address = document.getElementById('address-input').value;
