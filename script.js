@@ -682,7 +682,11 @@ function applyMobileMenuBackground(bgColor) {
     
     // If it's a hex color, convert to rgba
     if (safeColor.startsWith('#')) {
-        const hex = safeColor.replace('#', '');
+        let hex = safeColor.replace('#', '');
+        // Handle 3-character hex codes (e.g., #fff)
+        if (hex.length === 3) {
+            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        }
         const r = parseInt(hex.substring(0, 2), 16);
         const g = parseInt(hex.substring(2, 4), 16);
         const b = parseInt(hex.substring(4, 6), 16);
@@ -692,7 +696,10 @@ function applyMobileMenuBackground(bgColor) {
     else if (safeColor.startsWith('rgb(')) {
         transparentBg = safeColor.replace('rgb(', 'rgba(').replace(')', ', 0.95)');
     }
-    // If already rgba, use it as is
+    // If already rgba, update opacity to 0.95
+    else if (safeColor.startsWith('rgba(')) {
+        transparentBg = safeColor.replace(/[\d.]+\)$/, '0.95)');
+    }
     
     // Apply semi-transparent background color to mobile menu
     styleEl.textContent = `
