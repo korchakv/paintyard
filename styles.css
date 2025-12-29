@@ -361,6 +361,7 @@ h2 {
 .brands-grid,
 .articles-grid {
     display: grid;
+    /* auto-fit collapses empty columns for better distribution when fewer items */
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     padding: 20px;

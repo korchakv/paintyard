@@ -280,7 +280,7 @@ async function renderPage() {
     document.getElementById('brands-container').innerHTML = brandsHTML;
 
     // Render articles in reverse order (newest first)
-    // Show only first 8 articles initially (2 rows of 4)
+    // Show only first 8 articles initially
     const reversedArticles = [...data.articles].reverse();
     const initialArticleCount = 8;
     const visibleArticles = reversedArticles.slice(0, initialArticleCount);
