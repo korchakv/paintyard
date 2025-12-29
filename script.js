@@ -126,9 +126,9 @@ async function renderPage() {
         applyHeaderPadding(data.headerPadding);
     }
     
-    // Apply header background color to mobile menu
-    if (data.colors && data.colors.headerBg) {
-        applyMobileMenuBackground(data.colors.headerBg);
+    // Apply main background color to mobile menu
+    if (data.colors && data.colors.mainBg) {
+        applyMobileMenuBackground(data.colors.mainBg);
     }
     
     // Apply menu font size
