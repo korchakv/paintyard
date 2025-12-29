@@ -267,7 +267,7 @@ async function renderPage() {
     // Render about
     document.getElementById('about-content').innerHTML = `<p>${data.aboutText}</p>`;
 
-    // Render brands (without price)
+    // Render brands (without price) - all brands in grid
     const brands = data.brands || data.products || []; // Support both old and new format
     const brandsHTML = brands.map(brand => `
         <div class="brand-card" onclick="openBrandModal(${brand.id})">
@@ -280,8 +280,12 @@ async function renderPage() {
     document.getElementById('brands-container').innerHTML = brandsHTML;
 
     // Render articles in reverse order (newest first)
+    // Show only first 8 articles initially (2 rows of 4)
     const reversedArticles = [...data.articles].reverse();
-    const articlesHTML = reversedArticles.map(article => `
+    const initialArticleCount = 8;
+    const visibleArticles = reversedArticles.slice(0, initialArticleCount);
+    
+    const articlesHTML = visibleArticles.map(article => `
         <div class="article-card" onclick="openArticleModal(${article.id})">
             <img src="${article.image}" alt="${article.name}">
             <h3>${article.name}</h3>
@@ -291,14 +295,11 @@ async function renderPage() {
     `).join('');
     document.getElementById('articles-container').innerHTML = articlesHTML;
     
-    // Setup auto-scroll for brands and articles
-    setTimeout(() => {
-        setupAutoScroll('brands-container', 0.3);
-        setupAutoScroll('articles-container', 0.3);
-        setupEdgeHoverRotation('brands-container');
-        setupEdgeHoverRotation('articles-container');
-        setupScrollButtonHover();
-    }, 100);
+    // Show "More" button if there are more articles
+    const moreButton = document.getElementById('more-articles-btn');
+    if (reversedArticles.length > initialArticleCount && moreButton) {
+        moreButton.style.display = 'inline-block';
+    }
 }
 
 // Auto-scroll functionality for containers with overflow
@@ -988,6 +989,39 @@ function closeModal(closeBtn) {
     const modal = closeBtn.closest('.modal-overlay');
     modal.classList.remove('show');
     setTimeout(() => modal.remove(), 300);
+}
+
+// Open modal with all articles
+function openAllArticlesModal() {
+    const reversedArticles = [...siteData.articles].reverse();
+    const initialArticleCount = 8;
+    const remainingArticles = reversedArticles.slice(initialArticleCount);
+    
+    const articlesHTML = remainingArticles.map(article => `
+        <div class="article-card" onclick="openArticleModal(${article.id}); closeModal(document.querySelector('.modal-overlay .modal-close'));">
+            <img src="${article.image}" alt="${article.name}">
+            <h3>${article.name}</h3>
+            <p class="excerpt">${article.excerpt}</p>
+            <div class="read-more">Читати більше</div>
+        </div>
+    `).join('');
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal-content modal-article" style="max-width: 90%; max-height: 90vh;">
+            <button class="modal-close" onclick="closeModal(this)">&times;</button>
+            <div class="modal-body">
+                <h2 style="text-align: center; color: #1a1a1a; margin-bottom: 30px;">Більше статей</h2>
+                <div class="articles-grid" style="max-height: calc(90vh - 150px); overflow-y: auto;">
+                    ${articlesHTML}
+                </div>
+            </div>
+        </div>
+    `;
+    modal.onclick = (e) => { if (e.target === modal) closeModal(modal.querySelector('.modal-close')); };
+    document.body.appendChild(modal);
+    setTimeout(() => modal.classList.add('show'), 10);
 }
 
 // Apply footer size

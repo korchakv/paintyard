@@ -154,11 +154,7 @@
         <section id="brands" class="section">
             <div class="container">
                 <h2 id="brands-heading">Наші бренди</h2>
-                <div class="scroll-container">
-                    <button class="scroll-btn scroll-left" onclick="scrollBrands('left')">‹</button>
-                    <div id="brands-container" class="items-container"></div>
-                    <button class="scroll-btn scroll-right" onclick="scrollBrands('right')">›</button>
-                </div>
+                <div id="brands-container" class="brands-grid"></div>
             </div>
         </section>
 
@@ -166,10 +162,9 @@
         <section id="articles" class="section">
             <div class="container">
                 <h2 id="articles-heading">Корисні статті</h2>
-                <div class="scroll-container">
-                    <button class="scroll-btn scroll-left" onclick="scrollArticles('left')">‹</button>
-                    <div id="articles-container" class="items-container"></div>
-                    <button class="scroll-btn scroll-right" onclick="scrollArticles('right')">›</button>
+                <div id="articles-container" class="articles-grid"></div>
+                <div class="more-button-container">
+                    <button id="more-articles-btn" class="more-btn" onclick="openAllArticlesModal()" style="display: none;">Більше</button>
                 </div>
             </div>
         </section>
