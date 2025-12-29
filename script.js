@@ -126,9 +126,9 @@ async function renderPage() {
         applyHeaderPadding(data.headerPadding);
     }
     
-    // Apply header background color to mobile menu
-    if (data.colors && data.colors.headerBg) {
-        applyMobileMenuBackground(data.colors.headerBg);
+    // Apply main background color to mobile menu
+    if (data.colors && data.colors.mainBg) {
+        applyMobileMenuBackground(data.colors.mainBg);
     }
     
     // Apply menu font size
@@ -677,11 +677,37 @@ function applyMobileMenuBackground(bgColor) {
         document.head.appendChild(styleEl);
     }
     
-    // Apply background color to mobile menu
+    // Convert color to rgba with 0.95 opacity for semi-transparent effect
+    let transparentBg = safeColor;
+    
+    // If it's a hex color, convert to rgba
+    if (safeColor.startsWith('#')) {
+        let hex = safeColor.replace('#', '');
+        // Handle 3-character hex codes (e.g., #fff)
+        if (hex.length === 3) {
+            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        }
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        transparentBg = `rgba(${r}, ${g}, ${b}, 0.95)`;
+    } 
+    // If it's rgb, convert to rgba
+    else if (safeColor.startsWith('rgb(')) {
+        transparentBg = safeColor.replace('rgb(', 'rgba(').replace(')', ', 0.95)');
+    }
+    // If already rgba, update opacity to 0.95
+    else if (safeColor.startsWith('rgba(')) {
+        transparentBg = safeColor.replace(/[\d.]+\)$/, '0.95)');
+    }
+    
+    // Apply semi-transparent background color to mobile menu
     styleEl.textContent = `
         @media (max-width: 768px) {
             #header nav {
-                background: ${safeColor} !important;
+                background: ${transparentBg} !important;
+                backdrop-filter: blur(10px) !important;
+                -webkit-backdrop-filter: blur(10px) !important;
             }
         }
     `;

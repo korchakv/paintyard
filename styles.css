@@ -361,13 +361,14 @@ h2 {
 .brands-grid,
 .articles-grid {
     display: grid;
-    /* auto-fit collapses empty columns for better distribution when fewer items */
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* 4 columns layout for widescreen */
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     padding: 20px;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    margin: 0 auto;
 }
 
 /* More Button Container */
@@ -629,7 +630,9 @@ h2 {
         top: 100%;
         left: 0;
         right: 0;
-        background: white;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
     
@@ -1074,11 +1077,11 @@ h2 {
         padding: 60px 80px;
     }
     
-    /* Better spacing for brand/article cards on wide screens */
+    /* Better spacing for brand/article cards on wide screens with equal padding */
     .brands-grid,
     .articles-grid {
         gap: 15px;
-        padding: 20px 10px;
+        padding: 20px;
     }
     
     /* Ensure contact section remains centered and readable */
