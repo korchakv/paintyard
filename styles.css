@@ -53,14 +53,35 @@ body {
     width: 100%;
     background: white;
     z-index: 1000;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
-/* Removed padding since we're using Tailwind's px-4 sm:px-6 lg:px-8 */
+#header > div {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+@media (min-width: 640px) {
+    #header > div {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    #header > div {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-width: 2000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
 
 /* Header shrink on scroll */
 #header .flex {
-    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: height 0.3s ease, padding 0.3s ease;
 }
 
 #header.shrink .flex {
@@ -68,7 +89,7 @@ body {
 }
 
 #header-logo {
-    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: height 0.3s ease;
 }
 
 #header.shrink #header-logo {
@@ -76,47 +97,68 @@ body {
 }
 
 #header-logo-text {
-    transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: font-size 0.3s ease;
 }
 
 #header.shrink #header-logo-text {
-    font-size: 1.125rem !important;
+    font-size: 20px !important;
 }
 
 #header nav a {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: font-size 0.3s ease;
 }
 
 #header.shrink nav a {
-    font-size: 0.8125rem !important;
+    font-size: 13px !important;
 }
 
-/* Navigation menu hover effects - enhanced underline animation */
+#call-button,
+#route-button {
+    transition: all 0.3s ease;
+}
+
+#call-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    filter: brightness(1.1);
+}
+
+#route-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    filter: brightness(0.95);
+}
+
+#header.shrink #call-button,
+#header.shrink #route-button {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+}
+
+/* Navigation menu hover effects */
 #header nav a {
     position: relative;
+    transition: all 0.3s ease;
+}
+
+#header nav a:hover {
+    color: #0d9488 !important;
+    transform: translateY(-2px);
 }
 
 #header nav a::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -5px;
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, #0d9488 0%, #14b8a6 100%);
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 2px;
+    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    transition: width 0.3s ease;
 }
 
 #header nav a:hover::after {
     width: 100%;
-}
-
-/* Button shrink on scroll */
-#header.shrink #call-button,
-#header.shrink #route-button {
-    padding: 0.5rem 1rem !important;
-    font-size: 0.8125rem !important;
 }
 
 /* Main Content */
@@ -588,23 +630,10 @@ h2 {
         top: 100%;
         left: 0;
         right: 0;
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
-        animation: slideDown 0.3s ease-out;
-    }
-    
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
     
     #header nav.mobile-open {
@@ -613,30 +642,17 @@ h2 {
     
     #header nav ul {
         flex-direction: column;
-        padding: 0.5rem 0;
+        padding: 1rem 0;
     }
     
     #header nav ul li {
         width: 100%;
         text-align: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    }
-    
-    #header nav ul li:last-child {
-        border-bottom: none;
     }
     
     #header nav ul li a {
         display: block;
-        padding: 1rem 1.5rem;
-        font-weight: 500;
-        color: #374151;
-        transition: all 0.2s ease;
-    }
-    
-    #header nav ul li a:hover {
-        background: rgba(13, 148, 136, 0.08);
-        color: #0d9488;
+        padding: 0.75rem 1rem;
     }
     
     .footer-content {

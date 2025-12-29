@@ -82,52 +82,54 @@
 </head>
 <body>
     <!-- Sticky Header -->
-    <header id="header" class="bg-white shadow-md">
-        <div class="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
+    <header id="header" class="bg-white">
+        <div class="mx-auto max-w-full">
             <div class="flex h-16 items-center justify-between">
                 <div class="flex-1 md:flex md:items-center md:gap-12">
-                    <a class="block text-teal-600 hover:text-teal-700 transition-colors duration-200" href="#">
+                    <a class="block text-teal-600" href="#">
                         <span class="sr-only">Home</span>
                         <img id="header-logo" src="" alt="Paintyard Logo" style="display: none; height: 50px;">
-                        <span id="header-logo-text" class="text-xl font-bold">Paintyard</span>
+                        <span id="header-logo-text">Paintyard</span>
                     </a>
                 </div>
 
-                <div class="md:flex md:items-center md:gap-8">
+                <div class="md:flex md:items-center md:gap-12">
                     <nav aria-label="Global" class="hidden md:block">
-                        <ul class="flex items-center gap-8 text-sm">
+                        <ul class="flex items-center gap-6 text-sm">
                             <li>
-                                <a class="text-gray-700 font-medium transition-all duration-200 hover:text-teal-600 relative pb-1 hover:pb-0" href="#about">Про нас</a>
+                                <a class="text-gray-500 transition hover:text-gray-500/75" href="#about">Про нас</a>
                             </li>
 
                             <li>
-                                <a class="text-gray-700 font-medium transition-all duration-200 hover:text-teal-600 relative pb-1 hover:pb-0" href="#brands">Бренди</a>
+                                <a class="text-gray-500 transition hover:text-gray-500/75" href="#brands">Бренди</a>
                             </li>
 
                             <li>
-                                <a class="text-gray-700 font-medium transition-all duration-200 hover:text-teal-600 relative pb-1 hover:pb-0" href="#articles">Статті</a>
+                                <a class="text-gray-500 transition hover:text-gray-500/75" href="#articles">Статті</a>
                             </li>
 
                             <li>
-                                <a class="text-gray-700 font-medium transition-all duration-200 hover:text-teal-600 relative pb-1 hover:pb-0" href="#contact">Контакти</a>
+                                <a class="text-gray-500 transition hover:text-gray-500/75" href="#contact">Контакти</a>
                             </li>
                         </ul>
                     </nav>
 
-                    <div class="flex items-center gap-3">
-                        <div class="flex gap-3">
-                            <a id="call-button" class="rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-teal-700 hover:shadow-lg transition-all duration-200 hover:scale-105" href="tel:+380637702457">
+                    <div class="flex items-center gap-4">
+                        <div class="sm:flex sm:gap-4">
+                            <a id="call-button" class="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm" href="tel:+380637702457">
                                 Зателефонувати
                             </a>
 
-                            <a id="route-button" class="hidden sm:inline-flex rounded-lg bg-gray-100 px-5 py-2.5 text-sm font-semibold text-teal-700 hover:bg-gray-200 hover:shadow-md transition-all duration-200 hover:scale-105" href="https://www.google.com/maps/dir/?api=1&destination=Івано-Франківськ,+вул.+Вовчинецька,+191" target="_blank" rel="noopener noreferrer">
-                                Маршрут
-                            </a>
+                            <div class="hidden sm:flex">
+                                <a id="route-button" class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600" href="https://www.google.com/maps/dir/?api=1&destination=Івано-Франківськ,+вул.+Вовчинецька,+191" target="_blank" rel="noopener noreferrer">
+                                    Маршрут
+                                </a>
+                            </div>
                         </div>
 
                         <div class="block md:hidden">
-                            <button class="rounded-lg bg-gray-100 p-2.5 text-gray-700 hover:bg-gray-200 hover:text-teal-600 transition-all duration-200" id="mobile-menu-button" aria-label="Open menu" aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <button class="rounded-sm bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75" id="mobile-menu-button" aria-label="Open menu" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
                                 </svg>
                             </button>
