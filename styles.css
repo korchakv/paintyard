@@ -423,18 +423,8 @@ h2 {
     flex-shrink: 0;
 }
 
-/* Brands Grid Layout */
-.brands-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-/* Articles Grid Layout */
+/* Shared Grid Layout for Brands and Articles */
+.brands-grid,
 .articles-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -794,6 +784,7 @@ h2 {
         grid-template-columns: repeat(2, 1fr);
         padding: 10px 0.5rem;
         gap: 8px;
+        justify-items: center;
     }
     
     .brand-card,

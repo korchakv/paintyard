@@ -998,7 +998,7 @@ function openAllArticlesModal() {
     const remainingArticles = reversedArticles.slice(initialArticleCount);
     
     const articlesHTML = remainingArticles.map(article => `
-        <div class="article-card" onclick="openArticleModal(${article.id}); closeModal(document.querySelector('.modal-overlay .modal-close'));">
+        <div class="article-card" data-article-id="${article.id}">
             <img src="${article.image}" alt="${article.name}">
             <h3>${article.name}</h3>
             <p class="excerpt">${article.excerpt}</p>
@@ -1013,13 +1013,25 @@ function openAllArticlesModal() {
             <button class="modal-close" onclick="closeModal(this)">&times;</button>
             <div class="modal-body">
                 <h2 style="text-align: center; color: #1a1a1a; margin-bottom: 30px;">Більше статей</h2>
-                <div class="articles-grid" style="max-height: calc(90vh - 150px); overflow-y: auto;">
+                <div class="articles-grid more-articles-grid" style="max-height: calc(90vh - 150px); overflow-y: auto;">
                     ${articlesHTML}
                 </div>
             </div>
         </div>
     `;
     modal.onclick = (e) => { if (e.target === modal) closeModal(modal.querySelector('.modal-close')); };
+    
+    // Add event delegation for article cards in the modal
+    const articlesGrid = modal.querySelector('.more-articles-grid');
+    articlesGrid.addEventListener('click', (e) => {
+        const card = e.target.closest('.article-card');
+        if (card) {
+            const articleId = parseInt(card.dataset.articleId);
+            openArticleModal(articleId);
+            closeModal(modal.querySelector('.modal-close'));
+        }
+    });
+    
     document.body.appendChild(modal);
     setTimeout(() => modal.classList.add('show'), 10);
 }
