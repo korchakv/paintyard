@@ -225,72 +225,6 @@ h2 {
     font-size: clamp(14px, 1.5vw, 18px) !important;
 }
 
-/* Scroll Container - Always full width independent of content */
-.scroll-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0;
-    padding: 0;
-    width: 100%;
-    max-width: 100vw; /* Prevent overflow */
-    margin-left: calc(50% - 50vw); /* Expand to full viewport width */
-    margin-right: calc(50% - 50vw); /* Expand to full viewport width */
-}
-
-.items-container {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 10px;
-    padding: 15px 5px;
-    flex: 1; /* Take remaining space */
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    justify-content: center;
-}
-
-/* Scroll Buttons - Positioned at edges of full-width container */
-.scroll-btn {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 30px;
-    color: #333;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-    z-index: 10;
-}
-
-.scroll-btn.scroll-left {
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.scroll-btn.scroll-right {
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.scroll-btn:hover {
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    transform: scale(1.1);
-}
-
-.scroll-btn:active {
-    transform: scale(0.95);
-}
-
 /* Brand Card (previously Product Card) */
 .brand-card, .product-card {
     background: rgba(255, 255, 255, 0.95);
@@ -421,6 +355,58 @@ h2 {
     text-align: center;
     font-weight: 500;
     flex-shrink: 0;
+}
+
+/* Shared Grid Layout for Brands and Articles */
+.brands-grid,
+.articles-grid {
+    display: grid;
+    /* auto-fit collapses empty columns for better distribution when fewer items */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* More Button Container */
+.more-button-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+}
+
+/* More Button */
+.more-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.more-btn:active {
+    transform: translateY(0);
+}
+
+/* Update card styles for grid layout */
+.brands-grid .brand-card,
+.brands-grid .product-card,
+.articles-grid .article-card {
+    width: 100%;
+    max-width: none;
 }
 
 /* Footer */
@@ -728,9 +714,9 @@ h2 {
     }
 
     /* Mobile optimized cards - compact view with square images */
-    .items-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    .brands-grid,
+    .articles-grid {
+        grid-template-columns: repeat(2, 1fr);
         padding: 10px 0.5rem;
         gap: 8px;
         justify-items: center;
@@ -774,19 +760,6 @@ h2 {
     .brand-card .read-more,
     .product-card .read-more,
     .article-card .read-more {
-        display: none;
-    }
-    
-    /* Make scroll container full width but prevent overflow on mobile */
-    .scroll-container {
-        gap: 0;
-        width: 100%;
-        margin-left: 0;
-        margin-right: 0;
-    }
-    
-    /* Hide scroll buttons on mobile */
-    .scroll-btn {
         display: none;
     }
 }
@@ -1101,13 +1074,9 @@ h2 {
         padding: 60px 80px;
     }
     
-    /* Optimize scroll containers for wide screens */
-    .scroll-container {
-        padding: 0 2rem;
-    }
-    
     /* Better spacing for brand/article cards on wide screens */
-    .items-container {
+    .brands-grid,
+    .articles-grid {
         gap: 15px;
         padding: 20px 10px;
     }

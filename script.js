@@ -267,7 +267,7 @@ async function renderPage() {
     // Render about
     document.getElementById('about-content').innerHTML = `<p>${data.aboutText}</p>`;
 
-    // Render brands (without price)
+    // Render brands (without price) - all brands in grid
     const brands = data.brands || data.products || []; // Support both old and new format
     const brandsHTML = brands.map(brand => `
         <div class="brand-card" onclick="openBrandModal(${brand.id})">
@@ -280,8 +280,12 @@ async function renderPage() {
     document.getElementById('brands-container').innerHTML = brandsHTML;
 
     // Render articles in reverse order (newest first)
+    // Show only first 8 articles initially
     const reversedArticles = [...data.articles].reverse();
-    const articlesHTML = reversedArticles.map(article => `
+    const initialArticleCount = 8;
+    const visibleArticles = reversedArticles.slice(0, initialArticleCount);
+    
+    const articlesHTML = visibleArticles.map(article => `
         <div class="article-card" onclick="openArticleModal(${article.id})">
             <img src="${article.image}" alt="${article.name}">
             <h3>${article.name}</h3>
@@ -291,223 +295,11 @@ async function renderPage() {
     `).join('');
     document.getElementById('articles-container').innerHTML = articlesHTML;
     
-    // Setup auto-scroll for brands and articles
-    setTimeout(() => {
-        setupAutoScroll('brands-container', 0.3);
-        setupAutoScroll('articles-container', 0.3);
-        setupEdgeHoverRotation('brands-container');
-        setupEdgeHoverRotation('articles-container');
-        setupScrollButtonHover();
-    }, 100);
-}
-
-// Auto-scroll functionality for containers with overflow
-function setupAutoScroll(containerId, speed = 0.5) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    
-    let scrollInterval = null;
-    let isPaused = false;
-    
-    // Check if container has overflow
-    function hasOverflow() {
-        return container.scrollWidth > container.clientWidth;
+    // Show "More" button if there are more articles
+    const moreButton = document.getElementById('more-articles-btn');
+    if (reversedArticles.length > initialArticleCount && moreButton) {
+        moreButton.style.display = 'inline-block';
     }
-    
-    // Auto-scroll function
-    function autoScroll() {
-        if (!hasOverflow() || isPaused) return;
-        
-        // Scroll right slowly
-        container.scrollLeft += speed;
-        
-        // Reset to start when reaching the end (with 1px threshold to handle rounding)
-        const scrollThreshold = 1;
-        if (container.scrollLeft >= container.scrollWidth - container.clientWidth - scrollThreshold) {
-            setTimeout(() => {
-                container.scrollLeft = 0;
-            }, 2000); // Pause at end for 2 seconds
-        }
-    }
-    
-    // Pause on hover
-    container.addEventListener('mouseenter', () => {
-        isPaused = true;
-    });
-    
-    container.addEventListener('mouseleave', () => {
-        isPaused = false;
-    });
-    
-    // Start auto-scroll only if there's overflow
-    if (hasOverflow()) {
-        scrollInterval = setInterval(autoScroll, 30);
-    }
-    
-    // Re-check on window resize
-    window.addEventListener('resize', () => {
-        if (scrollInterval) {
-            clearInterval(scrollInterval);
-        }
-        if (hasOverflow()) {
-            scrollInterval = setInterval(autoScroll, 30);
-        }
-    });
-}
-
-// Edge hover rotation for articles and brands
-function setupEdgeHoverRotation(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    
-    let rafId = null;
-    
-    container.addEventListener('mousemove', (e) => {
-        // Cancel previous animation frame to throttle updates
-        if (rafId) {
-            cancelAnimationFrame(rafId);
-        }
-        
-        rafId = requestAnimationFrame(() => {
-            const containerRect = container.getBoundingClientRect();
-            const mouseX = e.clientX - containerRect.left;
-            const containerWidth = containerRect.width;
-            const edgeThreshold = 100; // pixels from edge to trigger rotation
-            
-            // Get all cards in the container
-            const cards = container.querySelectorAll('.brand-card, .product-card, .article-card');
-            
-            cards.forEach((card) => {
-                const cardRect = card.getBoundingClientRect();
-                const cardCenter = cardRect.left + cardRect.width / 2 - containerRect.left;
-                
-                // Check if mouse is near left edge and card is on the left side
-                if (mouseX < edgeThreshold && cardCenter < containerWidth / 2) {
-                    const distanceFromEdge = Math.abs(mouseX - cardCenter);
-                    if (distanceFromEdge < edgeThreshold) {
-                        card.style.transform = 'translateY(-10px) rotate(5deg)';
-                    }
-                }
-                // Check if mouse is near right edge and card is on the right side
-                else if (mouseX > containerWidth - edgeThreshold && cardCenter > containerWidth / 2) {
-                    const distanceFromEdge = Math.abs(mouseX - cardCenter);
-                    if (distanceFromEdge < edgeThreshold) {
-                        card.style.transform = 'translateY(-10px) rotate(-5deg)';
-                    }
-                }
-                else {
-                    // Reset to default hover state
-                    if (card.matches(':hover')) {
-                        card.style.transform = 'translateY(-10px)';
-                    } else {
-                        card.style.transform = '';
-                    }
-                }
-            });
-            
-            rafId = null;
-        });
-    });
-    
-    container.addEventListener('mouseleave', () => {
-        if (rafId) {
-            cancelAnimationFrame(rafId);
-            rafId = null;
-        }
-        const cards = container.querySelectorAll('.brand-card, .product-card, .article-card');
-        cards.forEach((card) => {
-            card.style.transform = '';
-        });
-    });
-}
-
-// Scroll functions (legacy - kept for backwards compatibility, but now using hover)
-function scrollBrands(direction) {
-    const container = document.getElementById('brands-container');
-    const scrollAmount = 290;
-    if (direction === 'left') {
-        container.scrollLeft -= scrollAmount;
-    } else {
-        container.scrollLeft += scrollAmount;
-    }
-}
-
-function scrollArticles(direction) {
-    const container = document.getElementById('articles-container');
-    const scrollAmount = 290;
-    if (direction === 'left') {
-        container.scrollLeft -= scrollAmount;
-    } else {
-        container.scrollLeft += scrollAmount;
-    }
-}
-
-// Setup hover-based scroll acceleration for navigation buttons
-function setupScrollButtonHover() {
-    // Get all scroll buttons
-    const scrollButtons = document.querySelectorAll('.scroll-btn');
-    
-    scrollButtons.forEach(button => {
-        let hoverScrollInterval = null;
-        let rafId = null;
-        const fastScrollSpeed = 5; // Faster speed on hover
-        
-        button.addEventListener('mouseenter', () => {
-            // Clear any existing interval/animation to prevent memory leaks
-            if (hoverScrollInterval) {
-                clearInterval(hoverScrollInterval);
-                hoverScrollInterval = null;
-            }
-            if (rafId) {
-                cancelAnimationFrame(rafId);
-                rafId = null;
-            }
-            
-            // Determine which container and direction
-            const section = button.closest('section');
-            let container = null;
-            let direction = 1; // 1 for right, -1 for left
-            
-            if (section && section.id === 'brands') {
-                container = document.getElementById('brands-container');
-            } else if (section && section.id === 'articles') {
-                container = document.getElementById('articles-container');
-            }
-            
-            if (button.classList.contains('scroll-left')) {
-                direction = -1;
-            }
-            
-            if (container) {
-                // Use requestAnimationFrame for smoother performance
-                function animateScroll() {
-                    // Check scroll boundaries
-                    const atStart = container.scrollLeft <= 0 && direction === -1;
-                    const atEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - 1 && direction === 1;
-                    
-                    if (!atStart && !atEnd) {
-                        container.scrollLeft += direction * fastScrollSpeed;
-                        rafId = requestAnimationFrame(animateScroll);
-                    } else {
-                        rafId = null;
-                    }
-                }
-                rafId = requestAnimationFrame(animateScroll);
-            }
-        });
-        
-        button.addEventListener('mouseleave', () => {
-            // Stop fast scrolling
-            if (hoverScrollInterval) {
-                clearInterval(hoverScrollInterval);
-                hoverScrollInterval = null;
-            }
-            if (rafId) {
-                cancelAnimationFrame(rafId);
-                rafId = null;
-            }
-        });
-    });
 }
 
 // Smooth scroll for menu links
@@ -988,6 +780,51 @@ function closeModal(closeBtn) {
     const modal = closeBtn.closest('.modal-overlay');
     modal.classList.remove('show');
     setTimeout(() => modal.remove(), 300);
+}
+
+// Open modal with all articles
+function openAllArticlesModal() {
+    const reversedArticles = [...siteData.articles].reverse();
+    const initialArticleCount = 8;
+    const remainingArticles = reversedArticles.slice(initialArticleCount);
+    
+    const articlesHTML = remainingArticles.map(article => `
+        <div class="article-card" data-article-id="${article.id}">
+            <img src="${article.image}" alt="${article.name}">
+            <h3>${article.name}</h3>
+            <p class="excerpt">${article.excerpt}</p>
+            <div class="read-more">Читати більше</div>
+        </div>
+    `).join('');
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal-content modal-article" style="max-width: 90%; max-height: 90vh;">
+            <button class="modal-close" onclick="closeModal(this)">&times;</button>
+            <div class="modal-body">
+                <h2 style="text-align: center; color: #1a1a1a; margin-bottom: 30px;">Більше статей</h2>
+                <div class="articles-grid more-articles-grid" style="max-height: calc(90vh - 150px); overflow-y: auto;">
+                    ${articlesHTML}
+                </div>
+            </div>
+        </div>
+    `;
+    modal.onclick = (e) => { if (e.target === modal) closeModal(modal.querySelector('.modal-close')); };
+    
+    // Add event delegation for article cards in the modal
+    const articlesGrid = modal.querySelector('.more-articles-grid');
+    articlesGrid.addEventListener('click', (e) => {
+        const card = e.target.closest('.article-card');
+        if (card) {
+            const articleId = parseInt(card.dataset.articleId);
+            openArticleModal(articleId);
+            closeModal(modal.querySelector('.modal-close'));
+        }
+    });
+    
+    document.body.appendChild(modal);
+    setTimeout(() => modal.classList.add('show'), 10);
 }
 
 // Apply footer size
