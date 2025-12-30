@@ -233,8 +233,7 @@ h2 {
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 12px;
-    width: 200px; /* Fixed width for horizontal scrolling */
-    flex-shrink: 0; /* Prevent shrinking */
+    width: 100%; /* Full width of grid cell */
     min-height: 320px;
     display: flex;
     flex-direction: column;
@@ -298,8 +297,7 @@ h2 {
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 12px;
-    width: 200px; /* Fixed width for horizontal scrolling */
-    flex-shrink: 0; /* Prevent shrinking */
+    width: 100%; /* Full width of grid cell */
     min-height: 320px;
     display: flex;
     flex-direction: column;
@@ -357,44 +355,27 @@ h2 {
     flex-shrink: 0;
 }
 
-/* Shared Grid Layout for Brands and Articles - Single Row Horizontal Scroll */
+/* Shared Grid Layout for Brands and Articles */
+/* Desktop: 8 items in one row with proportional scaling */
 .brands-grid,
 .articles-grid {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
     gap: 20px;
     padding: 20px;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
     margin: 0 auto;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
 }
 
-/* Hide scrollbar for cleaner look */
-.brands-grid::-webkit-scrollbar,
-.articles-grid::-webkit-scrollbar {
-    height: 8px;
+/* Articles grid specific - hide items beyond 8 on desktop */
+.articles-grid {
+    overflow: hidden;
 }
 
-.brands-grid::-webkit-scrollbar-track,
-.articles-grid::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
-}
-
-.brands-grid::-webkit-scrollbar-thumb,
-.articles-grid::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-}
-
-.brands-grid::-webkit-scrollbar-thumb:hover,
-.articles-grid::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.3);
+.articles-grid .article-card:nth-child(n+9) {
+    display: none;
 }
 
 /* More Button Container */
@@ -426,14 +407,6 @@ h2 {
 
 .more-btn:active {
     transform: translateY(0);
-}
-
-/* Keep fixed width for horizontal scroll */
-.brands-grid .brand-card,
-.brands-grid .product-card,
-.articles-grid .article-card {
-    width: 200px;
-    max-width: 200px;
 }
 
 /* Footer */
@@ -528,11 +501,25 @@ h2 {
         padding-right: 0;
     }
     
-    /* Cards maintain fixed width for horizontal scrolling */
+    /* Tablet: 2 rows of 4 items */
+    .brands-grid,
+    .articles-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, auto);
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    /* Articles grid - hide items beyond 8 on tablet */
+    .articles-grid .article-card:nth-child(n+9) {
+        display: none;
+    }
+    
+    /* Cards scale proportionally */
     .brand-card,
     .product-card,
     .article-card {
-        width: 180px;
+        width: 100%;
         min-height: 300px;
         padding: 10px;
         border-radius: 18px;
@@ -541,7 +528,7 @@ h2 {
     .brand-card img,
     .product-card img,
     .article-card img {
-        max-width: 160px;
+        max-width: 100%;
         height: 160px;
         margin-bottom: 6px;
     }
@@ -568,11 +555,25 @@ h2 {
         padding-right: 0;
     }
     
-    /* Cards maintain fixed width for horizontal scrolling */
+    /* Tablet: 2 rows of 4 items - maintain same layout as 1200px */
+    .brands-grid,
+    .articles-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, auto);
+        gap: 12px;
+        padding: 12px;
+    }
+    
+    /* Articles grid - hide items beyond 8 */
+    .articles-grid .article-card:nth-child(n+9) {
+        display: none;
+    }
+    
+    /* Cards scale proportionally */
     .brand-card,
     .product-card,
     .article-card {
-        width: 160px;
+        width: 100%;
         min-height: 280px;
         padding: 10px;
         border-radius: 16px;
@@ -581,7 +582,7 @@ h2 {
     .brand-card img,
     .product-card img,
     .article-card img {
-        max-width: 140px;
+        max-width: 100%;
         height: 140px;
         margin-bottom: 6px;
     }
@@ -742,19 +743,24 @@ h2 {
         font-size: clamp(12px, 3.5vw, 14px) !important;
     }
 
-    /* Mobile optimized cards - horizontal scroll with compact view */
+    /* Mobile: 2 rows of 4 items */
     .brands-grid,
     .articles-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, auto);
         padding: 10px 0.5rem;
         gap: 8px;
-        overflow-x: auto;
+    }
+    
+    /* Articles grid - hide items beyond 8 on mobile */
+    .articles-grid .article-card:nth-child(n+9) {
+        display: none;
     }
     
     .brand-card,
     .product-card,
     .article-card {
-        width: 120px;
-        max-width: 120px;
+        width: 100%;
         min-height: auto;
         padding: 5px;
         border-radius: 10px;
@@ -765,7 +771,7 @@ h2 {
     .product-card img,
     .article-card img {
         width: 100%;
-        max-width: 85px;
+        max-width: 100%;
         height: 85px;
         margin: 0 auto 5px;
         border-radius: 8px;
@@ -1124,18 +1130,18 @@ h2 {
         padding: 70px 100px;
     }
     
-    /* Ensure cards don't get lost on ultra-wide screens */
+    /* Ensure cards scale well on ultra-wide screens */
     .brand-card,
     .product-card,
     .article-card {
-        width: 220px;
+        width: 100%;
         min-height: 340px;
     }
     
     .brand-card img,
     .product-card img,
     .article-card img {
-        max-width: 200px;
+        max-width: 100%;
         height: 200px;
     }
     
