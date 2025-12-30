@@ -965,7 +965,7 @@ h2 {
 }
 
 .contact-info h3 {
-    font-size: 20px;
+    font-size: clamp(18px, 2vw, 20px);
     font-weight: 600;
     margin-bottom: 15px;
     margin-top: 25px;
@@ -979,8 +979,14 @@ h2 {
 .schedule p,
 .contact-details p {
     margin-bottom: 10px;
-    font-size: 16px;
+    font-size: clamp(14px, 1.5vw, 16px);
     line-height: 1.6;
+}
+
+.contact-address,
+.contact-phones-label,
+.contact-phone {
+    font-size: clamp(14px, 1.5vw, 16px);
 }
 
 .contact-details a {
@@ -1077,6 +1083,7 @@ h2 {
     color: #333;
     text-decoration: none;
     font-weight: 500;
+    font-size: clamp(13px, 1.5vw, 16px);
     transition: color 0.3s ease;
 }
 
@@ -1089,6 +1096,7 @@ h2 {
     color: #667eea;
     text-decoration: none;
     font-weight: 500;
+    font-size: clamp(14px, 1.5vw, 16px);
     transition: color 0.3s ease;
 }
 
