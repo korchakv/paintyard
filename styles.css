@@ -234,7 +234,8 @@ h2 {
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 12px;
     width: 100%; /* Full width of grid cell */
-    min-height: 320px;
+    aspect-ratio: 1 / 1;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -298,7 +299,8 @@ h2 {
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 12px;
     width: 100%; /* Full width of grid cell */
-    min-height: 320px;
+    aspect-ratio: 1 / 1;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     cursor: pointer;
@@ -362,7 +364,7 @@ h2 {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     gap: 20px;
-    padding: 20px;
+    padding: 20px 0;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -507,7 +509,7 @@ h2 {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(2, auto);
         gap: 15px;
-        padding: 15px;
+        padding: 15px 0;
     }
     
     /* Articles grid - hide items beyond 8 on tablet */
@@ -520,7 +522,8 @@ h2 {
     .product-card,
     .article-card {
         width: 100%;
-        min-height: 300px;
+        aspect-ratio: 1 / 1;
+        min-height: auto;
         padding: 10px;
         border-radius: 18px;
     }
@@ -561,7 +564,7 @@ h2 {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(2, auto);
         gap: 12px;
-        padding: 12px;
+        padding: 12px 0;
     }
     
     /* Articles grid - hide items beyond 8 */
@@ -574,7 +577,8 @@ h2 {
     .product-card,
     .article-card {
         width: 100%;
-        min-height: 280px;
+        aspect-ratio: 1 / 1;
+        min-height: auto;
         padding: 10px;
         border-radius: 16px;
     }
@@ -752,7 +756,7 @@ h2 {
     .articles-grid {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(2, auto);
-        padding: 10px 0.5rem;
+        padding: 10px 0;
         gap: 8px;
     }
     
@@ -765,6 +769,7 @@ h2 {
     .product-card,
     .article-card {
         width: 100%;
+        aspect-ratio: 1 / 1;
         min-height: auto;
         padding: 5px;
         border-radius: 10px;
@@ -1125,7 +1130,7 @@ h2 {
     .brands-grid,
     .articles-grid {
         gap: 15px;
-        padding: 20px;
+        padding: 20px 0;
     }
     
     /* Ensure contact section remains centered and readable */
@@ -1147,7 +1152,8 @@ h2 {
     .product-card,
     .article-card {
         width: 100%;
-        min-height: 340px;
+        aspect-ratio: 1 / 1;
+        min-height: auto;
     }
     
     .brand-card img,
