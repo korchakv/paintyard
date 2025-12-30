@@ -195,7 +195,7 @@
   },
   "sectionHeights": {
     "about": "50px 50px",
-    "brands": "100px 0px",
+    "brands": "30px 0px",
     "articles": "50px 0px"
   },
   "contentOpacity": {
