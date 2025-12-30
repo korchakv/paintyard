@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
-            if (nav.classList.contains('mobile-open') && !nav.contains(e.target) && e.target !== mobileMenuButton) {
+            if (nav.classList.contains('mobile-open') && !nav.contains(e.target) && !mobileMenuButton.contains(e.target)) {
                 nav.classList.remove('mobile-open');
                 mobileMenuButton.setAttribute('aria-expanded', 'false');
                 mobileMenuButton.setAttribute('aria-label', 'Open menu');
