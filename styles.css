@@ -655,7 +655,7 @@ h2 {
         display: none;
         position: absolute;
         top: 100%;
-        left: 0;
+        right: 0;
         width: 250px;
         background: #fff;
         backdrop-filter: blur(10px);
