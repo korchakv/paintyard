@@ -267,9 +267,12 @@ async function renderPage() {
     // Render about
     document.getElementById('about-content').innerHTML = `<p>${data.aboutText}</p>`;
 
-    // Render brands (without price) - all brands in grid
+    // Render brands (without price) - show only first 8 brands initially
     const brands = data.brands || data.products || []; // Support both old and new format
-    const brandsHTML = brands.map(brand => `
+    const initialBrandCount = 8;
+    const visibleBrands = brands.slice(0, initialBrandCount);
+    
+    const brandsHTML = visibleBrands.map(brand => `
         <div class="brand-card" onclick="openBrandModal(${brand.id})">
             <img src="${brand.image}" alt="${brand.name}">
             <h3>${brand.name}</h3>
@@ -278,12 +281,16 @@ async function renderPage() {
         </div>
     `).join('');
     document.getElementById('brands-container').innerHTML = brandsHTML;
+    
+    // Show "More" button if there are more brands
+    const moreBrandsButton = document.getElementById('more-brands-btn');
+    if (brands.length > initialBrandCount && moreBrandsButton) {
+        moreBrandsButton.style.display = 'inline-block';
+    }
 
-    // Render articles in reverse order (newest first)
-    // Show only first 8 articles initially
-    const reversedArticles = [...data.articles].reverse();
+    // Render articles - show only first 8 articles initially
     const initialArticleCount = 8;
-    const visibleArticles = reversedArticles.slice(0, initialArticleCount);
+    const visibleArticles = data.articles.slice(0, initialArticleCount);
     
     const articlesHTML = visibleArticles.map(article => `
         <div class="article-card" onclick="openArticleModal(${article.id})">
@@ -297,7 +304,7 @@ async function renderPage() {
     
     // Show "More" button if there are more articles
     const moreButton = document.getElementById('more-articles-btn');
-    if (reversedArticles.length > initialArticleCount && moreButton) {
+    if (data.articles.length > initialArticleCount && moreButton) {
         moreButton.style.display = 'inline-block';
     }
 }
@@ -808,11 +815,55 @@ function closeModal(closeBtn) {
     setTimeout(() => modal.remove(), 300);
 }
 
+// Open modal with all brands
+function openAllBrandsModal() {
+    const brands = siteData.brands || siteData.products || [];
+    const initialBrandCount = 8;
+    const remainingBrands = brands.slice(initialBrandCount);
+    
+    const brandsHTML = remainingBrands.map(brand => `
+        <div class="brand-card" data-brand-id="${brand.id}">
+            <img src="${brand.image}" alt="${brand.name}">
+            <h3>${brand.name}</h3>
+            <p>${brand.description}</p>
+            <div class="read-more">Читати більше</div>
+        </div>
+    `).join('');
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal-content modal-article" style="max-width: 90%; max-height: 90vh;">
+            <button class="modal-close" onclick="closeModal(this)">&times;</button>
+            <div class="modal-body">
+                <h2 style="text-align: center; color: #1a1a1a; margin-bottom: 30px;">Більше брендів</h2>
+                <div class="brands-grid more-brands-grid" style="max-height: calc(90vh - 150px); overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                    ${brandsHTML}
+                </div>
+            </div>
+        </div>
+    `;
+    modal.onclick = (e) => { if (e.target === modal) closeModal(modal.querySelector('.modal-close')); };
+    
+    // Add event delegation for brand cards in the modal
+    const brandsGrid = modal.querySelector('.more-brands-grid');
+    brandsGrid.addEventListener('click', (e) => {
+        const card = e.target.closest('.brand-card');
+        if (card) {
+            const brandId = parseInt(card.dataset.brandId);
+            openBrandModal(brandId);
+            closeModal(modal.querySelector('.modal-close'));
+        }
+    });
+    
+    document.body.appendChild(modal);
+    setTimeout(() => modal.classList.add('show'), 10);
+}
+
 // Open modal with all articles
 function openAllArticlesModal() {
-    const reversedArticles = [...siteData.articles].reverse();
     const initialArticleCount = 8;
-    const remainingArticles = reversedArticles.slice(initialArticleCount);
+    const remainingArticles = siteData.articles.slice(initialArticleCount);
     
     const articlesHTML = remainingArticles.map(article => `
         <div class="article-card" data-article-id="${article.id}">
@@ -830,7 +881,7 @@ function openAllArticlesModal() {
             <button class="modal-close" onclick="closeModal(this)">&times;</button>
             <div class="modal-body">
                 <h2 style="text-align: center; color: #1a1a1a; margin-bottom: 30px;">Більше статей</h2>
-                <div class="articles-grid more-articles-grid" style="max-height: calc(90vh - 150px); overflow-y: auto;">
+                <div class="articles-grid more-articles-grid" style="max-height: calc(90vh - 150px); overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
                     ${articlesHTML}
                 </div>
             </div>
