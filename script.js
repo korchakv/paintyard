@@ -330,7 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('#header nav');
     
     if (mobileMenuButton && nav) {
-        mobileMenuButton.addEventListener('click', () => {
+        mobileMenuButton.addEventListener('click', (e) => {
+            e.stopPropagation();
             const isOpen = nav.classList.toggle('mobile-open');
             mobileMenuButton.setAttribute('aria-expanded', isOpen.toString());
             mobileMenuButton.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
@@ -343,6 +344,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 mobileMenuButton.setAttribute('aria-expanded', 'false');
                 mobileMenuButton.setAttribute('aria-label', 'Open menu');
             });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (nav.classList.contains('mobile-open') && !nav.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                nav.classList.remove('mobile-open');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenuButton.setAttribute('aria-label', 'Open menu');
+            }
         });
     }
 });
