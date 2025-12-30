@@ -1,5 +1,5 @@
 // Default password
-const ADMIN_PASSWORD = 'admin';
+const ADMIN_PASSWORD = 'Admin12';
 
 // Check if logged in
 function checkAuth() {
