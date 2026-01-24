@@ -251,8 +251,7 @@ h2 {
 .brand-card img, .product-card img {
     width: 100%;
     max-width: 180px;
-    height: auto;
-    max-height: 180px;
+    height: 180px;
     object-fit: contain;
     border-radius: 16px;
     margin-bottom: 8px;
@@ -319,8 +318,7 @@ h2 {
 .article-card img {
     width: 100%;
     max-width: 180px;
-    height: auto;
-    max-height: 180px;
+    height: 180px;
     object-fit: contain;
     border-radius: 16px;
     margin-bottom: 8px;
@@ -541,6 +539,7 @@ h2 {
     .article-card img {
         max-width: 100%;
         height: auto;
+        aspect-ratio: 1 / 1;
         margin-bottom: 6px;
     }
     
@@ -599,6 +598,7 @@ h2 {
     .article-card img {
         max-width: 100%;
         height: auto;
+        aspect-ratio: 1 / 1;
         margin-bottom: 6px;
     }
     
@@ -796,6 +796,7 @@ h2 {
         width: 100%;
         max-width: 100%;
         height: auto;
+        aspect-ratio: 1 / 1;
         margin: 0 auto 5px;
         border-radius: 8px;
         object-fit: contain;
