@@ -361,8 +361,8 @@ h2 {
 .articles-grid {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    gap: 20px;
-    padding: 20px;
+    gap: clamp(10px, 1.5vw, 20px);
+    padding: clamp(10px, 2vw, 30px);
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -506,8 +506,8 @@ h2 {
     .articles-grid {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(2, auto);
-        gap: 15px;
-        padding: 15px;
+        gap: clamp(8px, 1.2vw, 15px);
+        padding: clamp(8px, 1.5vw, 20px);
     }
     
     /* Articles grid - hide items beyond 8 on tablet */
@@ -560,8 +560,8 @@ h2 {
     .articles-grid {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(2, auto);
-        gap: 12px;
-        padding: 12px;
+        gap: clamp(6px, 1vw, 12px);
+        padding: clamp(6px, 1.2vw, 15px);
     }
     
     /* Articles grid - hide items beyond 8 */
@@ -752,8 +752,8 @@ h2 {
     .articles-grid {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(2, auto);
-        padding: 10px 0.5rem;
-        gap: 8px;
+        padding: clamp(4px, 1vw, 10px) clamp(0.5rem, 2vw, 1.5rem);
+        gap: clamp(4px, 1vw, 8px);
     }
     
     /* Articles grid - hide items beyond 8 on mobile */
@@ -1124,8 +1124,8 @@ h2 {
     /* Better spacing for brand/article cards on wide screens with equal padding */
     .brands-grid,
     .articles-grid {
-        gap: 15px;
-        padding: 20px;
+        gap: clamp(12px, 1.2vw, 20px);
+        padding: clamp(15px, 2vw, 30px);
     }
     
     /* Ensure contact section remains centered and readable */
