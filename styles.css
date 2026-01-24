@@ -364,7 +364,7 @@ h2 {
     gap: clamp(10px, 1.5vw, 20px);
     padding: clamp(10px, 2vw, 30px);
     width: 100%;
-    max-width: 100%;
+    max-width: 1800px;
     box-sizing: border-box;
     margin: 0 auto;
 }
@@ -1121,11 +1121,14 @@ h2 {
         padding: 60px 80px;
     }
     
-    /* Better spacing for brand/article cards on wide screens with equal padding */
+    /* Better spacing for brand/article cards on wide screens with equal padding and centering */
     .brands-grid,
     .articles-grid {
         gap: clamp(12px, 1.2vw, 20px);
         padding: clamp(15px, 2vw, 30px);
+        max-width: 1800px;
+        margin: 0 auto;
+        justify-content: center;
     }
     
     /* Ensure contact section remains centered and readable */
@@ -1142,7 +1145,14 @@ h2 {
         padding: 70px 100px;
     }
     
-    /* Ensure cards scale well on ultra-wide screens */
+    /* Ensure cards scale well on ultra-wide screens and remain centered */
+    .brands-grid,
+    .articles-grid {
+        max-width: 2000px;
+        margin: 0 auto;
+        justify-content: center;
+    }
+    
     .brand-card,
     .product-card,
     .article-card {
