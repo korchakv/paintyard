@@ -234,7 +234,7 @@ h2 {
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 12px;
     width: 100%; /* Full width of grid cell */
-    aspect-ratio: 1 / 1; /* Make cards square on wide screens */
+    aspect-ratio: 3 / 4; /* Make cards rectangular (portrait) */
     min-height: 0; /* Remove fixed min-height to allow aspect-ratio to work */
     display: flex;
     flex-direction: column;
@@ -299,7 +299,7 @@ h2 {
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 12px;
     width: 100%; /* Full width of grid cell */
-    aspect-ratio: 1 / 1; /* Make cards square on wide screens */
+    aspect-ratio: 3 / 4; /* Make cards rectangular (portrait) */
     min-height: 0; /* Remove fixed min-height to allow aspect-ratio to work */
     display: flex;
     flex-direction: column;
@@ -523,12 +523,12 @@ h2 {
         display: none;
     }
     
-    /* Cards scale proportionally - maintain square aspect ratio */
+    /* Cards scale proportionally - maintain rectangular aspect ratio */
     .brand-card,
     .product-card,
     .article-card {
         width: 100%;
-        aspect-ratio: 1 / 1;
+        aspect-ratio: 3 / 4;
         min-height: 0;
         padding: 10px;
         border-radius: 18px;
@@ -582,12 +582,12 @@ h2 {
         display: none;
     }
     
-    /* Cards scale proportionally - maintain square aspect ratio */
+    /* Cards scale proportionally - maintain rectangular aspect ratio */
     .brand-card,
     .product-card,
     .article-card {
         width: 100%;
-        aspect-ratio: 1 / 1;
+        aspect-ratio: 3 / 4;
         min-height: 0;
         padding: 10px;
         border-radius: 16px;
@@ -783,7 +783,7 @@ h2 {
     .product-card,
     .article-card {
         width: 100%;
-        aspect-ratio: 1 / 1;
+        aspect-ratio: 3 / 4;
         min-height: 0;
         padding: 5px;
         border-radius: 10px;
@@ -805,15 +805,21 @@ h2 {
     .brand-card h3,
     .product-card h3,
     .article-card h3 {
-        font-size: 11px;
+        font-size: 10px;
         margin-bottom: 3px;
     }
     
-    /* Hide descriptions on mobile - show only logo and name */
+    /* Keep descriptions visible on mobile with smaller font */
     .brand-card p,
     .product-card p,
     .article-card .excerpt {
-        display: none;
+        font-size: 9px;
+        line-height: 1.3;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        margin-bottom: 3px;
     }
     
     .brand-card .read-more,
@@ -1182,7 +1188,7 @@ h2 {
     .product-card,
     .article-card {
         width: 100%;
-        aspect-ratio: 1 / 1;
+        aspect-ratio: 3 / 4;
         min-height: 0;
     }
     
