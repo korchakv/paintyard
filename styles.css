@@ -616,10 +616,6 @@ h2 {
         margin-bottom: 5px;
     }
 }
-        font-size: 12px;
-        margin-bottom: 5px;
-    }
-}
 
 @media (max-width: 768px) {
     /* Force background-size: cover on mobile to avoid empty strips */
