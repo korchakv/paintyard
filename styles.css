@@ -234,7 +234,7 @@ h2 {
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 12px;
     width: 100%; /* Full width of grid cell */
-    aspect-ratio: 4 / 3; /* Make cards rectangular on wide screens */
+    aspect-ratio: 1 / 1; /* Make cards square */
     min-height: 0; /* Remove fixed min-height to allow aspect-ratio to work */
     display: flex;
     flex-direction: column;
@@ -300,7 +300,7 @@ h2 {
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 12px;
     width: 100%; /* Full width of grid cell */
-    aspect-ratio: 4 / 3; /* Make cards rectangular on wide screens */
+    aspect-ratio: 1 / 1; /* Make cards square */
     min-height: 0; /* Remove fixed min-height to allow aspect-ratio to work */
     display: flex;
     flex-direction: column;
@@ -525,12 +525,12 @@ h2 {
         display: none;
     }
     
-    /* Cards scale proportionally - maintain rectangular aspect ratio */
+    /* Cards scale proportionally - maintain square aspect ratio */
     .brand-card,
     .product-card,
     .article-card {
         width: 100%;
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 1 / 1;
         min-height: 0;
         padding: 10px;
         border-radius: 18px;
@@ -583,12 +583,12 @@ h2 {
         display: none;
     }
     
-    /* Cards scale proportionally - maintain rectangular aspect ratio */
+    /* Cards scale proportionally - maintain square aspect ratio */
     .brand-card,
     .product-card,
     .article-card {
         width: 100%;
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 1 / 1;
         min-height: 0;
         padding: 10px;
         border-radius: 16px;
@@ -783,7 +783,7 @@ h2 {
     .product-card,
     .article-card {
         width: 100%;
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 1 / 1;
         min-height: 0;
         padding: 5px;
         border-radius: 10px;
@@ -1181,7 +1181,7 @@ h2 {
     .product-card,
     .article-card {
         width: 100%;
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 1 / 1;
         min-height: 0;
     }
     
