@@ -234,7 +234,8 @@ h2 {
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 12px;
     width: 100%; /* Full width of grid cell */
-    min-height: 320px;
+    aspect-ratio: 1 / 1; /* Make cards square on wide screens */
+    min-height: 0; /* Remove fixed min-height to allow aspect-ratio to work */
     display: flex;
     flex-direction: column;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -298,7 +299,8 @@ h2 {
     box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     padding: 12px;
     width: 100%; /* Full width of grid cell */
-    min-height: 320px;
+    aspect-ratio: 1 / 1; /* Make cards square on wide screens */
+    min-height: 0; /* Remove fixed min-height to allow aspect-ratio to work */
     display: flex;
     flex-direction: column;
     cursor: pointer;
@@ -362,9 +364,12 @@ h2 {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     gap: clamp(10px, 1.5vw, 20px);
-    padding: clamp(10px, 2vw, 30px);
+    padding-left: clamp(0.5rem, 1vw, 2rem);
+    padding-right: clamp(0.5rem, 1vw, 2rem);
+    padding-top: clamp(10px, 2vw, 30px);
+    padding-bottom: clamp(10px, 2vw, 30px);
     width: 100%;
-    max-width: 1800px;
+    max-width: 100%;
     box-sizing: border-box;
     margin: 0 auto;
 }
@@ -507,7 +512,10 @@ h2 {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(2, auto);
         gap: clamp(8px, 1.2vw, 15px);
-        padding: clamp(8px, 1.5vw, 20px);
+        padding-left: clamp(0.5rem, 1vw, 1.5rem);
+        padding-right: clamp(0.5rem, 1vw, 1.5rem);
+        padding-top: clamp(8px, 1.5vw, 20px);
+        padding-bottom: clamp(8px, 1.5vw, 20px);
     }
     
     /* Articles grid - hide items beyond 8 on tablet */
@@ -515,12 +523,13 @@ h2 {
         display: none;
     }
     
-    /* Cards scale proportionally */
+    /* Cards scale proportionally - maintain square aspect ratio */
     .brand-card,
     .product-card,
     .article-card {
         width: 100%;
-        min-height: 300px;
+        aspect-ratio: 1 / 1;
+        min-height: 0;
         padding: 10px;
         border-radius: 18px;
     }
@@ -529,7 +538,8 @@ h2 {
     .product-card img,
     .article-card img {
         max-width: 100%;
-        height: 160px;
+        height: auto;
+        aspect-ratio: 1 / 1;
         margin-bottom: 6px;
     }
     
@@ -561,7 +571,10 @@ h2 {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(2, auto);
         gap: clamp(6px, 1vw, 12px);
-        padding: clamp(6px, 1.2vw, 15px);
+        padding-left: clamp(0.25rem, 0.8vw, 1rem);
+        padding-right: clamp(0.25rem, 0.8vw, 1rem);
+        padding-top: clamp(6px, 1.2vw, 15px);
+        padding-bottom: clamp(6px, 1.2vw, 15px);
     }
     
     /* Articles grid - hide items beyond 8 */
@@ -569,12 +582,13 @@ h2 {
         display: none;
     }
     
-    /* Cards scale proportionally */
+    /* Cards scale proportionally - maintain square aspect ratio */
     .brand-card,
     .product-card,
     .article-card {
         width: 100%;
-        min-height: 280px;
+        aspect-ratio: 1 / 1;
+        min-height: 0;
         padding: 10px;
         border-radius: 16px;
     }
@@ -583,7 +597,8 @@ h2 {
     .product-card img,
     .article-card img {
         max-width: 100%;
-        height: 140px;
+        height: auto;
+        aspect-ratio: 1 / 1;
         margin-bottom: 6px;
     }
     
@@ -752,7 +767,10 @@ h2 {
     .articles-grid {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(2, auto);
-        padding: clamp(4px, 1vw, 10px) clamp(0.5rem, 2vw, 1.5rem);
+        padding-left: clamp(0.25rem, 1vw, 0.5rem);
+        padding-right: clamp(0.25rem, 1vw, 0.5rem);
+        padding-top: clamp(4px, 1vw, 10px);
+        padding-bottom: clamp(4px, 1vw, 10px);
         gap: clamp(4px, 1vw, 8px);
     }
     
@@ -765,7 +783,8 @@ h2 {
     .product-card,
     .article-card {
         width: 100%;
-        min-height: auto;
+        aspect-ratio: 1 / 1;
+        min-height: 0;
         padding: 5px;
         border-radius: 10px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -776,7 +795,8 @@ h2 {
     .article-card img {
         width: 100%;
         max-width: 100%;
-        height: 85px;
+        height: auto;
+        aspect-ratio: 1 / 1;
         margin: 0 auto 5px;
         border-radius: 8px;
         object-fit: contain;
@@ -1125,8 +1145,11 @@ h2 {
     .brands-grid,
     .articles-grid {
         gap: clamp(12px, 1.2vw, 20px);
-        padding: clamp(15px, 2vw, 30px);
-        max-width: 1800px;
+        padding-left: clamp(1rem, 1.5vw, 2.5rem);
+        padding-right: clamp(1rem, 1.5vw, 2.5rem);
+        padding-top: clamp(15px, 2vw, 30px);
+        padding-bottom: clamp(15px, 2vw, 30px);
+        max-width: 100%;
         margin: 0 auto;
         justify-content: center;
     }
@@ -1148,23 +1171,27 @@ h2 {
     /* Ensure cards scale well on ultra-wide screens and remain centered */
     .brands-grid,
     .articles-grid {
-        max-width: 2000px;
+        max-width: 100%;
         margin: 0 auto;
         justify-content: center;
+        padding-left: clamp(1.5rem, 2vw, 3rem);
+        padding-right: clamp(1.5rem, 2vw, 3rem);
     }
     
     .brand-card,
     .product-card,
     .article-card {
         width: 100%;
-        min-height: 340px;
+        aspect-ratio: 1 / 1;
+        min-height: 0;
     }
     
     .brand-card img,
     .product-card img,
     .article-card img {
         max-width: 100%;
-        height: 200px;
+        height: auto;
+        aspect-ratio: 1 / 1;
     }
     
     /* Better contact section layout for ultra-wide */
