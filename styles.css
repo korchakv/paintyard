@@ -176,6 +176,7 @@ body {
     width: 100%;
     max-width: 100%;
     padding: 0;
+    margin: 0 auto;
 }
 
 h2 {
@@ -500,7 +501,7 @@ h2 {
         padding-left: 0;
         padding-right: 0;
     }
-    
+
     /* Tablet: 2 rows of 4 items */
     .brands-grid,
     .articles-grid {
@@ -509,12 +510,12 @@ h2 {
         gap: clamp(8px, 1.2vw, 15px);
         padding: clamp(8px, 1.5vw, 20px);
     }
-    
+
     /* Articles grid - hide items beyond 8 on tablet */
     .articles-grid .article-card:nth-child(n+9) {
         display: none;
     }
-    
+
     /* Cards scale proportionally */
     .brand-card,
     .product-card,
@@ -524,7 +525,7 @@ h2 {
         padding: 10px;
         border-radius: 18px;
     }
-    
+
     .brand-card img,
     .product-card img,
     .article-card img {
@@ -532,14 +533,14 @@ h2 {
         height: 160px;
         margin-bottom: 6px;
     }
-    
+
     .brand-card h3,
     .product-card h3,
     .article-card h3 {
         font-size: 15px;
         margin-bottom: 5px;
     }
-    
+
     .brand-card p,
     .product-card p,
     .article-card .excerpt {
@@ -554,7 +555,7 @@ h2 {
         padding-left: 0;
         padding-right: 0;
     }
-    
+
     /* Tablet: 2 rows of 4 items - maintain same layout as 1200px */
     .brands-grid,
     .articles-grid {
@@ -563,12 +564,12 @@ h2 {
         gap: clamp(6px, 1vw, 12px);
         padding: clamp(6px, 1.2vw, 15px);
     }
-    
+
     /* Articles grid - hide items beyond 8 */
     .articles-grid .article-card:nth-child(n+9) {
         display: none;
     }
-    
+
     /* Cards scale proportionally */
     .brand-card,
     .product-card,
@@ -578,7 +579,7 @@ h2 {
         padding: 10px;
         border-radius: 16px;
     }
-    
+
     .brand-card img,
     .product-card img,
     .article-card img {
@@ -586,14 +587,14 @@ h2 {
         height: 140px;
         margin-bottom: 6px;
     }
-    
+
     .brand-card h3,
     .product-card h3,
     .article-card h3 {
         font-size: 14px;
         margin-bottom: 5px;
     }
-    
+
     .brand-card p,
     .product-card p,
     .article-card .excerpt {
@@ -607,49 +608,49 @@ h2 {
     .section-bg-overlay {
         background-size: cover !important;
     }
-    
+
     /* Mobile logo proportional scaling */
     #header-logo,
     #header-logo-text {
         transition: all 0.3s ease;
     }
-    
+
     #header-logo {
         max-height: 40px;
         width: auto !important;
         height: auto !important;
         object-fit: contain;
     }
-    
+
     #header-logo-text {
         font-size: 20px;
     }
-    
+
     /* Shrink logo even more on mobile when scrolling */
     #header.shrink #header-logo {
         max-height: 30px !important;
     }
-    
+
     #header.shrink #header-logo-text {
         font-size: 16px !important;
     }
-    
+
     /* Shrink header height on mobile */
     #header .flex {
         height: 56px;
     }
-    
+
     #header.shrink .flex {
         height: 48px !important;
     }
-    
+
     /* Shrink buttons on mobile */
     #header.shrink #call-button,
     #header.shrink #route-button {
         padding: 6px 12px !important;
         font-size: 12px !important;
     }
-    
+
     /* Mobile menu */
     #header nav {
         display: none;
@@ -663,29 +664,29 @@ h2 {
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         z-index: 50;
     }
-    
+
     #header nav.mobile-open {
         display: block;
     }
-    
+
     #header nav ul {
         flex-direction: column;
         padding: 1rem 0;
         background: #fff;
     }
-    
+
     #header nav ul li {
         width: 100%;
         text-align: left;
         background: #fff;
     }
-    
+
     #header nav ul li a {
         display: block;
         padding: 0.75rem 1rem;
         background: #fff;
     }
-    
+
     .footer-content {
         flex-direction: column;
         gap: 30px;
@@ -696,16 +697,16 @@ h2 {
         flex-direction: column;
         text-align: center;
     }
-    
+
     .footer-contacts-info {
         text-align: center;
     }
-    
+
     /* Smaller footer logo */
     #footer-logo {
         height: 35px;
     }
-    
+
     #footer-logo-text {
         font-size: 22px;
     }
@@ -717,7 +718,7 @@ h2 {
     .section {
         padding: 30px 0;
     }
-    
+
     .container {
         padding: 0;
     }
@@ -725,24 +726,24 @@ h2 {
     h2 {
         font-size: 32px;
     }
-    
+
     /* About section full width on mobile - margins reach 0 */
     #about {
         padding-left: 0;
         padding-right: 0;
     }
-    
+
     /* Scale about-content frame proportionally on mobile */
     #about-content {
         padding: clamp(12px, 4vw, 20px);
         font-size: clamp(12px, 3.5vw, 14px);
         border-radius: 0;
     }
-    
+
     #about-content .bold {
         font-size: clamp(14px, 4.5vw, 18px) !important;
     }
-    
+
     #about-content p {
         font-size: clamp(12px, 3.5vw, 14px) !important;
     }
@@ -755,12 +756,12 @@ h2 {
         padding: clamp(4px, 1vw, 10px) clamp(0.5rem, 2vw, 1.5rem);
         gap: clamp(4px, 1vw, 8px);
     }
-    
+
     /* Articles grid - hide items beyond 8 on mobile */
     .articles-grid .article-card:nth-child(n+9) {
         display: none;
     }
-    
+
     .brand-card,
     .product-card,
     .article-card {
@@ -770,7 +771,7 @@ h2 {
         border-radius: 10px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
-    
+
     .brand-card img,
     .product-card img,
     .article-card img {
@@ -781,21 +782,21 @@ h2 {
         border-radius: 8px;
         object-fit: contain;
     }
-    
+
     .brand-card h3,
     .product-card h3,
     .article-card h3 {
         font-size: 11px;
         margin-bottom: 3px;
     }
-    
+
     /* Hide descriptions on mobile - show only logo and name */
     .brand-card p,
     .product-card p,
     .article-card .excerpt {
         display: none;
     }
-    
+
     .brand-card .read-more,
     .product-card .read-more,
     .article-card .read-more {
@@ -1120,7 +1121,7 @@ h2 {
     #about-content {
         padding: 60px 80px;
     }
-    
+
     /* Better spacing for brand/article cards on wide screens with equal padding and centering */
     .brands-grid,
     .articles-grid {
@@ -1130,7 +1131,7 @@ h2 {
         margin: 0 auto;
         justify-content: center;
     }
-    
+
     /* Ensure contact section remains centered and readable */
     .contact-wrapper {
         padding: 0 2rem;
@@ -1144,7 +1145,7 @@ h2 {
         max-width: 1600px;
         padding: 70px 100px;
     }
-    
+
     /* Ensure cards scale well on ultra-wide screens and remain centered */
     .brands-grid,
     .articles-grid {
@@ -1152,21 +1153,21 @@ h2 {
         margin: 0 auto;
         justify-content: center;
     }
-    
+
     .brand-card,
     .product-card,
     .article-card {
         width: 100%;
         min-height: 340px;
     }
-    
+
     .brand-card img,
     .product-card img,
     .article-card img {
         max-width: 100%;
         height: 200px;
     }
-    
+
     /* Better contact section layout for ultra-wide */
     .contact-wrapper {
         max-width: 1800px;
